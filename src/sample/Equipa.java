@@ -23,12 +23,30 @@ public class Equipa {
      * É uma variável do tipo long que recebe o lugar em que a equipa ficou no decorrer do torneio tartaruga, o motivo para esta ser um long deve-se ao facto de o id também ser um long e como o número de equipas que podem ser criadas é infinito, então a posição em que a equipa se encontra no torneio também pode chegar a conter bastantes digitos, o que leva esta variável a ser um long.
      */
     private long classificacao;
+
     /**
      * 1 jogador pode ter 0 ou 1 equipa, e uma equipa tem 1 ou mais jogadores.
      *
      * (Nota: Proteção para a aplicação - A equipa não pode ser criada enquanto a equipa não tiver pelo menos um jogador).
      */
-    public Vector<Jogador> tem = new Vector<Jogador>();
+
+    /**
+     * Construtor Default
+     */
+    public Equipa() {
+    }
+
+    /**
+     * Construtor para criar um jogador com todos os atributos
+     * @param nome Nome da Equipa
+     * @param convocada Está convocada para o próximo jogo ou não
+     * @param classificacao Classificação da equipa
+     */
+    public Equipa(String nome, boolean convocada, long classificacao) {
+        this.nome = nome;
+        this.convocada = convocada;
+        this.classificacao = classificacao;
+    }
 
     /**
      * Esté é um método que está encarregado da adição das equipas na lista, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.

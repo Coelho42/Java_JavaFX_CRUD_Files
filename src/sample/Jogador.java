@@ -11,12 +11,32 @@ public class Jogador extends Pessoa {
      * (base, extremo, poste etc... ) em cada equipa.
      */
     private String posicao;
+
+    /**
+     * Construtor Default
+     */
+    public Jogador() {
+    }
+
+    /**
+     * Construtor para criar um jogador com todos os atributos
+     * @param nome Nome do Jogador
+     * @param idade Idade do Jogador
+     * @param altura Altura do Jogador
+     * @param posicao Posição no campo do Jogador
+     */
+    public Jogador(String nome, int idade, double altura, String posicao) {
+        this.setNome(nome);
+        this.setIdade(idade);
+        this.setAltura(altura);
+        this.posicao = posicao;
+    }
+
     /**
      * 1 jogador pode ter 0 ou 1 equipa, e uma equipa tem 1 ou mais jogadores.
      *
      * (Nota: Proteção para a aplicação - A equipa não pode ser criada enquanto a equipa não tiver pelo menos um jogador).
      */
-    public Equipa tem;
 
     /**
      * Esté é um método que está encarregado da criação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
