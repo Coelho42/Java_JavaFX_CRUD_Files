@@ -19,6 +19,7 @@ public class Equipa {
      * É uma variável do tipo boolean que verifica se a equipa está ou não convocada para o torneio tartaruga, se sim a equipa é adicionada à lista de equipas, se não a equipa continua na lista de equipas criadas, mas não se encontra adicionada no torneio.
      */
     private boolean convocada;
+
     /**
      * É uma variável do tipo long que recebe o lugar em que a equipa ficou no decorrer do torneio tartaruga, o motivo para esta ser um long deve-se ao facto de o id também ser um long e como o número de equipas que podem ser criadas é infinito, então a posição em que a equipa se encontra no torneio também pode chegar a conter bastantes digitos, o que leva esta variável a ser um long.
      */
@@ -43,9 +44,9 @@ public class Equipa {
      * @param classificacao Classificação da equipa
      */
     public Equipa(String nome, boolean convocada, long classificacao) {
-        this.nome = nome;
-        this.convocada = convocada;
-        this.classificacao = classificacao;
+        this.setNome(nome);
+        this.setConvocada(convocada);
+        this.setClassificacao(classificacao);
     }
 
     /**
@@ -73,5 +74,30 @@ public class Equipa {
      */
     public void Delete(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
         throw new UnsupportedOperationException();
+    }
+
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public boolean isConvocada() {
+        return convocada;
+    }
+
+    public void setConvocada(boolean convocada) {
+        this.convocada = convocada;
+    }
+
+    public long getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(long classificacao) {
+        this.classificacao = classificacao;
     }
 }

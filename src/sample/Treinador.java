@@ -36,7 +36,7 @@ public class Treinador extends Pessoa {
         this.setNome(nome);
         this.setIdade(idade);
         this.setAltura(altura);
-        this.categoria = categoria;
+        this.setCategoria(categoria);
     }
     /**
      * Esté é um método que está encarregado da criação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
@@ -57,5 +57,14 @@ public class Treinador extends Pessoa {
      */
     public void Delete(List<Treinador> listaTreinador) {
         throw new UnsupportedOperationException();
+    }
+
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

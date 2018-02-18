@@ -6,6 +6,7 @@ import java.util.List;
  * Esta classe é utilizada na criação dos Jogadores, esta contem 1 atributo que destigue os jogadores uns dos outros e contem 3 métodos para a criação , edição e eliminação de um ou mais jogadores para que estes participem no calendário de jogos do torneio tartaruga.
  */
 public class Jogador extends Pessoa {
+
     /**
      * É uma variável do tipo string que indica a posição do jogador no campo
      * (base, extremo, poste etc... ) em cada equipa.
@@ -29,7 +30,7 @@ public class Jogador extends Pessoa {
         this.setNome(nome);
         this.setIdade(idade);
         this.setAltura(altura);
-        this.posicao = posicao;
+        this.setPosicao(posicao);
     }
 
     /**
@@ -57,5 +58,15 @@ public class Jogador extends Pessoa {
      */
     public void Delete(List<Jogador> listaJogador) {
         throw new UnsupportedOperationException();
+    }
+
+
+
+    public String getPosicao() {
+        return posicao;
+    }
+
+    public void setPosicao(String posicao) {
+        this.posicao = posicao;
     }
 }
