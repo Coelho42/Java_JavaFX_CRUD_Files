@@ -1,5 +1,17 @@
 package sample;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.util.List;
 import java.util.Vector;
 
@@ -59,6 +71,46 @@ public class Treinador extends Pessoa {
         throw new UnsupportedOperationException();
     }
 
+    public void ParteGrafica(Button Custom, Button Cancel) {
+        GridPane gridPaneTreinadores = new GridPane();					// layout para a região central
+        gridPaneTreinadores.setAlignment(Pos.CENTER);
+        gridPaneTreinadores.setVgap(12);								// espaço entre colunas (pixeis)
+        gridPaneTreinadores.setHgap(10);								// espaço entre linhas
+
+        // Nome
+        Label labelNome = new Label("Nome:");			        // Nova Label
+        gridPaneTreinadores.add(labelNome, 0, 0);		// célula col 0,linha 0
+        TextField textoNome = new TextField();					    // Campo de texto vazio
+        gridPaneTreinadores.add(textoNome, 1, 0);       // célula: col 1, linha 0
+
+        // Convocada
+        Label labelConvocada = new Label("Convocada:");				// Nova Label
+        gridPaneTreinadores.add(labelConvocada, 0, 1);		// célula col 0,linha 1
+        TextField textoConvocada = new TextField();					    // Campo de texto vazio
+        gridPaneTreinadores.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
+
+        // Classificação
+        Label labelClassificacao = new Label("Classificação:");			// Nova Label
+        gridPaneTreinadores.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
+        TextField textoClassificacao = new TextField();					    // Campo de texto vazio
+        gridPaneTreinadores.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
+
+        BorderPane borderPaneJogadores = new BorderPane();
+        HBox Butoes = new HBox(40);
+        Butoes.getChildren().addAll(Custom, Cancel);
+
+        borderPaneJogadores.setCenter(gridPaneTreinadores);
+        borderPaneJogadores.setBottom(Butoes);
+        Butoes.setPadding(new Insets(20,20,20,20));
+
+        Scene formEntidadeTreinadoresDetalhes = new Scene(borderPaneJogadores,481, 489);
+        Stage entidadeTreinadores = new Stage();
+        entidadeTreinadores.setScene(formEntidadeTreinadoresDetalhes);
+        entidadeTreinadores.initModality(Modality.APPLICATION_MODAL);
+        entidadeTreinadores.setTitle("Treinadores Detalhes");
+        entidadeTreinadores.setResizable(false);
+        entidadeTreinadores.show();
+    }
 
     public String getCategoria() {
         return categoria;

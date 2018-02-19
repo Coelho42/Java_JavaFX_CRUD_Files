@@ -34,6 +34,7 @@ public class Main extends Application {
     StackPane stackPane = new StackPane();					// Layout para organizar verticalmente os objetos
     BorderPane rootLayout = new BorderPane();       // Layout Principal
     Scene Controlo = new Scene(rootLayout,1204, 731);   // Tratamento da janela
+
     /**
      * Método da classe Application (Super)
      * Responsável pela criação do programa. Quando termina a sua tarefa, chama o método Start
@@ -129,112 +130,16 @@ public class Main extends Application {
                 tableEquipas.setItems(listaEquipas);
 
                 Add.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  1, 3);
-                    layoutCenter.add(Cancel,  2, 3);
-
-                    Scene formEntidadeEquipasDetalhesAdd = new Scene(layoutCenter,481, 489);
-                    Stage entidadeEquipasAdd = new Stage();
-                    entidadeEquipasAdd.setScene(formEntidadeEquipasDetalhesAdd);
-                    entidadeEquipasAdd.initModality(Modality.APPLICATION_MODAL);
-                    entidadeEquipasAdd.setTitle("Equipas Detalhes");
-                    entidadeEquipasAdd.setResizable(false);
-                    entidadeEquipasAdd.show();
+                    Equipa equipaAdd = new Equipa();
+                    equipaAdd.ParteGrafica(Custom, Cancel);
                 });
                 Edit.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
-
-                    Scene formEntidadeEquipasDetalhesEdit = new Scene(layoutCenter,481, 489);
-                    Stage entidadeEquipasEdit = new Stage();
-                    entidadeEquipasEdit.setScene(formEntidadeEquipasDetalhesEdit);
-                    entidadeEquipasEdit.initModality(Modality.APPLICATION_MODAL);
-                    entidadeEquipasEdit.setTitle("Equipas Detalhes");
-                    entidadeEquipasEdit.setResizable(false);
-                    entidadeEquipasEdit.show();
+                    Equipa equipaEdit = new Equipa();
+                    equipaEdit.ParteGrafica(Custom, Cancel);
                 });
                 Delete.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
-
-                    Scene formEntidadeEquipasDetalhesDelete = new Scene(layoutCenter,481, 489);
-                    Stage fntidadeEquipasDelete = new Stage();
-                    fntidadeEquipasDelete.setScene(formEntidadeEquipasDetalhesDelete);
-                    fntidadeEquipasDelete.initModality(Modality.APPLICATION_MODAL);
-                    fntidadeEquipasDelete.setTitle("Equipas Detalhes");
-                    fntidadeEquipasDelete.setResizable(false);
-                    fntidadeEquipasDelete.show();
+                    Equipa equipaDelete = new Equipa();
+                    equipaDelete.ParteGrafica(Custom, Cancel);
                 });
                 Close.setOnAction(A->{
                     primaryStage.show();
@@ -244,21 +149,21 @@ public class Main extends Application {
                 // Preparação da janela
                 //////////////////////////////////////////////////////////////////////////////////////
 
-                BorderPane borderPane = new BorderPane();
+                BorderPane borderPaneEquipa = new BorderPane();
                 HBox Butoes = new HBox(40);
 
-                borderPane.setTop(labelEquipa);
-                borderPane.setCenter(tableEquipas);
-                borderPane.setBottom(Butoes);
+                borderPaneEquipa.setTop(labelEquipa);
+                borderPaneEquipa.setCenter(tableEquipas);
+                borderPaneEquipa.setBottom(Butoes);
 
                 Butoes.setPadding(new Insets(10,20,20,20));
                 Butoes.getChildren().addAll(Add, Edit, Delete, Close);
 
-                StackPane stackPane = new StackPane();					// Layout para organizar verticalmente os objetos
-                stackPane.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
-                stackPane.getChildren().add(borderPane);
+                StackPane stackPaneEquipa = new StackPane();					// Layout para organizar verticalmente os objetos
+                stackPaneEquipa.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
+                stackPaneEquipa.getChildren().add(borderPaneEquipa);
 
-                Scene formEntidadeEquipas = new Scene(stackPane,726, 561);			// Tratamento da janela
+                Scene formEntidadeEquipas = new Scene(stackPaneEquipa,726, 561);			// Tratamento da janela
                 Stage entidadeEquipas = new Stage();
                 entidadeEquipas.setScene(formEntidadeEquipas);
                 entidadeEquipas.initModality(Modality.APPLICATION_MODAL);
@@ -309,106 +214,16 @@ public class Main extends Application {
                 tableJogadores.setItems(listaJogadores);
 
                 Add.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
-
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Jogador jogadorAdd = new Jogador();
+                    jogadorAdd.ParteGrafica(Custom, Cancel);
                 });
                 Edit.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
-
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Jogador jogadorEdit = new Jogador();
+                    jogadorEdit.ParteGrafica(Custom, Cancel);
                 });
                 Delete.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
-
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Jogador jogadorDelete = new Jogador();
+                    jogadorDelete.ParteGrafica(Custom, Cancel);
                 });
                 Close.setOnAction(A->{
                     primaryStage.setScene(Controlo);
@@ -419,26 +234,27 @@ public class Main extends Application {
                 // Preparação da janela
                 //////////////////////////////////////////////////////////////////////////////////////
 
-                BorderPane borderPane = new BorderPane();
+                BorderPane borderPaneJogadores = new BorderPane();
                 HBox Butoes = new HBox(40);
 
-                borderPane.setTop(labelJogadores);
-                borderPane.setCenter(tableJogadores);
-                borderPane.setBottom(Butoes);
+                borderPaneJogadores.setTop(labelEquipa);
+                borderPaneJogadores.setCenter(tableJogadores);
+                borderPaneJogadores.setBottom(Butoes);
 
                 Butoes.setPadding(new Insets(10,20,20,20));
                 Butoes.getChildren().addAll(Add, Edit, Delete, Close);
 
                 StackPane stackPane = new StackPane();					// Layout para organizar verticalmente os objetos
                 stackPane.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
-                stackPane.getChildren().add(borderPane);
+                stackPane.getChildren().add(borderPaneJogadores);
 
-                Scene FormEntidadeJogadores = new Scene(stackPane,726, 561);			// Trataamento da janela
-                primaryStage.setScene(FormEntidadeJogadores);
-                primaryStage.setTitle("Jogadores");
-                primaryStage.setResizable(false);
-                primaryStage.show();
-
+                Scene formEntidadeJogadores = new Scene(stackPane,726, 561);			// Tratamento da janela
+                Stage entidadeJogadores = new Stage();
+                entidadeJogadores.setScene(formEntidadeJogadores);
+                entidadeJogadores.initModality(Modality.APPLICATION_MODAL);
+                entidadeJogadores.setTitle("Jogadores");
+                entidadeJogadores.setResizable(false);
+                entidadeJogadores.show();
             });
             menuItemFileOpcaoTreinadores.setOnAction(e->{
                 //////////////////////////////////////////////////////////////////////////////////////
@@ -482,109 +298,18 @@ public class Main extends Application {
                 tableTreinadores.setItems(listaTreinadores);
 
                 Add.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
-
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Treinador TreinadorAdd = new Treinador();
+                    TreinadorAdd.ParteGrafica(Custom, Cancel);
                 });
                 Edit.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
-
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Treinador TreinadorEdit = new Treinador();
+                    TreinadorEdit.ParteGrafica(Custom, Cancel);
                 });
                 Delete.setOnAction(A->{
-
-                    GridPane layoutCenter = new GridPane();					// layout para a região central
-                    layoutCenter.setAlignment(Pos.CENTER);
-                    layoutCenter.setVgap(12);								// espaço entre colunas (pixeis)
-                    layoutCenter.setHgap(10);								// espaço entre linhas
-
-                    // Nome
-                    Label labelNome = new Label("Nome:");			        // Nova Label
-                    layoutCenter.add(labelNome, 0, 0);		// célula col 0,linha 0
-                    TextField textoNome = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-                    // Convocada
-                    Label labelConvocada = new Label("Convocada:");				// Nova Label
-                    layoutCenter.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-                    TextField textoConvocada = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-                    // Classificação
-                    Label labelClassificacao = new Label("Classificação:");			// Nova Label
-                    layoutCenter.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-                    TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-                    layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
-
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Treinador TreinadorDelete = new Treinador();
+                    TreinadorDelete.ParteGrafica(Custom, Cancel);
                 });
                 Close.setOnAction(A->{
-                    primaryStage.setScene(Controlo);
                     primaryStage.show();
                 });
 
@@ -592,25 +317,27 @@ public class Main extends Application {
                 // Preparação da janela
                 //////////////////////////////////////////////////////////////////////////////////////
 
-                BorderPane borderPane = new BorderPane();
+                BorderPane borderPaneTreinadores = new BorderPane();
                 HBox Butoes = new HBox(40);
 
-                borderPane.setTop(labelTreinadores);
-                borderPane.setCenter(tableTreinadores);
-                borderPane.setBottom(Butoes);
+                borderPaneTreinadores.setTop(labelEquipa);
+                borderPaneTreinadores.setCenter(tableTreinadores);
+                borderPaneTreinadores.setBottom(Butoes);
 
                 Butoes.setPadding(new Insets(10,20,20,20));
                 Butoes.getChildren().addAll(Add, Edit, Delete, Close);
 
-                stackPane.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
-                stackPane.getChildren().add(borderPane);
+                StackPane stackPaneTreinadores = new StackPane();					// Layout para organizar verticalmente os objetos
+                stackPaneTreinadores.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
+                stackPaneTreinadores.getChildren().add(borderPaneTreinadores);
 
-
-                Scene FormEntidadeTreinadores = new Scene(stackPane,726, 561);			// Trataamento da janela
-                primaryStage.setScene(FormEntidadeTreinadores);
-                primaryStage.setTitle("Treinadores");
-                primaryStage.setResizable(false);
-                primaryStage.show();
+                Scene formEntidadeTreinadores = new Scene(stackPaneTreinadores,726, 561);			// Tratamento da janela
+                Stage entidadeTreinadores = new Stage();
+                entidadeTreinadores.setScene(formEntidadeTreinadores);
+                entidadeTreinadores.initModality(Modality.APPLICATION_MODAL);
+                entidadeTreinadores.setTitle("Jogadores");
+                entidadeTreinadores.setResizable(false);
+                entidadeTreinadores.show();
             });
 
             // Adicionar os MenuItems ao menuFile.

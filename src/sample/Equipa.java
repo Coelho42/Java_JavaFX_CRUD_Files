@@ -1,5 +1,18 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.util.List;
 import java.util.Vector;
 
@@ -74,6 +87,75 @@ public class Equipa {
      */
     public void Delete(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
         throw new UnsupportedOperationException();
+    }
+
+    public void ParteGrafica(Button Custom, Button Cancel){
+
+        GridPane gridPaneEquipas = new GridPane();					// layout para a região central
+        gridPaneEquipas.setAlignment(Pos.CENTER);
+        gridPaneEquipas.setVgap(12);								// espaço entre colunas (pixeis)
+        gridPaneEquipas.setHgap(10);								// espaço entre linhas
+
+        // Nome
+        Label labelNome = new Label("Nome:");			        // Nova Label
+        gridPaneEquipas.add(labelNome, 0, 0);		// célula col 0,linha 0
+        TextField textoNome = new TextField();					    // Campo de texto vazio
+        gridPaneEquipas.add(textoNome, 1, 0);       // célula: col 1, linha 0
+
+        // Convocada
+        Label labelConvocada = new Label("Convocada:");				// Nova Label
+        gridPaneEquipas.add(labelConvocada, 0, 1);		// célula col 0,linha 1
+        TextField textoConvocada = new TextField();					    // Campo de texto vazio
+        gridPaneEquipas.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
+
+        // Classificação
+        Label labelClassificacao = new Label("Classificação:");			// Nova Label
+        gridPaneEquipas.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
+        TextField textoClassificacao = new TextField();					    // Campo de texto vazio
+        gridPaneEquipas.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
+
+        // Criação do objeto da classe TableView: null
+        TableView<Equipa> tableJogadoresTreinadores = new TableView<>();
+
+        // Coluna Jogador
+        TableColumn<Equipa, String> colunaNomeJogadores = new TableColumn<>("Jogadores");
+        colunaNomeJogadores.setMinWidth(20);
+        colunaNomeJogadores.setCellValueFactory(new PropertyValueFactory<>("jogadores"));
+
+        // Coluna Treinador
+        TableColumn<Equipa, String> colunaNomeTreinadores = new TableColumn<>("Treinadores");
+        colunaNomeTreinadores.setMinWidth(20);
+        colunaNomeTreinadores.setCellValueFactory(new PropertyValueFactory<>("treinadores"));
+
+        // Associar as colunas à tabela
+        tableJogadoresTreinadores.getColumns().addAll(colunaNomeJogadores, colunaNomeTreinadores);
+
+        // Lista de alunos do tipo ObservableList<Classe>
+        // A inicialização é sempre feita desta forma.
+        ObservableList<Equipa> listaJogadoresTreinadores = FXCollections.observableArrayList();
+
+        // Carregamento de dados
+        listaJogadoresTreinadores.add(new Equipa("Dude", true, 12));
+
+        // Adição da ObservableList à tableView
+        tableJogadoresTreinadores.setItems(listaJogadoresTreinadores);
+
+        BorderPane borderPaneEquipas = new BorderPane();
+        HBox Butoes = new HBox(40);
+        Butoes.getChildren().addAll(Custom, Cancel);
+
+        borderPaneEquipas.setTop(gridPaneEquipas);
+        borderPaneEquipas.setCenter(tableJogadoresTreinadores);
+        borderPaneEquipas.setBottom(Butoes);
+        Butoes.setPadding(new Insets(20,20,20,20));
+
+        Scene formEntidadeEquipasDetalhes = new Scene(borderPaneEquipas,481, 489);
+        Stage entidadeEquipas = new Stage();
+        entidadeEquipas.setScene(formEntidadeEquipasDetalhes);
+        entidadeEquipas.initModality(Modality.APPLICATION_MODAL);
+        entidadeEquipas.setTitle("Equipas Detalhes");
+        entidadeEquipas.setResizable(false);
+        entidadeEquipas.show();
     }
 
 
