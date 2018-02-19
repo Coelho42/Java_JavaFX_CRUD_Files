@@ -16,9 +16,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.text.Normalizer;
 
 /**
  * Class de controlo, esta é a mais importante de todas as classes é esta classe que controla a adição das equipas, dos jogadores e dos treinadores no torneio tartaruga estas tarefas são realizadas através da ajuda de 3 métodos: adicionar, editar e eliminar. Esta contém 3 atributos que são listas: lista de equipas, lista de jogadores e lista de treinadores, estas por sua vez são utilizadas pelos métodos referidos anteriormente para depois serem adicionadas no torneio.
@@ -151,14 +153,16 @@ public class Main extends Application {
                     TextField textoClassificacao = new TextField();					    // Campo de texto vazio
                     layoutCenter.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
 
-                    layoutCenter.add(Custom,  0, 3);
-                    layoutCenter.add(Cancel,  1, 3);
+                    layoutCenter.add(Custom,  1, 3);
+                    layoutCenter.add(Cancel,  2, 3);
 
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Scene formEntidadeEquipasDetalhesAdd = new Scene(layoutCenter,481, 489);
+                    Stage entidadeEquipasAdd = new Stage();
+                    entidadeEquipasAdd.setScene(formEntidadeEquipasDetalhesAdd);
+                    entidadeEquipasAdd.initModality(Modality.APPLICATION_MODAL);
+                    entidadeEquipasAdd.setTitle("Equipas Detalhes");
+                    entidadeEquipasAdd.setResizable(false);
+                    entidadeEquipasAdd.show();
                 });
                 Edit.setOnAction(A->{
 
@@ -188,11 +192,13 @@ public class Main extends Application {
                     layoutCenter.add(Custom,  0, 3);
                     layoutCenter.add(Cancel,  1, 3);
 
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Scene formEntidadeEquipasDetalhesEdit = new Scene(layoutCenter,481, 489);
+                    Stage entidadeEquipasEdit = new Stage();
+                    entidadeEquipasEdit.setScene(formEntidadeEquipasDetalhesEdit);
+                    entidadeEquipasEdit.initModality(Modality.APPLICATION_MODAL);
+                    entidadeEquipasEdit.setTitle("Equipas Detalhes");
+                    entidadeEquipasEdit.setResizable(false);
+                    entidadeEquipasEdit.show();
                 });
                 Delete.setOnAction(A->{
 
@@ -222,16 +228,15 @@ public class Main extends Application {
                     layoutCenter.add(Custom,  0, 3);
                     layoutCenter.add(Cancel,  1, 3);
 
-
-
-                    Scene FormEntidadeEquipasDetalhes = new Scene(layoutCenter,481, 489);			// Trataamento da janela
-                    primaryStage.setScene(FormEntidadeEquipasDetalhes);
-                    primaryStage.setTitle("Equipas Detalhes");
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    Scene formEntidadeEquipasDetalhesDelete = new Scene(layoutCenter,481, 489);
+                    Stage fntidadeEquipasDelete = new Stage();
+                    fntidadeEquipasDelete.setScene(formEntidadeEquipasDetalhesDelete);
+                    fntidadeEquipasDelete.initModality(Modality.APPLICATION_MODAL);
+                    fntidadeEquipasDelete.setTitle("Equipas Detalhes");
+                    fntidadeEquipasDelete.setResizable(false);
+                    fntidadeEquipasDelete.show();
                 });
                 Close.setOnAction(A->{
-                    primaryStage.setScene(Controlo);
                     primaryStage.show();
                 });
 
@@ -253,11 +258,13 @@ public class Main extends Application {
                 stackPane.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
                 stackPane.getChildren().add(borderPane);
 
-                Scene FormEntidadeEquipas = new Scene(stackPane,726, 561);			// Tratamento da janela
-                primaryStage.setScene(FormEntidadeEquipas);
-                primaryStage.setTitle("Equipas");
-                primaryStage.setResizable(false);
-                primaryStage.show();
+                Scene formEntidadeEquipas = new Scene(stackPane,726, 561);			// Tratamento da janela
+                Stage entidadeEquipas = new Stage();
+                entidadeEquipas.setScene(formEntidadeEquipas);
+                entidadeEquipas.initModality(Modality.APPLICATION_MODAL);
+                entidadeEquipas.setTitle("Equipas");
+                entidadeEquipas.setResizable(false);
+                entidadeEquipas.show();
             });
             menuItemFileOpcaoJogadores.setOnAction(e->{
 
