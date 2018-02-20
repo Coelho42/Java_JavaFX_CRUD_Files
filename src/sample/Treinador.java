@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -54,7 +55,9 @@ public class Treinador extends Pessoa {
      * Esté é um método que está encarregado da criação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
     public void Add(List<Treinador> listaTreinador) {
-        throw new UnsupportedOperationException();
+
+
+
     }
 
     /**
@@ -74,6 +77,7 @@ public class Treinador extends Pessoa {
     public void ParteGrafica(Button Custom, Button Cancel) {
         GridPane gridPaneTreinadores = new GridPane();					// layout para a região central
         gridPaneTreinadores.setAlignment(Pos.CENTER);
+        gridPaneTreinadores.setPadding(new Insets(20,20,20,20));
         gridPaneTreinadores.setVgap(12);								// espaço entre colunas (pixeis)
         gridPaneTreinadores.setHgap(10);								// espaço entre linhas
 
@@ -95,15 +99,20 @@ public class Treinador extends Pessoa {
         TextField textoClassificacao = new TextField();					    // Campo de texto vazio
         gridPaneTreinadores.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
 
-        BorderPane borderPaneJogadores = new BorderPane();
+        // Equipa
+        Label labelTreinadores = new Label("Equipa:");				// Nova Label
+        gridPaneTreinadores.add(labelTreinadores, 0, 3);		// célula col 0,linha 1
+        TextField textoTreinadores = new TextField();					    // Campo de texto vazio
+        gridPaneTreinadores.add(textoTreinadores, 1, 3);		// célula: col 1, linha 1
+
         HBox Butoes = new HBox(40);
         Butoes.getChildren().addAll(Custom, Cancel);
+        gridPaneTreinadores.add(Butoes,1,4);
 
-        borderPaneJogadores.setCenter(gridPaneTreinadores);
-        borderPaneJogadores.setBottom(Butoes);
-        Butoes.setPadding(new Insets(20,20,20,20));
+        BorderPane borderPaneTreinadores = new BorderPane();
+        borderPaneTreinadores.setCenter(gridPaneTreinadores);
 
-        Scene formEntidadeTreinadoresDetalhes = new Scene(borderPaneJogadores,481, 489);
+        Scene formEntidadeTreinadoresDetalhes = new Scene(borderPaneTreinadores,481, 489);
         Stage entidadeTreinadores = new Stage();
         entidadeTreinadores.setScene(formEntidadeTreinadoresDetalhes);
         entidadeTreinadores.initModality(Modality.APPLICATION_MODAL);

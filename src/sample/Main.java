@@ -114,7 +114,7 @@ public class Main extends Application {
                 //Coluna Numero
                 TableColumn<Equipa, Long> colunaClassificacao = new TableColumn<>("Classificação");
                 colunaConvocada.setMinWidth(20);
-                colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("classificação"));
+                colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
 
                 // Associar as colunas à tabela
                 tableEquipas.getColumns().addAll(colunaNome, colunaConvocada, colunaClassificacao);
@@ -198,7 +198,7 @@ public class Main extends Application {
                 //Coluna Posição
                 TableColumn<Jogador, String> colunaPosicao = new TableColumn<>("Posição");
                 colunaPosicao.setMinWidth(20);
-                colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posição"));
+                colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posicao"));
 
                 // Associar as colunas à tabela
                 tableJogadores.getColumns().addAll(colunaNome, colunaIdade, colunaAltura, colunaPosicao);
@@ -208,7 +208,7 @@ public class Main extends Application {
                 ObservableList<Jogador> listaJogadores = FXCollections.observableArrayList();
 
                 // Carregamento de dados
-                listaJogadores.add(new Jogador("Jogador", 8, 4,"hehexd"));
+                listaJogadores.add(new Jogador("Jogador", 8, 4,"seila"));
 
                 // Adição da ObservableList à tableView
                 tableJogadores.setItems(listaJogadores);
@@ -237,7 +237,7 @@ public class Main extends Application {
                 BorderPane borderPaneJogadores = new BorderPane();
                 HBox Butoes = new HBox(40);
 
-                borderPaneJogadores.setTop(labelEquipa);
+                borderPaneJogadores.setTop(labelJogadores);
                 borderPaneJogadores.setCenter(tableJogadores);
                 borderPaneJogadores.setBottom(Butoes);
 
@@ -257,6 +257,7 @@ public class Main extends Application {
                 entidadeJogadores.show();
             });
             menuItemFileOpcaoTreinadores.setOnAction(e->{
+
                 //////////////////////////////////////////////////////////////////////////////////////
                 //  Criação da TableView
                 //////////////////////////////////////////////////////////////////////////////////////
@@ -320,7 +321,7 @@ public class Main extends Application {
                 BorderPane borderPaneTreinadores = new BorderPane();
                 HBox Butoes = new HBox(40);
 
-                borderPaneTreinadores.setTop(labelEquipa);
+                borderPaneTreinadores.setTop(labelTreinadores);
                 borderPaneTreinadores.setCenter(tableTreinadores);
                 borderPaneTreinadores.setBottom(Butoes);
 

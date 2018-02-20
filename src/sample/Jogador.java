@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -76,6 +77,7 @@ public class Jogador extends Pessoa {
 
         GridPane gridPaneJogadores = new GridPane();					// layout para a região central
         gridPaneJogadores.setAlignment(Pos.CENTER);
+        gridPaneJogadores.setPadding(new Insets(20,20,20,20));
         gridPaneJogadores.setVgap(12);								// espaço entre colunas (pixeis)
         gridPaneJogadores.setHgap(10);								// espaço entre linhas
 
@@ -97,13 +99,18 @@ public class Jogador extends Pessoa {
         TextField textoClassificacao = new TextField();					    // Campo de texto vazio
         gridPaneJogadores.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
 
-        BorderPane borderPaneJogadores = new BorderPane();
+        // Equipa
+        Label labelJogador = new Label("Equipa:");				// Nova Label
+        gridPaneJogadores.add(labelJogador, 0, 3);		// célula col 0,linha 1
+        TextField textoJogadores = new TextField();					    // Campo de texto vazio
+        gridPaneJogadores.add(textoJogadores, 1, 3);		// célula: col 1, linha 1
+
         HBox Butoes = new HBox(40);
         Butoes.getChildren().addAll(Custom, Cancel);
+        gridPaneJogadores.add(Butoes,1,4);
 
+        BorderPane borderPaneJogadores = new BorderPane();
         borderPaneJogadores.setCenter(gridPaneJogadores);
-        borderPaneJogadores.setBottom(Butoes);
-        Butoes.setPadding(new Insets(20,20,20,20));
 
         Scene formEntidadeJogadoresDetalhes = new Scene(borderPaneJogadores,481, 489);
         Stage entidadeJogadores = new Stage();

@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -93,6 +94,7 @@ public class Equipa {
 
         GridPane gridPaneEquipas = new GridPane();					// layout para a região central
         gridPaneEquipas.setAlignment(Pos.CENTER);
+        gridPaneEquipas.setPadding(new Insets(20,20,20,20));
         gridPaneEquipas.setVgap(12);								// espaço entre colunas (pixeis)
         gridPaneEquipas.setHgap(10);								// espaço entre linhas
 
@@ -142,14 +144,19 @@ public class Equipa {
 
         BorderPane borderPaneEquipas = new BorderPane();
         HBox Butoes = new HBox(40);
+        Butoes.setAlignment(Pos.CENTER);
+        Butoes.setPadding(new Insets(10,20,20,20));
         Butoes.getChildren().addAll(Custom, Cancel);
+
+        StackPane stackPaneEquipas = new StackPane();					// Layout para organizar verticalmente os objetos
+        stackPaneEquipas.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
+        stackPaneEquipas.getChildren().add(borderPaneEquipas);
 
         borderPaneEquipas.setTop(gridPaneEquipas);
         borderPaneEquipas.setCenter(tableJogadoresTreinadores);
         borderPaneEquipas.setBottom(Butoes);
-        Butoes.setPadding(new Insets(20,20,20,20));
 
-        Scene formEntidadeEquipasDetalhes = new Scene(borderPaneEquipas,481, 489);
+        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,481, 489);
         Stage entidadeEquipas = new Stage();
         entidadeEquipas.setScene(formEntidadeEquipasDetalhes);
         entidadeEquipas.initModality(Modality.APPLICATION_MODAL);
@@ -157,7 +164,6 @@ public class Equipa {
         entidadeEquipas.setResizable(false);
         entidadeEquipas.show();
     }
-
 
     public String getNome() {
         return nome;
