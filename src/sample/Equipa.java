@@ -69,7 +69,6 @@ public class Equipa {
      * @param treinador Recebe o treinador do tipo classe Treinador para ser criada
      */
     public void Add(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
-        throw new UnsupportedOperationException();
     }
 
     /**

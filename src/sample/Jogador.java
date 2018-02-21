@@ -27,12 +27,6 @@ public class Jogador extends Pessoa {
     private String posicao;
 
     /**
-     * Construtor Default
-     */
-    public Jogador() {
-    }
-
-    /**
      * Construtor para criar um jogador com todos os atributos
      * @param nome Nome do Jogador
      * @param idade Idade do Jogador
@@ -56,7 +50,7 @@ public class Jogador extends Pessoa {
      * Esté é um método que está encarregado da criação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
     public void Add(List<Jogador> listaJogador) {
-        throw new UnsupportedOperationException();
+
     }
 
     /**
