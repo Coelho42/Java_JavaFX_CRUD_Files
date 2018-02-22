@@ -33,12 +33,6 @@ public class Treinador extends Pessoa {
      */
 
     /**
-     * Construtor Default
-     */
-    public Treinador() {
-    }
-
-    /**
      * Construtor para criar um jogador com todos os atributos
      * @param nome Nome do Treinador
      * @param idade Idade do Treinador
@@ -51,30 +45,8 @@ public class Treinador extends Pessoa {
         this.setAltura(altura);
         this.setCategoria(categoria);
     }
-    /**
-     * Esté é um método que está encarregado da criação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Add(List<Treinador> listaTreinador) {
 
-
-
-    }
-
-    /**
-     * Esté é um método que está encarregado da edição dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Edit(List<Treinador> listaTreinador) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Esté é um método que está encarregado da eliminação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Delete(List<Treinador> listaTreinador) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void ParteGrafica(Button Custom, Button Cancel) {
+    public Treinador(Button Custom, Button Cancel) {
         GridPane gridPaneTreinadores = new GridPane();					// layout para a região central
         gridPaneTreinadores.setAlignment(Pos.CENTER);
         gridPaneTreinadores.setPadding(new Insets(20,20,20,20));
@@ -119,6 +91,27 @@ public class Treinador extends Pessoa {
         entidadeTreinadores.setTitle("Treinadores Detalhes");
         entidadeTreinadores.setResizable(false);
         entidadeTreinadores.show();
+    }
+
+    /**
+     * Esté é um método que está encarregado da criação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
+     */
+    public void Add(List<Treinador> listaTreinador) {
+
+    }
+
+    /**
+     * Esté é um método que está encarregado da edição dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
+     */
+    public void Edit(List<Treinador> listaTreinador) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Esté é um método que está encarregado da eliminação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
+     */
+    public void Delete(List<Treinador> listaTreinador) {
+        throw new UnsupportedOperationException();
     }
 
     public String getCategoria() {

@@ -80,7 +80,6 @@ public class Main extends Application {
             labelTreinadores.setFont(new Font("Cambria", 40));
             labelTreinadores.setStyle("-fx-font-weight: bold");
 
-
             // Criação dos botões
             Button Add = new Button("Adicionar");
             Button Edit = new Button("Editar");
@@ -142,16 +141,15 @@ public class Main extends Application {
                 tableEquipas.setItems(listaEquipas);
 
                 Add.setOnAction(A -> {
-                    Equipa equipaAdd = new Equipa();
-                    equipaAdd.ParteGrafica(Custom, Cancel);
+                    Equipa graficosAdd = new Equipa(Custom, Cancel);
+                    
+
                 });
                 Edit.setOnAction(A -> {
-                    Equipa equipaEdit = new Equipa();
-                    equipaEdit.ParteGrafica(Custom, Cancel);
+                    Equipa graficosEdit = new Equipa(Custom, Cancel);
                 });
                 Delete.setOnAction(A -> {
-                    Equipa equipaDelete = new Equipa();
-                    equipaDelete.ParteGrafica(Custom, Cancel);
+                    Equipa graficosDelete = new Equipa(Custom, Cancel);
                 });
                 Close.setOnAction(A -> {
                     primaryStage.show();
@@ -226,16 +224,13 @@ public class Main extends Application {
                 tableJogadores.setItems(listaJogadores);
 
                 Add.setOnAction(A -> {
-                    Jogador jogadorAdd = new Jogador();
-                    jogadorAdd.ParteGrafica(Custom, Cancel);
+
                 });
                 Edit.setOnAction(A -> {
-                    Jogador jogadorEdit = new Jogador();
-                    jogadorEdit.ParteGrafica(Custom, Cancel);
+
                 });
                 Delete.setOnAction(A -> {
-                    Jogador jogadorDelete = new Jogador();
-                    jogadorDelete.ParteGrafica(Custom, Cancel);
+
                 });
                 Close.setOnAction(A -> {
                     primaryStage.setScene(Controlo);
@@ -311,16 +306,13 @@ public class Main extends Application {
                 tableTreinadores.setItems(listaTreinadores);
 
                 Add.setOnAction(A -> {
-                    Treinador TreinadorAdd = new Treinador();
-                    TreinadorAdd.ParteGrafica(Custom, Cancel);
+
                 });
                 Edit.setOnAction(A -> {
-                    Treinador TreinadorEdit = new Treinador();
-                    TreinadorEdit.ParteGrafica(Custom, Cancel);
+
                 });
                 Delete.setOnAction(A -> {
-                    Treinador TreinadorDelete = new Treinador();
-                    TreinadorDelete.ParteGrafica(Custom, Cancel);
+
                 });
                 Close.setOnAction(A -> {
                     primaryStage.show();

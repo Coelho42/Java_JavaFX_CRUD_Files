@@ -40,34 +40,7 @@ public class Jogador extends Pessoa {
         this.setPosicao(posicao);
     }
 
-    /**
-     * 1 jogador pode ter 0 ou 1 equipa, e uma equipa tem 1 ou mais jogadores.
-     *
-     * (Nota: Proteção para a aplicação - A equipa não pode ser criada enquanto a equipa não tiver pelo menos um jogador).
-     */
-
-    /**
-     * Esté é um método que está encarregado da criação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Add(List<Jogador> listaJogador) {
-
-    }
-
-    /**
-     * Esté é um método que está encarregado da edição dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Edit(List<Jogador> listaJogador) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Esté é um método que está encarregado da eliminação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Delete(List<Jogador> listaJogador) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void ParteGrafica(Button Custom, Button Cancel) {
+    public Jogador(Button Custom, Button Cancel) {
 
         GridPane gridPaneJogadores = new GridPane();					// layout para a região central
         gridPaneJogadores.setAlignment(Pos.CENTER);
@@ -114,6 +87,34 @@ public class Jogador extends Pessoa {
         entidadeJogadores.setResizable(false);
         entidadeJogadores.show();
     }
+
+    /**
+     * 1 jogador pode ter 0 ou 1 equipa, e uma equipa tem 1 ou mais jogadores.
+     *
+     * (Nota: Proteção para a aplicação - A equipa não pode ser criada enquanto a equipa não tiver pelo menos um jogador).
+     */
+
+    /**
+     * Esté é um método que está encarregado da criação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
+     */
+    public void Add(List<Jogador> listaJogador) {
+
+    }
+
+    /**
+     * Esté é um método que está encarregado da edição dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
+     */
+    public void Edit(List<Jogador> listaJogador) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Esté é um método que está encarregado da eliminação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
+     */
+    public void Delete(List<Jogador> listaJogador) {
+        throw new UnsupportedOperationException();
+    }
+
 
     public String getPosicao() {
         return posicao;

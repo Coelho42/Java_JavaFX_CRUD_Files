@@ -46,12 +46,6 @@ public class Equipa {
      */
 
     /**
-     * Construtor Default
-     */
-    public Equipa() {
-    }
-
-    /**
      * Construtor para criar um jogador com todos os atributos
      * @param nome Nome da Equipa
      * @param convocada Está convocada para o próximo jogo ou não
@@ -63,33 +57,7 @@ public class Equipa {
         this.setClassificacao(classificacao);
     }
 
-    /**
-     * Esté é um método que está encarregado da adição das equipas na lista, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
-     * @param jogador Recebe o jogador do tipo classe Jogador para ser criada a equipa
-     * @param treinador Recebe o treinador do tipo classe Treinador para ser criada
-     */
-    public void Add(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
-    }
-
-    /**
-     * Esté é um método que está encarregado da edição das equipas na lista, anteriormente criadas, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
-     * @param jogador Recebe o jogador do tipo classe Jogador para ser editado
-     * @param treinador Recebe o treinador do tipo classe Treinador para ser editado
-     */
-    public void Edit(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Esté é um método que está encarregado de eliminar equipas na lista,anteriormente criadas ou editadas, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
-     * @param jogador Recebe o jogador do tipo classe Jogador
-     * @param treinador Recebe o treinador do tipo classe Treinador
-     */
-    public void Delete(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void ParteGrafica(Button Custom, Button Cancel){
+    public Equipa(Button Custom, Button Cancel){
 
         GridPane gridPaneEquipas = new GridPane();					// layout para a região central
         gridPaneEquipas.setAlignment(Pos.CENTER);
@@ -163,6 +131,34 @@ public class Equipa {
         entidadeEquipas.setResizable(false);
         entidadeEquipas.show();
     }
+
+    /**
+     * Esté é um método que está encarregado da adição das equipas na lista, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
+     * @param jogador Recebe o jogador do tipo classe Jogador para ser criada a equipa
+     * @param treinador Recebe o treinador do tipo classe Treinador para ser criada
+     */
+    public void Add(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
+    }
+
+    /**
+     * Esté é um método que está encarregado da edição das equipas na lista, anteriormente criadas, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
+     * @param jogador Recebe o jogador do tipo classe Jogador para ser editado
+     * @param treinador Recebe o treinador do tipo classe Treinador para ser editado
+     */
+    public void Edit(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Esté é um método que está encarregado de eliminar equipas na lista,anteriormente criadas ou editadas, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
+     * @param jogador Recebe o jogador do tipo classe Jogador
+     * @param treinador Recebe o treinador do tipo classe Treinador
+     */
+    public void Delete(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
+        throw new UnsupportedOperationException();
+    }
+
+
 
     public String getNome() {
         return nome;
