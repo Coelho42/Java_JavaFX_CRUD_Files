@@ -142,8 +142,6 @@ public class Main extends Application {
 
                 Add.setOnAction(A -> {
                     Equipa graficosAdd = new Equipa(Custom, Cancel);
-                    
-
                 });
                 Edit.setOnAction(A -> {
                     Equipa graficosEdit = new Equipa(Custom, Cancel);

@@ -20,12 +20,20 @@ import java.util.List;
  */
 public class Jogador extends Pessoa {
 
+    //region Atributos
+
     /**
      * É uma variável do tipo string que indica a posição do jogador no campo
      * (base, extremo, poste etc... ) em cada equipa.
      */
     private String posicao;
 
+    // Atributo de Relação
+    private Equipa equipa;
+
+    //endregion
+
+    //region Construtores
     /**
      * Construtor para criar um jogador com todos os atributos
      * @param nome Nome do Jogador
@@ -38,6 +46,22 @@ public class Jogador extends Pessoa {
         this.setIdade(idade);
         this.setAltura(altura);
         this.setPosicao(posicao);
+    }
+
+    /**
+     * Construtor para criar um jogador com todos os atributos
+     * @param nome Nome do Jogador
+     * @param idade Idade do Jogador
+     * @param altura Altura do Jogador
+     * @param posicao Posição no campo do Jogador
+     * @param equipa Objeto Equipa atributo de relação
+     */
+    public Jogador(String nome, int idade, double altura, String posicao, Equipa equipa) {
+        this.setNome(nome);
+        this.setIdade(idade);
+        this.setAltura(altura);
+        this.setPosicao(posicao);
+        this.equipa = equipa;
     }
 
     public Jogador(Button Custom, Button Cancel) {
@@ -87,13 +111,9 @@ public class Jogador extends Pessoa {
         entidadeJogadores.setResizable(false);
         entidadeJogadores.show();
     }
+    //endregion
 
-    /**
-     * 1 jogador pode ter 0 ou 1 equipa, e uma equipa tem 1 ou mais jogadores.
-     *
-     * (Nota: Proteção para a aplicação - A equipa não pode ser criada enquanto a equipa não tiver pelo menos um jogador).
-     */
-
+    //region Métodos
     /**
      * Esté é um método que está encarregado da criação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
@@ -105,17 +125,16 @@ public class Jogador extends Pessoa {
      * Esté é um método que está encarregado da edição dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
     public void Edit(List<Jogador> listaJogador) {
-        throw new UnsupportedOperationException();
     }
 
     /**
      * Esté é um método que está encarregado da eliminação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
     public void Delete(List<Jogador> listaJogador) {
-        throw new UnsupportedOperationException();
     }
+    //endregion
 
-
+    //region Getters & Setters
     public String getPosicao() {
         return posicao;
     }
@@ -123,4 +142,5 @@ public class Jogador extends Pessoa {
     public void setPosicao(String posicao) {
         this.posicao = posicao;
     }
+    //endregion
 }

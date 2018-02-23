@@ -21,17 +21,17 @@ import java.util.Vector;
  */
 public class Treinador extends Pessoa {
 
+    //region Atributos
     /**
      * É uma variável do tipo stirng que recebe uma string que indica a categoria do treinador na equipa.
      */
     private String categoria;
 
-    /**
-     * 1 treinador tem 1 ou mais equipas, e uma equipa tem 1 ou mais treinadores.
-     *
-     * (Nota: Proteção para a aplicação - A equipa não pode ser criada enquanto a equipa não tiver pelo menos um treinador).
-     */
+    // Objeto Equipa do Tipo Equipa
+    private Equipa equipa;
+    //endregion
 
+    //region Construtores
     /**
      * Construtor para criar um jogador com todos os atributos
      * @param nome Nome do Treinador
@@ -44,6 +44,22 @@ public class Treinador extends Pessoa {
         this.setIdade(idade);
         this.setAltura(altura);
         this.setCategoria(categoria);
+    }
+
+    /**
+     * Construtor para criar um jogador com todos os atributos
+     * @param nome Nome do Jogador
+     * @param idade Idade do Jogador
+     * @param altura Altura do Jogador
+     * @param posicao Posição no campo do Jogador
+     * @param equipa Objeto Equipa
+     */
+    public Treinador(String nome, int idade, double altura, String posicao, Equipa equipa) {
+        this.setNome(nome);
+        this.setIdade(idade);
+        this.setAltura(altura);
+        this.setCategoria(categoria);
+        this.equipa = equipa;
     }
 
     public Treinador(Button Custom, Button Cancel) {
@@ -92,7 +108,9 @@ public class Treinador extends Pessoa {
         entidadeTreinadores.setResizable(false);
         entidadeTreinadores.show();
     }
+    //endregion
 
+    //region Métodos
     /**
      * Esté é um método que está encarregado da criação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
@@ -104,16 +122,16 @@ public class Treinador extends Pessoa {
      * Esté é um método que está encarregado da edição dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
     public void Edit(List<Treinador> listaTreinador) {
-        throw new UnsupportedOperationException();
     }
 
     /**
      * Esté é um método que está encarregado da eliminação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
     public void Delete(List<Treinador> listaTreinador) {
-        throw new UnsupportedOperationException();
     }
+    //endregion
 
+    //region Getters & Setters
     public String getCategoria() {
         return categoria;
     }
@@ -121,4 +139,5 @@ public class Treinador extends Pessoa {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+    //endregion
 }
