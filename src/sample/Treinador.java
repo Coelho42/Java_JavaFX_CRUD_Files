@@ -51,10 +51,10 @@ public class Treinador extends Pessoa {
      * @param nome Nome do Jogador
      * @param idade Idade do Jogador
      * @param altura Altura do Jogador
-     * @param posicao Posição no campo do Jogador
+     * @param categoria Posição no campo do Jogador
      * @param equipa Objeto Equipa
      */
-    public Treinador(String nome, int idade, double altura, String posicao, Equipa equipa) {
+    public Treinador(String nome, int idade, double altura, String categoria, Equipa equipa) {
         this.setNome(nome);
         this.setIdade(idade);
         this.setAltura(altura);
@@ -115,7 +115,6 @@ public class Treinador extends Pessoa {
      * Esté é um método que está encarregado da criação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
      */
     public void Add(List<Treinador> listaTreinador) {
-
     }
 
     /**

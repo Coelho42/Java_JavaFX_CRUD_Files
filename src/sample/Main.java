@@ -37,13 +37,52 @@ public class Main extends Application {
     List<Treinador> listaTreinadores;
     //endregion
 
+    //region Labels
+    Label labelEquipa = new Label("Equipas");
+    Label labelJogadores = new Label("Jogadores");
+    Label labelTreinadores = new Label("Treinadores");
+    //endregion
+
+    //region Botões
+    Button Add = new Button("Adicionar");
+    Button Edit = new Button("Editar");
+    Button Delete = new Button("Eliminar");
+    Button Close = new Button("Fechar Lista");
+    Button Custom = new Button("'Custom'");
+    Button Cancel = new Button("Cancel");
+    //endregion
+
+    //region Opções do MenuStrip
+    Menu menuFile = new Menu("_Principal");      // Menu Principal
+    Menu menuEdit = new Menu("_About Me");      // Menu About Me
+    MenuItem menuItemFileOpcaoEquipas = new MenuItem("Equipas");
+    MenuItem menuItemFileOpcaoJogadores = new MenuItem("Jogadores");
+    MenuItem menuItemFileOpcaoTreinadores = new MenuItem("Treinadores");
+    //endregion
+
+    //region TableView e respetivas Colunas
+    TableView<Equipa> tableEquipas = new TableView<>();
+    TableColumn<Equipa, String> colunaNomeEquipas = new TableColumn<>("Nome");
+    TableColumn<Equipa, Boolean> colunaConvocada = new TableColumn<>("Convocada");
+    TableColumn<Equipa, Long> colunaClassificacao = new TableColumn<>("Classificação");
+
+    TableView<Jogador> tableJogadores = new TableView<>();
+    TableColumn<Jogador, String> colunaNomeJogadores = new TableColumn<>("Nome");
+    TableColumn<Jogador, Integer> colunaIdadeJogadores = new TableColumn<>("Idade");
+    TableColumn<Jogador, Double> colunaAlturaJogadores = new TableColumn<>("Altura");
+    TableColumn<Jogador, String> colunaPosicao = new TableColumn<>("Posição");
+
+    TableView<Treinador> tableTreinadores = new TableView<>();
+    TableColumn<Treinador, String> colunaNomeTreinadores = new TableColumn<>("Nome");
+    TableColumn<Treinador, Integer> colunaIdadeTreinadores = new TableColumn<>("Idade");
+    TableColumn<Treinador, Double> colunaAlturaTreinadores = new TableColumn<>("Altura");
+    TableColumn<Treinador, String> colunaCategoria = new TableColumn<>("Categoria");
+    //endregion
+
+    //region strAction e selectedIndex
     String strAction;
     int selectedIndex;
-
-    MenuBar menuBar = new MenuBar();
-    StackPane stackPane = new StackPane();                    // Layout para organizar verticalmente os objetos
-    BorderPane rootLayout = new BorderPane();       // Layout Principal
-    Scene Controlo = new Scene(rootLayout, 1204, 731);   // Tratamento da janela
+    //endregion
 
     /**
      * Método da classe Application (Super)
@@ -67,71 +106,43 @@ public class Main extends Application {
 
         try {
 
-            // Criação das Labels
-            Label labelEquipa = new Label("Equipas");
+            //region Estilo e fonte das Labels
             labelEquipa.setFont(new Font("Cambria", 40));
             labelEquipa.setStyle("-fx-font-weight: bold");
-
-            Label labelJogadores = new Label("Jogadores");
             labelJogadores.setFont(new Font("Cambria", 40));
             labelJogadores.setStyle("-fx-font-weight: bold");
-
-            Label labelTreinadores = new Label("Treinadores");
             labelTreinadores.setFont(new Font("Cambria", 40));
             labelTreinadores.setStyle("-fx-font-weight: bold");
+            //endregion
 
-            // Criação dos botões
-            Button Add = new Button("Adicionar");
-            Button Edit = new Button("Editar");
-            Button Delete = new Button("Eliminar");
-            Button Close = new Button("Fechar Lista");
-            Button Custom = new Button("'Custom'");
-            Button Cancel = new Button("Cancel");
-
+            //region Tamanho dos Botões
             Add.setPrefSize(130, 60);
             Edit.setPrefSize(130, 60);
             Delete.setPrefSize(130, 60);
             Close.setPrefSize(130, 60);
+            //endregion
 
-            // Construtor recebe uma string com o nome do menu
-            Menu menuFile = new Menu("_Principal");      // Menu Principal
-            Menu menuEdit = new Menu("_About Me");      // Menu About Me
-
-            // Opções do Menu Strip
-            MenuItem menuItemFileOpcaoEquipas = new MenuItem("Equipas");
-            MenuItem menuItemFileOpcaoJogadores = new MenuItem("Jogadores");
-            MenuItem menuItemFileOpcaoTreinadores = new MenuItem("Treinadores");
-
-            // Listeners - Com as funções de cada opção do menu Strip
             menuItemFileOpcaoEquipas.setOnAction(e -> {
 
-                //////////////////////////////////////////////////////////////////////////////////////
-                //  Criação da TableView
-                //////////////////////////////////////////////////////////////////////////////////////
-
-                // Criação do objeto da classe TableView: null
-                TableView<Equipa> tableEquipas = new TableView<>();    //
-
+                //region Propriedades das Colunas da TableView Equipas
                 // Coluna Nome
-                TableColumn<Equipa, String> colunaNome = new TableColumn<>("Nome");
-                colunaNome.setMinWidth(20);
-                colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                colunaNomeEquipas.setMinWidth(20);
+                colunaNomeEquipas.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
                 //Coluna Convocada
-                TableColumn<Equipa, Boolean> colunaConvocada = new TableColumn<>("Convocada");
                 colunaConvocada.setMinWidth(20);
                 colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("convocada"));
 
                 //Coluna Numero
-                TableColumn<Equipa, Long> colunaClassificacao = new TableColumn<>("Classificação");
                 colunaConvocada.setMinWidth(20);
                 colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
+                //endregion
 
-                // Associar as colunas à tabela
-                tableEquipas.getColumns().addAll(colunaNome, colunaConvocada, colunaClassificacao);
+                //region TableView e ObservableList Stuff
+                // Associação das colunas à TableView
+                tableEquipas.getColumns().addAll(colunaNomeEquipas, colunaConvocada, colunaClassificacao);
 
-                // Lista de alunos do tipo ObservableList<Classe>
-                // A inicialização é sempre feita desta forma.
+                // Inicialização da ObservableList
                 ObservableList<Equipa> listaEquipas = FXCollections.observableArrayList();
 
                 // Carregamento de dados
@@ -139,7 +150,9 @@ public class Main extends Application {
 
                 // Adição da ObservableList à tableView
                 tableEquipas.setItems(listaEquipas);
+                //endregion
 
+                //region Botões Add, Edit e Delete
                 Add.setOnAction(A -> {
                     Equipa graficosAdd = new Equipa(Custom, Cancel);
                 });
@@ -152,11 +165,9 @@ public class Main extends Application {
                 Close.setOnAction(A -> {
                     primaryStage.show();
                 });
+                //endregion
 
-                //////////////////////////////////////////////////////////////////////////////////////
-                // Preparação da janela
-                //////////////////////////////////////////////////////////////////////////////////////
-
+                //region Preparação da janela
                 BorderPane borderPaneEquipa = new BorderPane();
                 HBox Butoes = new HBox(40);
 
@@ -178,41 +189,33 @@ public class Main extends Application {
                 entidadeEquipas.setTitle("Equipas");
                 entidadeEquipas.setResizable(false);
                 entidadeEquipas.show();
+                //endregion
             });
             menuItemFileOpcaoJogadores.setOnAction(e -> {
 
-                //////////////////////////////////////////////////////////////////////////////////////
-                //  Criação da TableView
-                //////////////////////////////////////////////////////////////////////////////////////
-
-                // Criação do objeto da classe TableView: null
-                TableView<Jogador> tableJogadores = new TableView<>();    //
-
+                //region Propriedades das Colunas da TableView Jogadores
                 // Coluna Nome
-                TableColumn<Jogador, String> colunaNome = new TableColumn<>("Nome");
-                colunaNome.setMinWidth(20);
-                colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                colunaNomeJogadores.setMinWidth(20);
+                colunaNomeJogadores.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
                 //Coluna Idade
-                TableColumn<Jogador, Integer> colunaIdade = new TableColumn<>("Idade");
-                colunaIdade.setMinWidth(20);
-                colunaIdade.setCellValueFactory(new PropertyValueFactory<>("idade"));
+                colunaIdadeJogadores.setMinWidth(20);
+                colunaIdadeJogadores.setCellValueFactory(new PropertyValueFactory<>("idade"));
 
                 //Coluna Altura
-                TableColumn<Jogador, Double> colunaAltura = new TableColumn<>("Altura");
-                colunaAltura.setMinWidth(20);
-                colunaAltura.setCellValueFactory(new PropertyValueFactory<>("altura"));
+                colunaAlturaJogadores.setMinWidth(20);
+                colunaAlturaJogadores.setCellValueFactory(new PropertyValueFactory<>("altura"));
 
                 //Coluna Posição
-                TableColumn<Jogador, String> colunaPosicao = new TableColumn<>("Posição");
                 colunaPosicao.setMinWidth(20);
                 colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posicao"));
+                //endregion
 
+                //region TableView e ObservableList Stuff
                 // Associar as colunas à tabela
-                tableJogadores.getColumns().addAll(colunaNome, colunaIdade, colunaAltura, colunaPosicao);
+                tableJogadores.getColumns().addAll(colunaNomeJogadores, colunaIdadeJogadores, colunaAlturaJogadores, colunaPosicao);
 
-                // Lista de alunos do tipo ObservableList<Classe>
-                // A inicialização é sempre feita desta forma.
+                // Inicialização da ObservableList
                 ObservableList<Jogador> listaJogadores = FXCollections.observableArrayList();
 
                 // Carregamento de dados
@@ -220,7 +223,9 @@ public class Main extends Application {
 
                 // Adição da ObservableList à tableView
                 tableJogadores.setItems(listaJogadores);
+                //endregion
 
+                //region Botões Add, Edit e Delete
                 Add.setOnAction(A -> {
 
                 });
@@ -231,14 +236,10 @@ public class Main extends Application {
 
                 });
                 Close.setOnAction(A -> {
-                    primaryStage.setScene(Controlo);
-                    primaryStage.show();
                 });
+                //endregion
 
-                //////////////////////////////////////////////////////////////////////////////////////
-                // Preparação da janela
-                //////////////////////////////////////////////////////////////////////////////////////
-
+                //region Preparação da janela
                 BorderPane borderPaneJogadores = new BorderPane();
                 HBox Butoes = new HBox(40);
 
@@ -260,38 +261,31 @@ public class Main extends Application {
                 entidadeJogadores.setTitle("Jogadores");
                 entidadeJogadores.setResizable(false);
                 entidadeJogadores.show();
+                //endregion
             });
             menuItemFileOpcaoTreinadores.setOnAction(e -> {
 
-                //////////////////////////////////////////////////////////////////////////////////////
-                //  Criação da TableView
-                //////////////////////////////////////////////////////////////////////////////////////
-
-                // Criação do objeto da classe TableView: null
-                TableView<Treinador> tableTreinadores = new TableView<>();    //
-
+                //region Propriedades das Colunas da TableView Treinadores
                 // Coluna Nome
-                TableColumn<Treinador, String> colunaNome = new TableColumn<>("Nome");
-                colunaNome.setMinWidth(20);
-                colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                colunaNomeTreinadores.setMinWidth(20);
+                colunaNomeTreinadores.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
                 //Coluna Idade
-                TableColumn<Treinador, Integer> colunaIdade = new TableColumn<>("Idade");
-                colunaIdade.setMinWidth(20);
-                colunaIdade.setCellValueFactory(new PropertyValueFactory<>("idade"));
+                colunaIdadeTreinadores.setMinWidth(20);
+                colunaIdadeTreinadores.setCellValueFactory(new PropertyValueFactory<>("idade"));
 
                 //Coluna Altura
-                TableColumn<Treinador, Double> colunaAltura = new TableColumn<>("Altura");
-                colunaAltura.setMinWidth(20);
-                colunaAltura.setCellValueFactory(new PropertyValueFactory<>("altura"));
+                colunaAlturaTreinadores.setMinWidth(20);
+                colunaAlturaTreinadores.setCellValueFactory(new PropertyValueFactory<>("altura"));
 
                 //Coluna Posição
-                TableColumn<Treinador, String> colunaCategoria = new TableColumn<>("Categoria");
                 colunaCategoria.setMinWidth(20);
                 colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+                //endregion
 
+                //region TableView e ObservableList Stuff
                 // Associar as colunas à tabela
-                tableTreinadores.getColumns().addAll(colunaNome, colunaIdade, colunaAltura, colunaCategoria);
+                tableTreinadores.getColumns().addAll(colunaNomeTreinadores, colunaIdadeTreinadores, colunaAlturaTreinadores, colunaCategoria);
 
                 // Lista de alunos do tipo ObservableList<Classe>
                 // A inicialização é sempre feita desta forma.
@@ -302,7 +296,9 @@ public class Main extends Application {
 
                 // Adição da ObservableList à tableView
                 tableTreinadores.setItems(listaTreinadores);
+                //endregion
 
+                //region Botões Add, Edit e Delete
                 Add.setOnAction(A -> {
 
                 });
@@ -315,11 +311,9 @@ public class Main extends Application {
                 Close.setOnAction(A -> {
                     primaryStage.show();
                 });
+                //endregion
 
-                //////////////////////////////////////////////////////////////////////////////////////
-                // Preparação da janela
-                //////////////////////////////////////////////////////////////////////////////////////
-
+                //region Preparação da janela
                 BorderPane borderPaneTreinadores = new BorderPane();
                 HBox Butoes = new HBox(40);
 
@@ -341,30 +335,30 @@ public class Main extends Application {
                 entidadeTreinadores.setTitle("Jogadores");
                 entidadeTreinadores.setResizable(false);
                 entidadeTreinadores.show();
+                //endregion
             });
 
-            // Adicionar os MenuItems ao menuFile.
+            //region Adição dos MenuItems ao menuFile.
             menuFile.getItems().addAll(
                     menuItemFileOpcaoEquipas,
                     menuItemFileOpcaoJogadores,
                     menuItemFileOpcaoTreinadores);
+            //endregion
 
-            ///////////////////////////////////////////////////////////////////////////////
-            // Passo 3 - Criar o menuBar e associar os menus
-            ///////////////////////////////////////////////////////////////////////////////
-
+            //region Criação do menuBar e associação dos Menus
+            MenuBar menuBar = new MenuBar();
             menuBar.getMenus().addAll(menuFile, menuEdit);
-            // Associar o menu à região TOP do rootLayout
-            rootLayout.setTop(menuBar);
+            BorderPane rootLayout = new BorderPane();       // Layout Principal
+            rootLayout.setTop(menuBar);     // Associar o menu à região TOP do rootLayout
+            //endregion
 
-            ///////////////////////////////////////////////////////////////////////////////
-            // Associar o rootLayout à Scene e esta à Stage
-            ///////////////////////////////////////////////////////////////////////////////
-
+            //region Preparação da janela
+            Scene Controlo = new Scene(rootLayout, 1204, 731);   // Tratamento da janela
             primaryStage.setScene(Controlo);
             primaryStage.setTitle("Torneio Tartaruga");
             primaryStage.setResizable(false);
             primaryStage.show();
+            //endregion
 
         } catch (Exception e) {
             e.printStackTrace();        // qq exceção é exibida
