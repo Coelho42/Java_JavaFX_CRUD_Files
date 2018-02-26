@@ -23,14 +23,17 @@ import java.util.Vector;
 public class Equipa {
 
     //region Atributos
+
     /**
      * É uma variável do tipo long que recebe o id das equipas, pois as equipas que podem ser criadas são infinitas ou seja o id pode chegar a ter vários digitos, logo tem de ser um long.
      */
     private long id;
+
     /**
      * É uma varíavel do tipo String que atribui um nome de cada equipa.
      */
     private String nome;
+
     /**
      * É uma variável do tipo boolean que verifica se a equipa está ou não convocada para o torneio tartaruga, se sim a equipa é adicionada à lista de equipas, se não a equipa continua na lista de equipas criadas, mas não se encontra adicionada no torneio.
      */
@@ -75,82 +78,6 @@ public class Equipa {
         this.jogadorList = jogadorList;
         this.treinadorList = treinadorList;
     }
-
-    public Equipa(Button Custom, Button Cancel){
-
-        GridPane gridPaneEquipas = new GridPane();					// layout para a região central
-        gridPaneEquipas.setAlignment(Pos.CENTER);
-        gridPaneEquipas.setPadding(new Insets(20,20,20,20));
-        gridPaneEquipas.setVgap(12);								// espaço entre colunas (pixeis)
-        gridPaneEquipas.setHgap(10);								// espaço entre linhas
-
-        // Nome
-        Label labelNome = new Label("Nome:");			        // Nova Label
-        gridPaneEquipas.add(labelNome, 0, 0);		// célula col 0,linha 0
-        TextField textoNome = new TextField();					    // Campo de texto vazio
-        gridPaneEquipas.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-        // Convocada
-        Label labelConvocada = new Label("Convocada:");				// Nova Label
-        gridPaneEquipas.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-        TextField textoConvocada = new TextField();					    // Campo de texto vazio
-        gridPaneEquipas.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-        // Classificação
-        Label labelClassificacao = new Label("Classificação:");			// Nova Label
-        gridPaneEquipas.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-        TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-        gridPaneEquipas.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-        // Criação do objeto da classe TableView: null
-        TableView<Equipa> tableJogadoresTreinadores = new TableView<>();
-
-        // Coluna Jogador
-        TableColumn<Equipa, String> colunaNomeJogadores = new TableColumn<>("Jogadores");
-        colunaNomeJogadores.setMinWidth(20);
-        colunaNomeJogadores.setCellValueFactory(new PropertyValueFactory<>("jogadores"));
-
-        // Coluna Treinador
-        TableColumn<Equipa, String> colunaNomeTreinadores = new TableColumn<>("Treinadores");
-        colunaNomeTreinadores.setMinWidth(20);
-        colunaNomeTreinadores.setCellValueFactory(new PropertyValueFactory<>("treinadores"));
-
-        // Associar as colunas à tabela
-        tableJogadoresTreinadores.getColumns().addAll(colunaNomeJogadores, colunaNomeTreinadores);
-
-        // Lista de alunos do tipo ObservableList<Classe>
-        // A inicialização é sempre feita desta forma.
-        ObservableList<Equipa> listaJogadoresTreinadores = FXCollections.observableArrayList();
-
-        // Carregamento de dados
-        listaJogadoresTreinadores.add(new Equipa("Dude", true, 12));
-
-        // Adição da ObservableList à tableView
-        tableJogadoresTreinadores.setItems(listaJogadoresTreinadores);
-
-        BorderPane borderPaneEquipas = new BorderPane();
-        HBox Butoes = new HBox(40);
-        Butoes.setAlignment(Pos.CENTER);
-        Butoes.setPadding(new Insets(10,20,20,20));
-        Butoes.getChildren().addAll(Custom, Cancel);
-
-        StackPane stackPaneEquipas = new StackPane();					// Layout para organizar verticalmente os objetos
-        stackPaneEquipas.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
-        stackPaneEquipas.getChildren().add(borderPaneEquipas);
-
-        borderPaneEquipas.setTop(gridPaneEquipas);
-        borderPaneEquipas.setCenter(tableJogadoresTreinadores);
-        borderPaneEquipas.setBottom(Butoes);
-
-        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,481, 489);
-        Stage entidadeEquipas = new Stage();
-        entidadeEquipas.setScene(formEntidadeEquipasDetalhes);
-        entidadeEquipas.initModality(Modality.APPLICATION_MODAL);
-        entidadeEquipas.setTitle("Equipas Detalhes");
-        entidadeEquipas.setResizable(false);
-        entidadeEquipas.show();
-    }
-
     //endregion
 
     //region Métodos
@@ -159,8 +86,7 @@ public class Equipa {
      * @param jogador Recebe o jogador do tipo classe Jogador para ser criada a equipa
      * @param treinador Recebe o treinador do tipo classe Treinador para ser criada
      */
-    public void Add(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa, Button Custom, Button Cancel) {
-    }
+    public void Add(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {}
 
     /**
      * Esté é um método que está encarregado da edição das equipas na lista, anteriormente criadas, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.

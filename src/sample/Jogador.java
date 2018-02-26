@@ -63,54 +63,6 @@ public class Jogador extends Pessoa {
         this.setPosicao(posicao);
         this.equipa = equipa;
     }
-
-    public Jogador(Button Custom, Button Cancel) {
-
-        GridPane gridPaneJogadores = new GridPane();					// layout para a região central
-        gridPaneJogadores.setAlignment(Pos.CENTER);
-        gridPaneJogadores.setPadding(new Insets(20,20,20,20));
-        gridPaneJogadores.setVgap(12);								// espaço entre colunas (pixeis)
-        gridPaneJogadores.setHgap(10);								// espaço entre linhas
-
-        // Nome
-        Label labelNome = new Label("Nome:");			        // Nova Label
-        gridPaneJogadores.add(labelNome, 0, 0);		// célula col 0,linha 0
-        TextField textoNome = new TextField();					    // Campo de texto vazio
-        gridPaneJogadores.add(textoNome, 1, 0);       // célula: col 1, linha 0
-
-        // Convocada
-        Label labelConvocada = new Label("Convocada:");				// Nova Label
-        gridPaneJogadores.add(labelConvocada, 0, 1);		// célula col 0,linha 1
-        TextField textoConvocada = new TextField();					    // Campo de texto vazio
-        gridPaneJogadores.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
-
-        // Classificação
-        Label labelClassificacao = new Label("Classificação:");			// Nova Label
-        gridPaneJogadores.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
-        TextField textoClassificacao = new TextField();					    // Campo de texto vazio
-        gridPaneJogadores.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
-
-        // Equipa
-        Label labelJogador = new Label("Equipa:");				// Nova Label
-        gridPaneJogadores.add(labelJogador, 0, 3);		// célula col 0,linha 1
-        TextField textoJogadores = new TextField();					    // Campo de texto vazio
-        gridPaneJogadores.add(textoJogadores, 1, 3);		// célula: col 1, linha 1
-
-        HBox Butoes = new HBox(40);
-        Butoes.getChildren().addAll(Custom, Cancel);
-        gridPaneJogadores.add(Butoes,1,4);
-
-        BorderPane borderPaneJogadores = new BorderPane();
-        borderPaneJogadores.setCenter(gridPaneJogadores);
-
-        Scene formEntidadeJogadoresDetalhes = new Scene(borderPaneJogadores,481, 489);
-        Stage entidadeJogadores = new Stage();
-        entidadeJogadores.setScene(formEntidadeJogadoresDetalhes);
-        entidadeJogadores.initModality(Modality.APPLICATION_MODAL);
-        entidadeJogadores.setTitle("Jogadores Detalhes");
-        entidadeJogadores.setResizable(false);
-        entidadeJogadores.show();
-    }
     //endregion
 
     //region Métodos
