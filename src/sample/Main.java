@@ -3,24 +3,17 @@ package sample;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.FileInputStream;
-import java.text.Normalizer;
 import java.util.List;
 
 /**
@@ -71,11 +64,12 @@ public class Main extends Application {
     //endregion
 
     //region Opções do MenuStrip
-    Menu menuFile = new Menu("_Principal");      // Menu Principal
-    Menu menuEdit = new Menu("_About Me");      // Menu About Me
+    Menu menuPrincipal = new Menu("_Principal");      // Menu Principal
+    Menu menuHelp = new Menu("_Help");      // Menu About Me
     MenuItem menuItemFileOpcaoEquipas = new MenuItem("Equipas");
     MenuItem menuItemFileOpcaoJogadores = new MenuItem("Jogadores");
     MenuItem menuItemFileOpcaoTreinadores = new MenuItem("Treinadores");
+    MenuItem menuItemFileAcercaDe = new MenuItem("Acerca De:");
     //endregion
 
     //region TableView e respetivas Colunas
@@ -357,16 +351,22 @@ public class Main extends Application {
                 //endregion
             });
 
+            menuItemFileAcercaDe.setOnAction(e -> {
+                acercaDe();
+            });
+
             //region Adição dos MenuItems ao menuFile.
-            menuFile.getItems().addAll(
+            menuPrincipal.getItems().addAll(
                     menuItemFileOpcaoEquipas,
                     menuItemFileOpcaoJogadores,
                     menuItemFileOpcaoTreinadores);
+
+            menuHelp.getItems().add(menuItemFileAcercaDe);
             //endregion
 
             //region Criação do menuBar e associação dos Menus
             MenuBar menuBar = new MenuBar();
-            menuBar.getMenus().addAll(menuFile, menuEdit);
+            menuBar.getMenus().addAll(menuPrincipal, menuHelp);
             BorderPane rootLayout = new BorderPane();       // Layout Principal
             rootLayout.setTop(menuBar);     // Associar o menu à região TOP do rootLayout
             //endregion
@@ -556,8 +556,35 @@ public class Main extends Application {
 
     public void acercaDe(){
 
+        Image logo = new Image("file:Logo.jpg");
+        ImageView imageViewLogo = new ImageView();
+        imageViewLogo.setImage(logo);
+        imageViewLogo.setPreserveRatio(true);
+        imageViewLogo.setFitHeight(150);
 
-        Scene sceneAcercaDe = new Scene(borderPaneTreinadores,481, 489);
+        Image profilePhoto = new Image("file:Profile.png");
+        ImageView imageViewprofilePhoto = new ImageView();
+        imageViewprofilePhoto.setImage(profilePhoto);
+        imageViewprofilePhoto.setPreserveRatio(true);
+        imageViewprofilePhoto.setFitHeight(300);
+
+        TextArea textoAcercaDe = new TextArea();
+        textoAcercaDe.setMaxSize(515, 180);
+        textoAcercaDe.setEditable(false);
+        textoAcercaDe.setText("Escola Secundária Ferreira Dias \n" +
+                " TGPSI - Curso técnico de gestão e programação de sistemas informáticos \n" +
+                " Trabalho realizado no ambito da disciplina de PSI \n" +
+                " 11º ano - 2ºGI\n" +
+                "\n" +
+                " Realizado por:\n" +
+                " Gonçalo Coelho Nº 7 ");
+
+        HBox HBoxAcercaDe = new HBox();
+        HBoxAcercaDe.setAlignment(Pos.CENTER);
+        HBoxAcercaDe.setSpacing(20);
+        HBoxAcercaDe.getChildren().addAll(imageViewLogo, textoAcercaDe, imageViewprofilePhoto);
+
+        Scene sceneAcercaDe = new Scene(HBoxAcercaDe,1000, 500);
         Stage stageAcercaDe = new Stage();
         stageAcercaDe.setScene(sceneAcercaDe);
         stageAcercaDe.initModality(Modality.APPLICATION_MODAL);
