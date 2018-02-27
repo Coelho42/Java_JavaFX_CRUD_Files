@@ -86,7 +86,11 @@ public class Equipa {
      * @param jogador Recebe o jogador do tipo classe Jogador para ser criada a equipa
      * @param treinador Recebe o treinador do tipo classe Treinador para ser criada
      */
-    public void Add(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {}
+    public void Add(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
+        //textBoxNome.Text.Trim();
+        //textBoxConvocada.Text.Trim(); ;
+        //textBoxLiga.Text.Trim();
+    }
 
     /**
      * Esté é um método que está encarregado da edição das equipas na lista, anteriormente criadas, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.

@@ -92,8 +92,7 @@ public class Main extends Application {
 
     //endregion
 
-    //region strAction e selectedIndex
-    String strAction;
+    //region selectedIndex
     int selectedIndex;
     //endregion
 
@@ -168,12 +167,17 @@ public class Main extends Application {
                 //region Botões Add, Edit e Delete
                 Add.setOnAction(A -> {
                     parteGraficaEquipa();
+                    Custom.setText("Adicionar");
+
+
                 });
                 Edit.setOnAction(A -> {
                     parteGraficaEquipa();
+                    Custom.setText("Edit");
                 });
                 Delete.setOnAction(A -> {
                     parteGraficaEquipa();
+                    Custom.setText("Delete");
                 });
                 Close.setOnAction(A -> {
                 });
