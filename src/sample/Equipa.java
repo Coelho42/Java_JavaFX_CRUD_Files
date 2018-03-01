@@ -80,36 +80,6 @@ public class Equipa {
     }
     //endregion
 
-    //region Métodos
-    /**
-     * Esté é um método que está encarregado da adição das equipas na lista, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
-     * @param jogador Recebe o jogador do tipo classe Jogador para ser criada a equipa
-     * @param treinador Recebe o treinador do tipo classe Treinador para ser criada
-     */
-    public void Add(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
-        //textBoxNome.Text.Trim();
-        //textBoxConvocada.Text.Trim(); ;
-        //textBoxLiga.Text.Trim();
-    }
-
-    /**
-     * Esté é um método que está encarregado da edição das equipas na lista, anteriormente criadas, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
-     * @param jogador Recebe o jogador do tipo classe Jogador para ser editado
-     * @param treinador Recebe o treinador do tipo classe Treinador para ser editado
-     */
-    public void Edit(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
-    }
-
-    /**
-     * Esté é um método que está encarregado de eliminar equipas na lista,anteriormente criadas ou editadas, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
-     * @param jogador Recebe o jogador do tipo classe Jogador
-     * @param treinador Recebe o treinador do tipo classe Treinador
-     */
-    public void Delete(Jogador jogador, Treinador treinador, List<Equipa> listaEquipa) {
-    }
-
-    //endregion
-
     //region Getters & Setters
     public String getNome() {
         return nome;
@@ -119,7 +89,7 @@ public class Equipa {
         this.nome = nome;
     }
 
-    public boolean isConvocada() {
+    public boolean getConvocada() {
         return convocada;
     }
 

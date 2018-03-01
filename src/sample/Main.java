@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,9 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sun.invoke.empty.Empty;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,11 +93,10 @@ public class Main extends Application {
     TableColumn<Treinador, Integer> colunaIdadeTreinadores = new TableColumn<>("Idade");
     TableColumn<Treinador, Double> colunaAlturaTreinadores = new TableColumn<>("Altura");
     TableColumn<Treinador, String> colunaCategoria = new TableColumn<>("Categoria");
-
     //endregion
 
-    //region selectedIndex
-    int selectedIndex;
+    //region Outras Variáveis
+    boolean convocada;
     //endregion
 
     /**
@@ -117,6 +120,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         try {
+            //region Inicialização das listas
+            listaEquipas = new ArrayList<>();
+            listaJogadores = new ArrayList<>();
+            listaTreinadores = new ArrayList<>();
+            //endregion
 
             //region Estilo e fonte das Labels
             labelEquipa.setFont(new Font("Cambria", 40));
@@ -146,41 +154,44 @@ public class Main extends Application {
                 colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("convocada"));
 
                 //Coluna Numero
-                colunaConvocada.setMinWidth(20);
-                colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
+                colunaClassificacao.setMinWidth(20);
+                colunaClassificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
                 //endregion
 
                 //region TableView e ObservableList Stuff
                 // Associação das colunas à TableView
                 tableEquipas.getColumns().addAll(colunaNomeEquipas, colunaConvocada, colunaClassificacao);
-
-                // Inicialização da ObservableList
-                ObservableList<Equipa> listaEquipas = FXCollections.observableArrayList();
-
-                // Carregamento de dados
-                listaEquipas.add(new Equipa("Dude", true, 12));
-
-                // Adição da ObservableList à tableView
-                tableEquipas.setItems(listaEquipas);
                 //endregion
 
                 //region Botões Add, Edit e Delete
                 Add.setOnAction(A -> {
-                    parteGraficaEquipa();
+                    ParteGraficaEquipa();
                     Custom.setText("Adicionar");
-
-
+                    Custom.setOnAction(AE -> {
+                        AddEquipas();
+                        ObservableList<Equipa> observableListEquipas = FXCollections.observableArrayList(listaEquipas);
+                        tableEquipas.setItems(observableListEquipas);    // Adição da ObservableList à tableView
+                    });
                 });
-                Edit.setOnAction(A -> {
-                    parteGraficaEquipa();
-                    Custom.setText("Edit");
+                Edit.setOnAction(E -> {
+                    if (tableEquipas.getSelectionModel().getSelectedItem() != null) {
+                        ParteGraficaEquipa();
+                        Custom.setText("Edit");
+                        Custom.setOnAction(EE -> {
+                            EditEquipas();
+                        });
+                    }
+                    else {
+                    AlertBox.Show("Erro","Selecione uma Equipa antes de tentar editar");
+                    }
                 });
-                Delete.setOnAction(A -> {
-                    parteGraficaEquipa();
+                Delete.setOnAction(DE -> {
+                    ParteGraficaEquipa();
                     Custom.setText("Delete");
                 });
                 Close.setOnAction(A -> {
                 });
+
                 //endregion
 
                 //region Preparação da janela
@@ -243,16 +254,16 @@ public class Main extends Application {
 
                 //region Botões Add, Edit e Delete
                 Add.setOnAction(A -> {
-                    parteGraficaJogador();
+                    ParteGraficaJogador();
                 });
                 Edit.setOnAction(A -> {
-                    parteGraficaJogador();
+                    ParteGraficaJogador();
                 });
                 Delete.setOnAction(A -> {
-                    parteGraficaJogador();
+                    ParteGraficaJogador();
                 });
                 Close.setOnAction(A -> {
-                    parteGraficaJogador();
+                    ParteGraficaJogador();
                 });
                 //endregion
 
@@ -317,13 +328,13 @@ public class Main extends Application {
 
                 //region Botões Add, Edit e Delete
                 Add.setOnAction(A -> {
-                    parteGraficaTreinador();
+                    ParteGraficaTreinador();
                 });
                 Edit.setOnAction(A -> {
-                    parteGraficaTreinador();
+                    ParteGraficaTreinador();
                 });
                 Delete.setOnAction(A -> {
-                    parteGraficaTreinador();
+                    ParteGraficaTreinador();
                 });
                 Close.setOnAction(A -> {
                     primaryStage.show();
@@ -356,7 +367,7 @@ public class Main extends Application {
             });
 
             menuItemFileAcercaDe.setOnAction(e -> {
-                acercaDe();
+                AcercaDe();
             });
 
             //region Adição dos MenuItems ao menuFile.
@@ -389,7 +400,7 @@ public class Main extends Application {
         }
     }
 
-    public void parteGraficaEquipa() {
+    public void ParteGraficaEquipa() {
 
         GridPane gridPaneEquipas = new GridPane();					// layout para a região central
         gridPaneEquipas.setAlignment(Pos.CENTER);
@@ -460,7 +471,7 @@ public class Main extends Application {
         entidadeEquipas.show();
     }
 
-    public void parteGraficaJogador(){
+    public void ParteGraficaJogador(){
 
         GridPane gridPaneJogadores = new GridPane();					// layout para a região central
         gridPaneJogadores.setAlignment(Pos.CENTER);
@@ -509,7 +520,7 @@ public class Main extends Application {
         entidadeJogadores.show();
     }
 
-    public void parteGraficaTreinador(){
+    public void ParteGraficaTreinador(){
 
         GridPane gridPaneTreinadores = new GridPane();					// layout para a região central
         gridPaneTreinadores.setAlignment(Pos.CENTER);
@@ -558,7 +569,7 @@ public class Main extends Application {
         entidadeTreinadores.show();
     }
 
-    public void acercaDe(){
+    public void AcercaDe(){
 
         Image logo = new Image("file:Logo.jpg");
         ImageView imageViewLogo = new ImageView();
@@ -595,5 +606,66 @@ public class Main extends Application {
         stageAcercaDe.setTitle("Acerca De");
         stageAcercaDe.setResizable(false);
         stageAcercaDe.show();
+    }
+
+    /**
+     * Esté é um método que está encarregado da adição das equipas na lista, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
+     */
+    public void AddEquipas() {
+
+        if (textoNomeEquipas.getText().isEmpty() || textoConvocada.getText().isEmpty()|| textoClassificacao.getText().isEmpty())
+        {
+            AlertBox.Show("Erro","A Equipa não pode ser criada, porfavor preencha todos os espaços.");
+        }
+        else
+        {
+            if (textoConvocada.getText().equals("Sim") || textoConvocada.getText().equals("sim"))
+            {
+                if (Valida.number(textoClassificacao.getText()))
+                {
+                    AlertBox.Show("Erro","A classificação só pode ser demonstrada através de múmeros, porfavor introduza novos dados");
+                }
+                else
+                {
+                    convocada = true;
+                    Equipa Equipa = new Equipa(textoNomeEquipas.getText(), convocada, Long.parseLong(textoClassificacao.getText()));
+                    listaEquipas.add(Equipa);
+                }
+            }
+            else if (textoConvocada.getText().equals("Não") || textoConvocada.getText().equals("não"))
+            {
+                if (Valida.number(textoClassificacao.getText()))
+                {
+                    AlertBox.Show("Erro","A classificação só pode ser demonstrada através de múmeros, porfavor introduza novos dados");
+                }
+                else
+                {
+                    convocada = false;
+                    Equipa Equipa = new Equipa(textoNomeEquipas.getText(), convocada, Long.parseLong(textoClassificacao.getText()));
+                    listaEquipas.add(Equipa);
+                }
+            }
+            else
+            {
+                AlertBox.Show("Erro","O que introduziu não se encontra de acordo com os parâmetros que são requeridos ... ");
+            }
+        }
+        textoNomeEquipas.clear();
+        textoConvocada.clear();
+        textoClassificacao.clear();
+    }
+
+    public void EditEquipas() {
+
+        textoNomeEquipas.setText(tableEquipas.getSelectionModel().getSelectedItem().getNome());
+        if (tableEquipas.getSelectionModel().getSelectedItem().getConvocada() == true)
+        {
+            textoConvocada.setText("Sim");
+        }
+        else
+        {
+            textoConvocada.setText("Não");
+        }
+        textoConvocada.setText(String.valueOf(tableEquipas.getSelectionModel().getSelectedItem().getClassificacao()));
     }
 }
