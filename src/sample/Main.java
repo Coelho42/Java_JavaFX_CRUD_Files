@@ -47,6 +47,9 @@ public class Main extends Application {
     Button Close = new Button("Fechar Lista");
     Button Custom = new Button("'Custom'");
     Button Cancel = new Button("Cancel");
+    Button associar = new Button("Associar");
+    Button desassociar = new Button("Desassociar");
+
     //endregion
 
     //region TextFields
@@ -449,20 +452,24 @@ public class Main extends Application {
         tableJogadoresTreinadores.setItems(listaJogadoresTreinadores);
 
         BorderPane borderPaneEquipas = new BorderPane();
-        HBox Butoes = new HBox(40);
-        Butoes.setAlignment(Pos.CENTER);
-        Butoes.setPadding(new Insets(10,20,20,20));
-        Butoes.getChildren().addAll(Custom, Cancel);
+        HBox butoesBaixo = new HBox(40);
+        HBox butoesDireita = new HBox(40);
+        butoesBaixo.setAlignment(Pos.CENTER);
+        butoesBaixo.setPadding(new Insets(10,20,20,20));
+        butoesBaixo.getChildren().addAll(Custom, Cancel);
+        butoesDireita.setAlignment(Pos.CENTER);
+        butoesDireita.setPadding(new Insets(10,20,20,20));
+        butoesDireita.getChildren().addAll(tableJogadoresTreinadores, associar, desassociar);
 
         StackPane stackPaneEquipas = new StackPane();					// Layout para organizar verticalmente os objetos
         stackPaneEquipas.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
         stackPaneEquipas.getChildren().add(borderPaneEquipas);
 
         borderPaneEquipas.setTop(gridPaneEquipas);
-        borderPaneEquipas.setCenter(tableJogadoresTreinadores);
-        borderPaneEquipas.setBottom(Butoes);
+        borderPaneEquipas.setCenter(butoesDireita);
+        borderPaneEquipas.setBottom(butoesBaixo);
 
-        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,481, 489);
+        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,650, 489);
         Stage entidadeEquipas = new Stage();
         entidadeEquipas.setScene(formEntidadeEquipasDetalhes);
         entidadeEquipas.initModality(Modality.APPLICATION_MODAL);
