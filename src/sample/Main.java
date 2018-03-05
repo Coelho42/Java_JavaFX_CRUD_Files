@@ -15,8 +15,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sun.invoke.empty.Empty;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,19 +32,15 @@ public class Main extends Application {
     List<Treinador> listaTreinadores;
     //endregion
 
-    //region Labels
-    Label labelEquipa = new Label("Equipas");
-    Label labelJogador = new Label("Jogadores");
-    Label labelTreinador = new Label("Treinadores");
-    //endregion
-
     //region Botões
-    Button Add = new Button("Adicionar");
-    Button Edit = new Button("Editar");
-    Button Delete = new Button("Eliminar");
-    Button Close = new Button("Fechar Lista");
-    Button Custom = new Button("'Custom'");
-    Button Cancel = new Button("Cancel");
+    Button add = new Button("Adicionar");
+    Button edit = new Button("Editar");
+    Button delete = new Button("Eliminar");
+    Button close = new Button("Fechar Lista");
+    Button custom = new Button("'Custom'");
+    Button cancel = new Button("Cancel");
+    Button associar = new Button("Associar");
+    Button desassociar = new Button("Desassociar");
     //endregion
 
     //region TextFields
@@ -67,56 +61,19 @@ public class Main extends Application {
     TextField textoEquipaTreinador = new TextField();					    // Campo de texto vazio
     //endregion
 
-    //region HBoxes
-    HBox butoesEquipa = new HBox(40);
-    HBox butoesJogador = new HBox(40);
-    HBox butoesTreinador = new HBox(40);
-    //endregion
-
-    // region StackPanes
-    StackPane stackPaneEquipa = new StackPane();
-    StackPane stackPaneJogador = new StackPane();                    // Layout para organizar verticalmente os objetos
-    StackPane stackPaneTreinador = new StackPane();                    // Layout para organizar verticalmente os objetos
-    //endregion
-
-    //region BorderPane
-    BorderPane borderPaneControlo = new BorderPane();       // Layout Principal
-    BorderPane borderPaneEquipa = new BorderPane();
-    BorderPane borderPaneJogador = new BorderPane();
-    BorderPane borderPaneTreinador = new BorderPane();
-    //endregion
-
     //region Scenes & Stages
-    Scene formControlo = new Scene(borderPaneControlo, 800, 600);   // Tratamento da janela
-    Scene formEntidadeEquipa = new Scene(stackPaneEquipa, 726, 561);            // Tratamento da janela
     Stage entidadeEquipa = new Stage();
-    Scene formEntidadeJogador = new Scene(stackPaneJogador, 726, 561);            // Tratamento da janela
+    Stage entidadeEquipasDetalhes = new Stage();
     Stage entidadeJogador = new Stage();
-    Scene formEntidadeTreinador = new Scene(stackPaneTreinador, 726, 561);            // Tratamento da janela
+    Stage entidadeJogadorDetalhes = new Stage();
     Stage entidadeTreinador = new Stage();
-    //endregion
-
-    //region Opções do MenuStrip
-    MenuBar menuBar = new MenuBar();
-    Menu menuPrincipal = new Menu("_Principal");      // Menu Principal
-    Menu menuHelp = new Menu("_Ajuda");      // Menu About Me
-    MenuItem menuItemFileOpcaoEquipa = new MenuItem("Equipas");
-    MenuItem menuItemFileOpcaoJogador = new MenuItem("Jogadores");
-    MenuItem menuItemFileOpcaoTreinador = new MenuItem("Treinadores");
-    MenuItem menuItemFileAcercaDe = new MenuItem("Acerca De:");
+    Stage entidadeTreinadorDetalhes = new Stage();
     //endregion
 
     //region TableView e respetivas Colunas
     TableView<Equipa> tableEquipa = new TableView<>();
-    TableColumn<Equipa, String> colunaNomeEquipa = new TableColumn<>("Nome");
-    TableColumn<Equipa, Boolean> colunaConvocada = new TableColumn<>("Convocada");
-    TableColumn<Equipa, Long> colunaClassificacao = new TableColumn<>("Classificação");
-
+    ObservableList<Equipa> observableListEquipas;
     TableView<Jogador> tableJogador = new TableView<>();
-    TableColumn<Jogador, String> colunaNomeJogador = new TableColumn<>("Nome");
-    TableColumn<Jogador, Integer> colunaIdadeJogador = new TableColumn<>("Idade");
-    TableColumn<Jogador, Double> colunaAlturaJogador = new TableColumn<>("Altura");
-    TableColumn<Jogador, String> colunaPosicao = new TableColumn<>("Posição");
 
     TableView<Treinador> tableTreinador = new TableView<>();
     TableColumn<Treinador, String> colunaNomeTreinador = new TableColumn<>("Nome");
@@ -148,242 +105,28 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         try {
+
             //region Inicialização das listas
             listaEquipas = new ArrayList<>();
             listaJogadores = new ArrayList<>();
             listaTreinadores = new ArrayList<>();
             //endregion
 
-            //region Estilo e fonte das Labels
-            labelEquipa.setFont(new Font("Cambria", 40));
-            labelEquipa.setStyle("-fx-font-weight: bold");
-            labelJogador.setFont(new Font("Cambria", 40));
-            labelJogador.setStyle("-fx-font-weight: bold");
-            labelTreinador.setFont(new Font("Cambria", 40));
-            labelTreinador.setStyle("-fx-font-weight: bold");
+            //region Tamanho dos Butões
+            add.setPrefSize(130, 60);
+            edit.setPrefSize(130, 60);
+            delete.setPrefSize(130, 60);
+            close.setPrefSize(130, 60);
             //endregion
-
-            //region Tamanho dos Botões
-            Add.setPrefSize(130, 60);
-            Edit.setPrefSize(130, 60);
-            Delete.setPrefSize(130, 60);
-            Close.setPrefSize(130, 60);
-            //endregion
-
-            menuItemFileOpcaoEquipa.setOnAction(e -> {
-
-                //region Propriedades das Colunas da TableView Equipas
-                // Coluna Nome
-                colunaNomeEquipa.setMinWidth(20);
-                colunaNomeEquipa.setCellValueFactory(new PropertyValueFactory<>("nome"));
-
-                //Coluna Convocada
-                colunaConvocada.setMinWidth(20);
-                colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("convocada"));
-
-                //Coluna Numero
-                colunaClassificacao.setMinWidth(20);
-                colunaClassificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
-                //endregion
-
-                //region TableView e ObservableList Stuff
-                // Associação das colunas à TableView
-                tableEquipa.getColumns().addAll(colunaNomeEquipa, colunaConvocada, colunaClassificacao);
-                //endregion
-
-                //region Botões Add, Edit e Delete
-                Add.setOnAction(A -> {
-                    ParteGraficaEquipaDetalhes();
-                    Custom.setText("Adicionar");
-                    Custom.setOnAction(AE -> {
-                        AddEquipas();
-                        ObservableList<Equipa> observableListEquipas = FXCollections.observableArrayList(listaEquipas);
-                        tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
-                    });
-                });
-                Edit.setOnAction(E -> {
-                    if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
-                        ParteGraficaEquipaDetalhes();
-                        Custom.setText("Edit");
-                        Custom.setOnAction(EE -> {
-                            EditEquipas();
-                        });
-                    }
-                    else {
-                    AlertBox.Show("Erro","Selecione uma Equipa antes de tentar editar");
-                    }
-                });
-                Delete.setOnAction(DE -> {
-                    ParteGraficaEquipaDetalhes();
-                    Custom.setText("Delete");
-                });
-                Close.setOnAction(A -> {
-                    entidadeEquipa.close();
-                });
-                //endregion
-
-                //region Preparação da janela
-                borderPaneEquipa.setTop(labelEquipa);
-                borderPaneEquipa.setCenter(tableEquipa);
-                borderPaneEquipa.setBottom(butoesEquipa);
-
-                butoesEquipa.setPadding(new Insets(10, 20, 20, 20));
-                butoesEquipa.getChildren().addAll(Add, Edit, Delete, Close);
-
-                stackPaneEquipa.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
-                stackPaneEquipa.getChildren().add(borderPaneEquipa);
-
-                entidadeEquipa.setScene(formEntidadeEquipa);
-                entidadeEquipa.initModality(Modality.APPLICATION_MODAL);
-                entidadeEquipa.setTitle("Equipas");
-                entidadeEquipa.setResizable(false);
-                entidadeEquipa.show();
-                //endregion
-            });
-            menuItemFileOpcaoJogador.setOnAction(e -> {
-
-                //region Propriedades das Colunas da TableView Jogadores
-                // Coluna Nome
-                colunaNomeJogador.setMinWidth(20);
-                colunaNomeJogador.setCellValueFactory(new PropertyValueFactory<>("nome"));
-
-                //Coluna Idade
-                colunaIdadeJogador.setMinWidth(20);
-                colunaIdadeJogador.setCellValueFactory(new PropertyValueFactory<>("idade"));
-
-                //Coluna Altura
-                colunaAlturaJogador.setMinWidth(20);
-                colunaAlturaJogador.setCellValueFactory(new PropertyValueFactory<>("altura"));
-
-                //Coluna Posição
-                colunaPosicao.setMinWidth(20);
-                colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posicao"));
-                //endregion
-
-                //region TableView e ObservableList Stuff
-                // Associar as colunas à tabela
-                tableJogador.getColumns().addAll(colunaNomeJogador, colunaIdadeJogador, colunaAlturaJogador, colunaPosicao);
-
-                // Inicialização da ObservableList
-                ObservableList<Jogador> listaJogadores = FXCollections.observableArrayList();
-
-                // Carregamento de dados
-                listaJogadores.add(new Jogador("Jogador", 8, 4, "seila"));
-
-                // Adição da ObservableList à tableView
-                tableJogador.setItems(listaJogadores);
-                //endregion
-
-                //region Botões Add, Edit e Delete
-                Add.setOnAction(A -> {
-                    ParteGraficaJogadorDetalhes();
-                });
-                Edit.setOnAction(A -> {
-                    ParteGraficaJogadorDetalhes();
-                });
-                Delete.setOnAction(A -> {
-                    ParteGraficaJogadorDetalhes();
-                });
-                Close.setOnAction(A -> {
-                    ParteGraficaJogadorDetalhes();
-                });
-                //endregion
-
-                //region Preparação da janela
-                borderPaneJogador.setTop(labelJogador);
-                borderPaneJogador.setCenter(tableJogador);
-                borderPaneJogador.setBottom(butoesJogador);
-
-                butoesJogador.setPadding(new Insets(10, 20, 20, 20));
-                butoesJogador.getChildren().addAll(Add, Edit, Delete, Close);
-
-                stackPaneJogador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
-                stackPaneJogador.getChildren().add(borderPaneJogador);
-
-                entidadeJogador.setScene(formEntidadeJogador);
-                entidadeJogador.initModality(Modality.APPLICATION_MODAL);
-                entidadeJogador.setTitle("Jogadores");
-                entidadeJogador.setResizable(false);
-                entidadeJogador.show();
-                //endregion
-            });
-            menuItemFileOpcaoTreinador.setOnAction(e -> {
-
-                //region Propriedades das Colunas da TableView Treinadores
-                // Coluna Nome
-                colunaNomeTreinador.setMinWidth(20);
-                colunaNomeTreinador.setCellValueFactory(new PropertyValueFactory<>("nome"));
-
-                //Coluna Idade
-                colunaIdadeTreinador.setMinWidth(20);
-                colunaIdadeTreinador.setCellValueFactory(new PropertyValueFactory<>("idade"));
-
-                //Coluna Altura
-                colunaAlturaTreinador.setMinWidth(20);
-                colunaAlturaTreinador.setCellValueFactory(new PropertyValueFactory<>("altura"));
-
-                //Coluna Posição
-                colunaCategoria.setMinWidth(20);
-                colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-                //endregion
-
-                //region TableView e ObservableList Stuff
-                // Associar as colunas à tabela
-                tableTreinador.getColumns().addAll(colunaNomeTreinador, colunaIdadeTreinador, colunaAlturaTreinador, colunaCategoria);
-
-                // Lista de alunos do tipo ObservableList<Classe>
-                // A inicialização é sempre feita desta forma.
-                ObservableList<Treinador> listaTreinadores = FXCollections.observableArrayList();
-
-                // Carregamento de dados
-                listaTreinadores.add(new Treinador("Treinador", 12, 12, "ABRE"));
-
-                // Adição da ObservableList à tableView
-                tableTreinador.setItems(listaTreinadores);
-                //endregion
-
-                //region Botões Add, Edit e Delete
-                Add.setOnAction(A -> {
-                    ParteGraficaTreinadorDetalhes();
-                });
-                Edit.setOnAction(A -> {
-                    ParteGraficaTreinadorDetalhes();
-                });
-                Delete.setOnAction(A -> {
-                    ParteGraficaTreinadorDetalhes();
-                });
-                Close.setOnAction(A -> {
-                    primaryStage.show();
-                });
-                //endregion
-
-                //region Preparação da janela
-
-                borderPaneTreinador.setTop(labelTreinador);
-                borderPaneTreinador.setCenter(tableTreinador);
-                borderPaneTreinador.setBottom(butoesTreinador);
-
-                butoesTreinador.setPadding(new Insets(10, 20, 20, 20));
-                butoesTreinador.getChildren().addAll(Add, Edit, Delete, Close);
-
-                stackPaneTreinador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
-                stackPaneTreinador.getChildren().add(borderPaneTreinador);
-
-                entidadeTreinador.setScene(formEntidadeTreinador);
-                entidadeTreinador.initModality(Modality.APPLICATION_MODAL);
-                entidadeTreinador.setTitle("Jogadores");
-                entidadeTreinador.setResizable(false);
-                entidadeTreinador.show();
-                //endregion
-            });
-
-            menuItemFileAcercaDe.setOnAction(e -> {
-                AcercaDe();
-            });
 
             //region Adição dos MenuItems ao menuFile.
+            Menu menuPrincipal = new Menu("_Principal");      // Menu Principal
+            Menu menuHelp = new Menu("_Ajuda");      // Menu About Me
+            MenuItem menuItemFileOpcaoEquipa = new MenuItem("Equipas");
+            MenuItem menuItemFileOpcaoJogador = new MenuItem("Jogadores");
+            MenuItem menuItemFileOpcaoTreinador = new MenuItem("Treinadores");
+            MenuItem menuItemFileAcercaDe = new MenuItem("Acerca De:");
             menuPrincipal.getItems().addAll(
                     menuItemFileOpcaoEquipa,
                     menuItemFileOpcaoJogador,
@@ -393,21 +136,170 @@ public class Main extends Application {
             //endregion
 
             //region Criação do menuBar e associação dos Menus
+            MenuBar menuBar = new MenuBar();
             menuBar.getMenus().addAll(menuPrincipal, menuHelp);
-            borderPaneControlo.setTop(menuBar);     // Associar o menu à região TOP do rootLayout
             //endregion
 
             //region Preparação da janela
+            BorderPane borderPaneControlo = new BorderPane();       // Layout Principal
+            borderPaneControlo.setTop(menuBar);     // Associar o menu à região TOP do rootLayout
+            Scene formControlo = new Scene(borderPaneControlo, 800, 600);   // Tratamento da janela
             primaryStage.setScene(formControlo);
             primaryStage.setTitle("Torneio Tartaruga");
             primaryStage.setResizable(false);
             primaryStage.show();
 
+            menuItemFileOpcaoEquipa.setOnAction(e -> {
+                ParteGraficaEquipa();
+                ParteGraficaEquipaDetalhes();
+                //region Botões Add, Edit e Delete
+                add.setOnAction(AE -> {
+                    textoNomeEquipa.clear();
+                    textoConvocada.clear();
+                    textoClassificacao.clear();
+                    entidadeEquipasDetalhes.show();
+                    custom.setText("Adicionar");
+                    custom.setOnAction(CE -> {
+                        AddEquipas();
+                        observableListEquipas = FXCollections.observableArrayList(listaEquipas);
+                        tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
+                        entidadeEquipasDetalhes.close();
+                    });
+                });
+                edit.setOnAction(EE -> {
+                    if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
+                        entidadeEquipasDetalhes.show();
+                        Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
+                        textoNomeEquipa.setText(equipaSelecionada.getNome());
+                        if (equipaSelecionada.getConvocada() == true)
+                        {
+                            textoConvocada.setText("Sim");
+                        }
+                        else
+                        {
+                            textoConvocada.setText("Não");
+                        }
+                        textoClassificacao.setText(String.valueOf(equipaSelecionada.getClassificacao()));
+                        custom.setText("Edit");
+                        custom.setOnAction(CE -> {
+                            EditEquipas();
+                            observableListEquipas = FXCollections.observableArrayList(listaEquipas);
+                            tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
+                            entidadeEquipasDetalhes.close();
+                        });
+                    }
+                    else {
+                        AlertBox.Show("Erro","Selecione uma Equipa antes de tentar editar");
+                    }
+                });
+                delete.setOnAction(DE -> {
+                    entidadeEquipasDetalhes.show();
+                    custom.setText("Delete");
+                    observableListEquipas = FXCollections.observableArrayList(listaEquipas);
+                    tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
+                    entidadeEquipasDetalhes.close();
+                });
+                close.setOnAction(CE -> {
+                    entidadeEquipa.close();
+                });
+                //endregion
+            });
+            menuItemFileOpcaoJogador.setOnAction(e -> {
+                ParteGraficaJogador();
+                ParteGraficaJogadorDetalhes();
+                //region Botões Add, Edit e Delete
+                add.setOnAction(AJ -> {
+                    entidadeJogadorDetalhes.show();
+                });
+                edit.setOnAction(EJ -> {
+                    entidadeJogadorDetalhes.show();
+                });
+                delete.setOnAction(DJ -> {
+                    entidadeJogadorDetalhes.show();
+                });
+                close.setOnAction(CJ -> {
+                    entidadeJogadorDetalhes.close();
+                });
+                //endregion
+            });
+            menuItemFileOpcaoTreinador.setOnAction(e -> {
+                ParteGraficaTreinador();
+                ParteGraficaTreinadorDetalhes();
+                //region Botões Add, Edit e Delete
+                add.setOnAction(A -> {
+                    entidadeTreinadorDetalhes.show();
+                });
+                edit.setOnAction(A -> {
+                    entidadeTreinadorDetalhes.show();
+                });
+                delete.setOnAction(A -> {
+                    entidadeTreinadorDetalhes.show();
+                });
+                close.setOnAction(A -> {
+                    entidadeTreinadorDetalhes.close();
+                });
+                //endregion
+            });
+            menuItemFileAcercaDe.setOnAction(e -> {
+                AcercaDe();
+            });
             //endregion
 
         } catch (Exception e) {
             e.printStackTrace();        // qq exceção é exibida
         }
+    }
+
+    public void ParteGraficaEquipa() {
+        //region Estilo e fonte das Labels
+        Label labelEquipa = new Label("Equipas");
+        labelEquipa.setFont(new Font("Cambria", 40));
+        labelEquipa.setStyle("-fx-font-weight: bold");
+        //endregion
+
+        //region Propriedades das Colunas da TableView Equipas
+        // Coluna Nome
+        TableColumn<Equipa, String> colunaNomeEquipa = new TableColumn<>("Nome");
+        colunaNomeEquipa.setMinWidth(20);
+        colunaNomeEquipa.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+        //Coluna Convocada
+        TableColumn<Equipa, Boolean> colunaConvocada = new TableColumn<>("Convocada");
+        colunaConvocada.setMinWidth(20);
+        colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("convocada"));
+
+        //Coluna Numero
+        TableColumn<Equipa, Long> colunaClassificacao = new TableColumn<>("Classificação");
+        colunaClassificacao.setMinWidth(20);
+        colunaClassificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
+        //endregion
+
+        //region TableView e ObservableList Stuff
+        // Associação das colunas à TableView
+        tableEquipa.getColumns().addAll(colunaNomeEquipa, colunaConvocada, colunaClassificacao);
+        //endregion
+
+        //region Preparação da janela
+        HBox butoesEquipa = new HBox(40);
+        BorderPane borderPaneEquipa = new BorderPane();
+        borderPaneEquipa.setTop(labelEquipa);
+        borderPaneEquipa.setCenter(tableEquipa);
+        borderPaneEquipa.setBottom(butoesEquipa);
+
+        butoesEquipa.setPadding(new Insets(10, 20, 20, 20));
+        butoesEquipa.getChildren().addAll(add, edit, delete, close);
+
+        StackPane stackPaneEquipa = new StackPane();
+        stackPaneEquipa.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
+        stackPaneEquipa.getChildren().add(borderPaneEquipa);
+
+        Scene formEntidadeEquipa = new Scene(stackPaneEquipa, 726, 561);            // Tratamento da janela
+        entidadeEquipa.setScene(formEntidadeEquipa);
+        entidadeEquipa.initModality(Modality.APPLICATION_MODAL);
+        entidadeEquipa.setTitle("Equipas");
+        entidadeEquipa.setResizable(false);
+        entidadeEquipa.show();
+        //endregion
     }
 
     public void ParteGraficaEquipaDetalhes() {
@@ -438,13 +330,13 @@ public class Main extends Application {
 
         // Coluna Jogador
         TableColumn<Equipa, String> colunaNomeJogadoresDetalhes = new TableColumn<>("Jogadores");
-        colunaNomeJogador.setMinWidth(20);
-        colunaNomeJogador.setCellValueFactory(new PropertyValueFactory<>("jogadores"));
+        colunaNomeJogadoresDetalhes.setMinWidth(20);
+        colunaNomeJogadoresDetalhes.setCellValueFactory(new PropertyValueFactory<>("jogadores"));
 
         // Coluna Treinador
         TableColumn<Equipa, String> colunaNomeTreinadoresDetalhes = new TableColumn<>("Treinadores");
-        colunaNomeTreinador.setMinWidth(20);
-        colunaNomeTreinador.setCellValueFactory(new PropertyValueFactory<>("treinadores"));
+        colunaNomeTreinadoresDetalhes.setMinWidth(20);
+        colunaNomeTreinadoresDetalhes.setCellValueFactory(new PropertyValueFactory<>("treinadores"));
 
         // Associar as colunas à tabela
         tableJogadoresTreinadores.getColumns().addAll(colunaNomeJogadoresDetalhes, colunaNomeTreinadoresDetalhes);
@@ -459,26 +351,94 @@ public class Main extends Application {
         tableJogadoresTreinadores.setItems(listaJogadoresTreinadores);
 
         BorderPane borderPaneEquipas = new BorderPane();
-        HBox Butoes = new HBox(40);
-        Butoes.setAlignment(Pos.CENTER);
-        Butoes.setPadding(new Insets(10,20,20,20));
-        Butoes.getChildren().addAll(Custom, Cancel);
+        HBox butoesBaixo = new HBox(40);
+        HBox butoesDireita = new HBox(40);
+        butoesBaixo.setAlignment(Pos.CENTER);
+        butoesBaixo.setPadding(new Insets(10,20,20,20));
+        butoesBaixo.getChildren().addAll(custom, cancel);
+        butoesDireita.setAlignment(Pos.CENTER);
+        butoesDireita.setPadding(new Insets(10,20,20,20));
+        butoesDireita.getChildren().addAll(tableJogadoresTreinadores, associar, desassociar);
 
         StackPane stackPaneEquipas = new StackPane();					// Layout para organizar verticalmente os objetos
         stackPaneEquipas.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
         stackPaneEquipas.getChildren().add(borderPaneEquipas);
 
         borderPaneEquipas.setTop(gridPaneEquipas);
-        borderPaneEquipas.setCenter(tableJogadoresTreinadores);
-        borderPaneEquipas.setBottom(Butoes);
+        borderPaneEquipas.setCenter(butoesDireita);
+        borderPaneEquipas.setBottom(butoesBaixo);
 
-        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,481, 489);
-        Stage entidadeEquipas = new Stage();
-        entidadeEquipas.setScene(formEntidadeEquipasDetalhes);
-        entidadeEquipas.initModality(Modality.APPLICATION_MODAL);
-        entidadeEquipas.setTitle("Equipas Detalhes");
-        entidadeEquipas.setResizable(false);
-        entidadeEquipas.show();
+        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,650, 489);
+        entidadeEquipasDetalhes.setScene(formEntidadeEquipasDetalhes);
+        entidadeEquipasDetalhes.initModality(Modality.APPLICATION_MODAL);
+        entidadeEquipasDetalhes.setTitle("Equipas Detalhes");
+        entidadeEquipasDetalhes.setResizable(false);
+    }
+
+    public void ParteGraficaJogador(){
+        //region Estilo e fonte das Labels
+        Label labelJogador = new Label("Jogadores");
+        labelJogador.setFont(new Font("Cambria", 40));
+        labelJogador.setStyle("-fx-font-weight: bold");
+        //endregion
+
+        //region Propriedades das Colunas da TableView Jogadores
+        // Coluna Nome
+        TableColumn<Jogador, String> colunaNomeJogador = new TableColumn<>("Nome");
+        colunaNomeJogador.setMinWidth(20);
+        colunaNomeJogador.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+        //Coluna Idade
+        TableColumn<Jogador, Integer> colunaIdadeJogador = new TableColumn<>("Idade");
+        colunaIdadeJogador.setMinWidth(20);
+        colunaIdadeJogador.setCellValueFactory(new PropertyValueFactory<>("idade"));
+
+        //Coluna Altura
+        TableColumn<Jogador, Double> colunaAlturaJogador = new TableColumn<>("Altura");
+        colunaAlturaJogador.setMinWidth(20);
+        colunaAlturaJogador.setCellValueFactory(new PropertyValueFactory<>("altura"));
+
+        //Coluna Posição
+        TableColumn<Jogador, String> colunaPosicao = new TableColumn<>("Posição");
+        colunaPosicao.setMinWidth(20);
+        colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posicao"));
+        //endregion
+
+        //region TableView e ObservableList Stuff
+        // Associar as colunas à tabela
+        tableJogador.getColumns().addAll(colunaNomeJogador, colunaIdadeJogador, colunaAlturaJogador, colunaPosicao);
+
+        // Inicialização da ObservableList
+        ObservableList<Jogador> listaJogadores = FXCollections.observableArrayList();
+
+        // Carregamento de dados
+        listaJogadores.add(new Jogador("Jogador", 8, 4, "seila"));
+
+        // Adição da ObservableList à tableView
+        tableJogador.setItems(listaJogadores);
+        //endregion
+
+        //region Preparação da janela
+        HBox butoesJogador = new HBox(40);
+        BorderPane borderPaneJogador = new BorderPane();
+        borderPaneJogador.setTop(labelJogador);
+        borderPaneJogador.setCenter(tableJogador);
+        borderPaneJogador.setBottom(butoesJogador);
+
+        butoesJogador.setPadding(new Insets(10, 20, 20, 20));
+        butoesJogador.getChildren().addAll(add, edit, delete, close);
+
+        StackPane stackPaneJogador = new StackPane();
+        stackPaneJogador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
+        stackPaneJogador.getChildren().add(borderPaneJogador);
+
+        Scene formEntidadeJogador = new Scene(stackPaneJogador, 726, 561);            // Tratamento da janela
+        entidadeJogador.setScene(formEntidadeJogador);
+        entidadeJogador.initModality(Modality.APPLICATION_MODAL);
+        entidadeJogador.setTitle("Jogadores");
+        entidadeJogador.setResizable(false);
+        entidadeJogador.show();
+        //endregion
     }
 
     public void ParteGraficaJogadorDetalhes(){
@@ -515,19 +475,80 @@ public class Main extends Application {
         gridPaneJogadores.add(textoEquipaJogador, 1, 4);		// célula: col 1, linha 1
 
         HBox Butoes = new HBox(40);
-        Butoes.getChildren().addAll(Custom, Cancel);
+        Butoes.getChildren().addAll(custom, cancel);
         gridPaneJogadores.add(Butoes,1,5);
 
         BorderPane borderPaneJogadores = new BorderPane();
         borderPaneJogadores.setCenter(gridPaneJogadores);
 
         Scene formEntidadeJogadoresDetalhes = new Scene(borderPaneJogadores,481, 489);
-        Stage entidadeJogadores = new Stage();
-        entidadeJogadores.setScene(formEntidadeJogadoresDetalhes);
-        entidadeJogadores.initModality(Modality.APPLICATION_MODAL);
-        entidadeJogadores.setTitle("Jogadores Detalhes");
-        entidadeJogadores.setResizable(false);
-        entidadeJogadores.show();
+        entidadeJogadorDetalhes.setScene(formEntidadeJogadoresDetalhes);
+        entidadeJogadorDetalhes.initModality(Modality.APPLICATION_MODAL);
+        entidadeJogadorDetalhes.setTitle("Jogadores Detalhes");
+        entidadeJogadorDetalhes.setResizable(false);
+    }
+
+    public void ParteGraficaTreinador(){
+        //region Estilo e fonte das Labels
+        Label labelTreinador = new Label("Treinadores");
+        labelTreinador.setFont(new Font("Cambria", 40));
+        labelTreinador.setStyle("-fx-font-weight: bold");
+        //endregion
+
+        //region Propriedades das Colunas da TableView Treinadores
+        // Coluna Nome
+        colunaNomeTreinador.setMinWidth(20);
+        colunaNomeTreinador.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+        //Coluna Idade
+        colunaIdadeTreinador.setMinWidth(20);
+        colunaIdadeTreinador.setCellValueFactory(new PropertyValueFactory<>("idade"));
+
+        //Coluna Altura
+        colunaAlturaTreinador.setMinWidth(20);
+        colunaAlturaTreinador.setCellValueFactory(new PropertyValueFactory<>("altura"));
+
+        //Coluna Posição
+        colunaCategoria.setMinWidth(20);
+        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        //endregion
+
+        //region TableView e ObservableList Stuff
+        // Associar as colunas à tabela
+        tableTreinador.getColumns().addAll(colunaNomeTreinador, colunaIdadeTreinador, colunaAlturaTreinador, colunaCategoria);
+
+        // Lista de alunos do tipo ObservableList<Classe>
+        // A inicialização é sempre feita desta forma.
+        ObservableList<Treinador> listaTreinadores = FXCollections.observableArrayList();
+
+        // Carregamento de dados
+        listaTreinadores.add(new Treinador("Treinador", 12, 12, "ABRE"));
+
+        // Adição da ObservableList à tableView
+        tableTreinador.setItems(listaTreinadores);
+        //endregion
+
+        //region Preparação da janela
+        HBox butoesTreinador = new HBox(40);
+        BorderPane borderPaneTreinador = new BorderPane();
+        borderPaneTreinador.setTop(labelTreinador);
+        borderPaneTreinador.setCenter(tableTreinador);
+        borderPaneTreinador.setBottom(butoesTreinador);
+
+        butoesTreinador.setPadding(new Insets(10, 20, 20, 20));
+        butoesTreinador.getChildren().addAll(add, edit, delete, close);
+
+        StackPane stackPaneTreinador = new StackPane();
+        stackPaneTreinador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
+        stackPaneTreinador.getChildren().add(borderPaneTreinador);
+
+        Scene formEntidadeTreinador = new Scene(stackPaneTreinador, 726, 561);            // Tratamento da janela
+        entidadeTreinador.setScene(formEntidadeTreinador);
+        entidadeTreinador.initModality(Modality.APPLICATION_MODAL);
+        entidadeTreinador.setTitle("Jogadores");
+        entidadeTreinador.setResizable(false);
+        entidadeTreinador.show();
+        //endregion
     }
 
     public void ParteGraficaTreinadorDetalhes(){
@@ -564,19 +585,17 @@ public class Main extends Application {
         gridPaneTreinadores.add(textoEquipaTreinador, 1, 4);		// célula: col 1, linha 1
 
         HBox Butoes = new HBox(40);
-        Butoes.getChildren().addAll(Custom, Cancel);
+        Butoes.getChildren().addAll(custom, cancel);
         gridPaneTreinadores.add(Butoes,1,5);
 
         BorderPane borderPaneTreinadores = new BorderPane();
         borderPaneTreinadores.setCenter(gridPaneTreinadores);
 
         Scene formEntidadeTreinadoresDetalhes = new Scene(borderPaneTreinadores,481, 489);
-        Stage entidadeTreinadores = new Stage();
-        entidadeTreinadores.setScene(formEntidadeTreinadoresDetalhes);
-        entidadeTreinadores.initModality(Modality.APPLICATION_MODAL);
-        entidadeTreinadores.setTitle("Treinadores Detalhes");
-        entidadeTreinadores.setResizable(false);
-        entidadeTreinadores.show();
+        entidadeTreinadorDetalhes.setScene(formEntidadeTreinadoresDetalhes);
+        entidadeTreinadorDetalhes.initModality(Modality.APPLICATION_MODAL);
+        entidadeTreinadorDetalhes.setTitle("Treinadores Detalhes");
+        entidadeTreinadorDetalhes.setResizable(false);
     }
 
     public void AcercaDe(){
@@ -638,8 +657,8 @@ public class Main extends Application {
                 else
                 {
                     convocada = true;
-                    Equipa Equipa = new Equipa(textoNomeEquipa.getText(), convocada, Long.parseLong(textoClassificacao.getText()));
-                    listaEquipas.add(Equipa);
+                    Equipa equipa = new Equipa(textoNomeEquipa.getText(), convocada, Long.parseLong(textoClassificacao.getText()));
+                    listaEquipas.add(equipa);
                 }
             }
             else if (textoConvocada.getText().equals("Não") || textoConvocada.getText().equals("não"))
@@ -651,8 +670,8 @@ public class Main extends Application {
                 else
                 {
                     convocada = false;
-                    Equipa Equipa = new Equipa(textoNomeEquipa.getText(), convocada, Long.parseLong(textoClassificacao.getText()));
-                    listaEquipas.add(Equipa);
+                    Equipa equipa = new Equipa(textoNomeEquipa.getText(), convocada, Long.parseLong(textoClassificacao.getText()));
+                    listaEquipas.add(equipa);
                 }
             }
             else
@@ -660,22 +679,50 @@ public class Main extends Application {
                 AlertBox.Show("Erro","O que introduziu não se encontra de acordo com os parâmetros que são requeridos ... ");
             }
         }
-        textoNomeEquipa.clear();
-        textoConvocada.clear();
-        textoClassificacao.clear();
     }
 
     public void EditEquipas() {
 
-        textoNomeEquipa.setText(tableEquipa.getSelectionModel().getSelectedItem().getNome());
-        if (tableEquipa.getSelectionModel().getSelectedItem().getConvocada() == true)
+        if (textoNomeEquipa.getText().isEmpty() || textoConvocada.getText().isEmpty()|| textoClassificacao.getText().isEmpty())
         {
-            textoConvocada.setText("Sim");
+            AlertBox.Show("Erro","A Equipa não pode ser criada, porfavor preencha todos os espaços.");
         }
         else
         {
-            textoConvocada.setText("Não");
+            if (textoConvocada.getText().equals("Sim") || textoConvocada.getText().equals("sim"))
+            {
+                if (Valida.number(textoClassificacao.getText()))
+                {
+                    AlertBox.Show("Erro","A classificação só pode ser demonstrada através de múmeros, porfavor introduza novos dados");
+                }
+                else
+                {
+                    convocada = true;
+                    Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem() ;
+                    equipaSelecionada.setNome(textoNomeEquipa.getText());
+                    equipaSelecionada.setConvocada(convocada);
+                    equipaSelecionada.setClassificacao(Long.parseLong(textoClassificacao.getText()));
+                }
+            }
+            else if (textoConvocada.getText().equals("Não") || textoConvocada.getText().equals("não"))
+            {
+                if (Valida.number(textoClassificacao.getText()))
+                {
+                    AlertBox.Show("Erro","A classificação só pode ser demonstrada através de múmeros, porfavor introduza novos dados");
+                }
+                else
+                {
+                    convocada = false;
+                    Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
+                    equipaSelecionada.setNome(textoNomeEquipa.getText());
+                    equipaSelecionada.setConvocada(convocada);
+                    equipaSelecionada.setClassificacao(Long.parseLong(textoClassificacao.getText()));
+                }
+            }
+            else
+            {
+                AlertBox.Show("Erro","O que introduziu não se encontra de acordo com os parâmetros que são requeridos ... ");
+            }
         }
-        textoConvocada.setText(String.valueOf(tableEquipa.getSelectionModel().getSelectedItem().getClassificacao()));
     }
 }
