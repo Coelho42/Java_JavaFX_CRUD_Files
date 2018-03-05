@@ -41,6 +41,7 @@ public class Main extends Application {
     Button cancel = new Button("Cancel");
     Button associar = new Button("Associar");
     Button desassociar = new Button("Desassociar");
+    Button cemRegistos = new Button("100 Registos");
     //endregion
 
     //region TextFields
@@ -117,6 +118,7 @@ public class Main extends Application {
             add.setPrefSize(130, 60);
             edit.setPrefSize(130, 60);
             delete.setPrefSize(130, 60);
+            cemRegistos.setPrefSize(130,60);
             close.setPrefSize(130, 60);
             //endregion
 
@@ -198,6 +200,14 @@ public class Main extends Application {
                     observableListEquipas = FXCollections.observableArrayList(listaEquipas);
                     tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
                     entidadeEquipasDetalhes.close();
+                });
+                cemRegistos.setOnAction(CR -> {
+                    for(int i = 0; i <= 99; i++)
+                    {
+                        listaEquipas.add(new Equipa("Dude", true, 12));
+                    }
+                    observableListEquipas = FXCollections.observableArrayList(listaEquipas);
+                    tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
                 });
                 close.setOnAction(CE -> {
                     entidadeEquipa.close();
@@ -287,7 +297,7 @@ public class Main extends Application {
         borderPaneEquipa.setBottom(butoesEquipa);
 
         butoesEquipa.setPadding(new Insets(10, 20, 20, 20));
-        butoesEquipa.getChildren().addAll(add, edit, delete, close);
+        butoesEquipa.getChildren().addAll(add, edit, delete, cemRegistos, close);
 
         StackPane stackPaneEquipa = new StackPane();
         stackPaneEquipa.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
@@ -426,7 +436,7 @@ public class Main extends Application {
         borderPaneJogador.setBottom(butoesJogador);
 
         butoesJogador.setPadding(new Insets(10, 20, 20, 20));
-        butoesJogador.getChildren().addAll(add, edit, delete, close);
+        butoesJogador.getChildren().addAll(add, edit, delete, cemRegistos, close);
 
         StackPane stackPaneJogador = new StackPane();
         stackPaneJogador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
@@ -536,7 +546,7 @@ public class Main extends Application {
         borderPaneTreinador.setBottom(butoesTreinador);
 
         butoesTreinador.setPadding(new Insets(10, 20, 20, 20));
-        butoesTreinador.getChildren().addAll(add, edit, delete, close);
+        butoesTreinador.getChildren().addAll(add, edit, delete, cemRegistos, close);
 
         StackPane stackPaneTreinador = new StackPane();
         stackPaneTreinador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
