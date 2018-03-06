@@ -45,7 +45,7 @@ public class Jogador extends Pessoa {
         this.setNome(nome);
         this.setIdade(idade);
         this.setAltura(altura);
-        this.setPosicao(posicao);
+        this.posicao = posicao;
     }
 
     /**
@@ -60,7 +60,7 @@ public class Jogador extends Pessoa {
         this.setNome(nome);
         this.setIdade(idade);
         this.setAltura(altura);
-        this.setPosicao(posicao);
+        this.posicao = posicao;
         this.equipa = equipa;
     }
     //endregion
