@@ -141,26 +141,6 @@ public class Main extends Application {
             ParteGraficaTreinadorDetalhes();
             //endregion
 
-            //region Tamanho dos Butões
-            addEquipa.setPrefSize(130, 60);
-            editEquipa.setPrefSize(130, 60);
-            deleteEquipa.setPrefSize(130, 60);
-            cemRegistosEquipa.setPrefSize(130,60);
-            closeEquipa.setPrefSize(130, 60);
-
-            addJogador.setPrefSize(130, 60);
-            editJogador.setPrefSize(130, 60);
-            deleteJogador.setPrefSize(130, 60);
-            cemRegistosJogador.setPrefSize(130,60);
-            closeJogador.setPrefSize(130, 60);
-
-            addTreinador.setPrefSize(130, 60);
-            editTreinador.setPrefSize(130, 60);
-            deleteTreinador.setPrefSize(130, 60);
-            cemRegistosTreinador.setPrefSize(130,60);
-            closeTreinador.setPrefSize(130, 60);
-            //endregion
-
             //region Adição dos MenuItems ao menuFile.
             Menu menuPrincipal = new Menu("_Principal");      // Menu Principal
             Menu menuHelp = new Menu("_Ajuda");      // Menu About Me
@@ -325,6 +305,15 @@ public class Main extends Application {
     }
 
     public void ParteGraficaEquipa() {
+
+        //region Tamanho dos Butões
+        addEquipa.setPrefSize(130, 60);
+        editEquipa.setPrefSize(130, 60);
+        deleteEquipa.setPrefSize(130, 60);
+        cemRegistosEquipa.setPrefSize(130,60);
+        closeEquipa.setPrefSize(130, 60);
+        //endregion
+
         //region Estilo e fonte das Labels
         Label labelEquipa = new Label("Equipas");
         labelEquipa.setFont(new Font("Cambria", 40));
@@ -450,6 +439,15 @@ public class Main extends Application {
     }
 
     public void ParteGraficaJogador(){
+
+        //region Tamanho dos Butões
+        addJogador.setPrefSize(130, 60);
+        editJogador.setPrefSize(130, 60);
+        deleteJogador.setPrefSize(130, 60);
+        cemRegistosJogador.setPrefSize(130,60);
+        closeJogador.setPrefSize(130, 60);
+        //endregion
+
         //region Estilo e fonte das Labels
         Label labelJogador = new Label("Jogadores");
         labelJogador.setFont(new Font("Cambria", 40));
@@ -562,6 +560,15 @@ public class Main extends Application {
     }
 
     public void ParteGraficaTreinador(){
+
+        //region Tamanho dos Butões
+        addTreinador.setPrefSize(130, 60);
+        editTreinador.setPrefSize(130, 60);
+        deleteTreinador.setPrefSize(130, 60);
+        cemRegistosTreinador.setPrefSize(130,60);
+        closeTreinador.setPrefSize(130, 60);
+        //endregion
+
         //region Estilo e fonte das Labels
         Label labelTreinador = new Label("Treinadores");
         labelTreinador.setFont(new Font("Cambria", 40));
