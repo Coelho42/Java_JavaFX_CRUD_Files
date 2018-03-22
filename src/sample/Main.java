@@ -95,10 +95,6 @@ public class Main extends Application {
     TableView<Treinador> tableTreinador = new TableView<>();
     ObservableList<Treinador> observableListTreinadores;
 
-    TableColumn<Treinador, String> colunaNomeTreinador = new TableColumn<>("Nome");
-    TableColumn<Treinador, Integer> colunaIdadeTreinador = new TableColumn<>("Idade");
-    TableColumn<Treinador, Double> colunaAlturaTreinador = new TableColumn<>("Altura");
-    TableColumn<Treinador, String> colunaCategoria = new TableColumn<>("Categoria");
     //endregion
 
     //region Outras Variáveis
@@ -248,10 +244,28 @@ public class Main extends Application {
                 entidadeJogador.show();
                 //region Botões Add, Edit e Delete
                 addJogador.setOnAction(AJ -> {
+                    textoNomeJogador.clear();
+                    textoIdadeJogador.clear();
+                    textoAlturaJogador.clear();
                     entidadeJogadorDetalhes.show();
+                    customJogador.setText("Adicionar");
+                    customJogador.setOnAction(CE -> {
+                        AddEquipas();
+                    });
                 });
                 editJogador.setOnAction(EJ -> {
-                    entidadeJogadorDetalhes.show();
+                    if (tableJogador.getSelectionModel().getSelectedItem() != null) {
+                        entidadeJogadorDetalhes.show();
+                        Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
+                        textoNomeJogador.setText(jogadorSelecionado.getNome());
+                        textoIdadeJogador.setText(String.valueOf(jogadorSelecionado.getIdade()));
+                        textoAlturaJogador.setText(String.valueOf(jogadorSelecionado.getAltura()));
+                        textoPosicao.setText(jogadorSelecionado.getPosicao());
+                        customEquipa.setText("Edit");
+                        customEquipa.setOnAction(CE -> {
+                            EditEquipas();
+                        });
+                    }
                 });
                 deleteJogador.setOnAction(DJ -> {
                     entidadeJogadorDetalhes.show();
@@ -361,7 +375,6 @@ public class Main extends Application {
         entidadeEquipa.initModality(Modality.APPLICATION_MODAL);
         entidadeEquipa.setTitle("Equipas");
         entidadeEquipa.setResizable(false);
-        entidadeEquipa.show();
         //endregion
     }
 
@@ -403,15 +416,6 @@ public class Main extends Application {
 
         // Associar as colunas à tabela
         tableJogadoresTreinadores.getColumns().addAll(colunaNomeJogadoresDetalhes, colunaNomeTreinadoresDetalhes);
-
-        // A inicialização é sempre feita desta forma.
-        ObservableList<Equipa> listaJogadoresTreinadores = FXCollections.observableArrayList();
-
-        // Carregamento de dados
-        listaJogadoresTreinadores.add(new Equipa("Dude", true, 12));
-
-        // Adição da ObservableList à tableView
-        tableJogadoresTreinadores.setItems(listaJogadoresTreinadores);
 
         BorderPane borderPaneEquipas = new BorderPane();
         HBox butoesBaixo = new HBox(40);
@@ -474,21 +478,15 @@ public class Main extends Application {
         TableColumn<Jogador, String> colunaPosicao = new TableColumn<>("Posição");
         colunaPosicao.setMinWidth(20);
         colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posicao"));
+
+        //Coluna Equipa
+        TableColumn<Jogador, String> colunaEquipa = new TableColumn<>("Equipa");
+        colunaEquipa.setMinWidth(20);
+        colunaEquipa.setCellValueFactory(new PropertyValueFactory<>("equipa"));
         //endregion
 
-        //region TableView e ObservableList Stuff
         // Associar as colunas à tabela
         tableJogador.getColumns().addAll(colunaNomeJogador, colunaIdadeJogador, colunaAlturaJogador, colunaPosicao);
-
-        // Inicialização da ObservableList
-        ObservableList<Jogador> listaJogadores = FXCollections.observableArrayList();
-
-        // Carregamento de dados
-        listaJogadores.add(new Jogador("Jogador", 8, 4, "seila"));
-
-        // Adição da ObservableList à tableView
-        tableJogador.setItems(listaJogadores);
-        //endregion
 
         //region Preparação da janela
         HBox butoesJogador = new HBox(40);
@@ -546,7 +544,7 @@ public class Main extends Application {
         gridPaneJogadores.add(textoEquipaJogador, 1, 4);		// célula: col 1, linha 1
 
         HBox Butoes = new HBox(40);
-        Butoes.getChildren().addAll(customJogador, customJogador);
+        Butoes.getChildren().addAll(customJogador, cancelJogador);
         gridPaneJogadores.add(Butoes,1,5);
 
         BorderPane borderPaneJogadores = new BorderPane();
@@ -577,35 +575,34 @@ public class Main extends Application {
 
         //region Propriedades das Colunas da TableView Treinadores
         // Coluna Nome
+        TableColumn<Treinador, String> colunaNomeTreinador = new TableColumn<>("Nome");
         colunaNomeTreinador.setMinWidth(20);
         colunaNomeTreinador.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         //Coluna Idade
+        TableColumn<Treinador, Integer> colunaIdadeTreinador = new TableColumn<>("Idade");
         colunaIdadeTreinador.setMinWidth(20);
         colunaIdadeTreinador.setCellValueFactory(new PropertyValueFactory<>("idade"));
 
         //Coluna Altura
+        TableColumn<Treinador, Double> colunaAlturaTreinador = new TableColumn<>("Altura");
         colunaAlturaTreinador.setMinWidth(20);
         colunaAlturaTreinador.setCellValueFactory(new PropertyValueFactory<>("altura"));
 
         //Coluna Posição
+        TableColumn<Treinador, String> colunaCategoria = new TableColumn<>("Categoria");
         colunaCategoria.setMinWidth(20);
         colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+
+        //Coluna Equipa
+        TableColumn<Treinador, String> colunaEquipa = new TableColumn<>("Equipa");
+        colunaEquipa.setMinWidth(20);
+        colunaEquipa.setCellValueFactory(new PropertyValueFactory<>("equipa"));
         //endregion
 
         //region TableView e ObservableList Stuff
         // Associar as colunas à tabela
         tableTreinador.getColumns().addAll(colunaNomeTreinador, colunaIdadeTreinador, colunaAlturaTreinador, colunaCategoria);
-
-        // Lista de alunos do tipo ObservableList<Classe>
-        // A inicialização é sempre feita desta forma.
-        ObservableList<Treinador> listaTreinadores = FXCollections.observableArrayList();
-
-        // Carregamento de dados
-        listaTreinadores.add(new Treinador("Treinador", 12, 12, "ABRE"));
-
-        // Adição da ObservableList à tableView
-        tableTreinador.setItems(listaTreinadores);
         //endregion
 
         //region Preparação da janela
@@ -625,7 +622,7 @@ public class Main extends Application {
         Scene formEntidadeTreinador = new Scene(stackPaneTreinador, 726, 561);            // Tratamento da janela
         entidadeTreinador.setScene(formEntidadeTreinador);
         entidadeTreinador.initModality(Modality.APPLICATION_MODAL);
-        entidadeTreinador.setTitle("Jogadores");
+        entidadeTreinador.setTitle("Treinadores");
         entidadeTreinador.setResizable(false);
         //endregion
     }
