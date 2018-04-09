@@ -30,7 +30,6 @@ public class Jogador extends Pessoa {
 
     // Atributo de Relação
     private Equipa equipa;
-
     //endregion
 
     //region Construtores

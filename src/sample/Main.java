@@ -42,6 +42,8 @@ public class Main extends Application {
     Button cancelEquipa = new Button("Cancel");
     Button associarEquipa = new Button("Associar");
     Button desassociarEquipa = new Button("Desassociar");
+    Button associar = new Button("Associar");
+    Button cancelAssociar = new Button ("Cancelar");
 
     Button addJogador = new Button("Adicionar");
     Button editJogador = new Button("Editar");
@@ -85,6 +87,7 @@ public class Main extends Application {
     Stage entidadeJogadorDetalhes = new Stage();
     Stage entidadeTreinador = new Stage();
     Stage entidadeTreinadorDetalhes = new Stage();
+    Stage entidadeAssociarEquipa = new Stage();
     //endregion
 
     //region TableView e respetivas Colunas
@@ -94,7 +97,6 @@ public class Main extends Application {
     ObservableList<Jogador> observableListJogadores;
     TableView<Treinador> tableTreinador = new TableView<>();
     ObservableList<Treinador> observableListTreinadores;
-
     //endregion
 
     //region Outras Variáveis
@@ -135,6 +137,7 @@ public class Main extends Application {
             ParteGraficaJogadorDetalhes();
             ParteGraficaTreinador();
             ParteGraficaTreinadorDetalhes();
+            ParteGraficaAssociarEquipa();
             //endregion
 
             //region Adição dos MenuItems ao menuFile.
@@ -170,6 +173,9 @@ public class Main extends Application {
                 entidadeEquipa.show();
                 //region Botões Add, Edit e Delete
                 addEquipa.setOnAction(AE -> {
+                    textoNomeEquipa.setEditable(true);
+                    textoConvocada.setEditable(true);
+                    textoClassificacao.setEditable(true);
                     textoNomeEquipa.clear();
                     textoConvocada.clear();
                     textoClassificacao.clear();
@@ -178,8 +184,17 @@ public class Main extends Application {
                     customEquipa.setOnAction(CE -> {
                         AddEquipas();
                     });
+                    associarEquipa.setOnAction(aE -> {
+                        entidadeAssociarEquipa.show();
+                    });
+                    cancelEquipa.setOnAction(Cancel -> {
+                        entidadeEquipasDetalhes.close();
+                    });
                 });
                 editEquipa.setOnAction(EE -> {
+                    textoNomeEquipa.setEditable(true);
+                    textoConvocada.setEditable(true);
+                    textoClassificacao.setEditable(true);
                     if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
                         entidadeEquipasDetalhes.show();
                         Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
@@ -194,6 +209,9 @@ public class Main extends Application {
                         customEquipa.setText("Edit");
                         customEquipa.setOnAction(CE -> {
                             EditEquipas();
+                        });
+                        cancelEquipa.setOnAction(Cancel -> {
+                            entidadeEquipasDetalhes.close();
                         });
                     }
                     else {
@@ -244,16 +262,28 @@ public class Main extends Application {
                 entidadeJogador.show();
                 //region Botões Add, Edit e Delete
                 addJogador.setOnAction(AJ -> {
+                    textoNomeJogador.setEditable(true);
+                    textoIdadeJogador.setEditable(true);
+                    textoAlturaJogador.setEditable(true);
+                    textoPosicao.setEditable(true);
                     textoNomeJogador.clear();
                     textoIdadeJogador.clear();
                     textoAlturaJogador.clear();
+                    textoPosicao.clear();
                     entidadeJogadorDetalhes.show();
                     customJogador.setText("Adicionar");
                     customJogador.setOnAction(CE -> {
-                        AddEquipas();
+                        AddJogadores();
+                    });
+                    cancelJogador.setOnAction(CE -> {
+                        entidadeJogadorDetalhes.close();
                     });
                 });
                 editJogador.setOnAction(EJ -> {
+                    textoNomeJogador.setEditable(true);
+                    textoIdadeJogador.setEditable(true);
+                    textoAlturaJogador.setEditable(true);
+                    textoPosicao.setEditable(true);
                     if (tableJogador.getSelectionModel().getSelectedItem() != null) {
                         entidadeJogadorDetalhes.show();
                         Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
@@ -261,14 +291,41 @@ public class Main extends Application {
                         textoIdadeJogador.setText(String.valueOf(jogadorSelecionado.getIdade()));
                         textoAlturaJogador.setText(String.valueOf(jogadorSelecionado.getAltura()));
                         textoPosicao.setText(jogadorSelecionado.getPosicao());
-                        customEquipa.setText("Edit");
-                        customEquipa.setOnAction(CE -> {
-                            EditEquipas();
+                        customJogador.setText("Edit");
+                        customJogador.setOnAction(CE -> {
+                            EditJogadores();
                         });
+                        cancelJogador.setOnAction(CE -> {
+                            entidadeJogadorDetalhes.close();
+                        });
+                    }
+                    else {
+                        AlertBox.Show("Erro","Selecione um Jogador antes de tentar editar");
                     }
                 });
                 deleteJogador.setOnAction(DJ -> {
-                    entidadeJogadorDetalhes.show();
+                    if (tableJogador.getSelectionModel().getSelectedItem() != null) {
+                        entidadeJogadorDetalhes.show();
+                        Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
+                        textoNomeJogador.setText(jogadorSelecionado.getNome());
+                        textoNomeJogador.setEditable(false);
+                        textoIdadeJogador.setText(String.valueOf(jogadorSelecionado.getIdade()));
+                        textoIdadeJogador.setEditable(false);
+                        textoAlturaJogador.setText(String.valueOf(jogadorSelecionado.getAltura()));
+                        textoAlturaJogador.setEditable(false);
+                        textoPosicao.setText(jogadorSelecionado.getPosicao());
+                        textoPosicao.setEditable(false);
+                        customJogador.setText("Delete");
+                        customJogador.setOnAction(CE -> {
+                            DeleteJogadores();
+                        });
+                        cancelJogador.setOnAction(CE -> {
+                            entidadeJogadorDetalhes.close();
+                        });
+                    }
+                    else {
+                        AlertBox.Show("Erro", "Selecione um Jogador antes de tentar Eliminar");
+                    }
                 });
                 cemRegistosJogador.setOnAction(CR -> {
                     for(int i = 0; i <= 99; i++)
@@ -279,7 +336,7 @@ public class Main extends Application {
                     tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
                 });
                 closeJogador.setOnAction(CJ -> {
-                    entidadeJogadorDetalhes.close();
+                    entidadeJogador.close();
                 });
                 //endregion
             });
@@ -287,13 +344,70 @@ public class Main extends Application {
                 entidadeTreinador.show();
                 //region Botões Add, Edit e Delete
                 addTreinador.setOnAction(A -> {
+                    textoNomeTreinador.setEditable(true);
+                    textoIdadeTreinador.setEditable(true);
+                    textoAlturaTreinador.setEditable(true);
+                    textoCategoria.setEditable(true);
+                    textoNomeTreinador.clear();
+                    textoIdadeTreinador.clear();
+                    textoAlturaTreinador.clear();
+                    textoCategoria.clear();
                     entidadeTreinadorDetalhes.show();
+                    customTreinador.setText("Adicionar");
+                    customTreinador.setOnAction(CE -> {
+                        AddTreinadores();
+                    });
+                    cancelTreinador.setOnAction(CE -> {
+                        entidadeTreinadorDetalhes.close();
+                    });
                 });
                 editTreinador.setOnAction(A -> {
-                    entidadeTreinadorDetalhes.show();
+                    textoNomeTreinador.setEditable(true);
+                    textoIdadeTreinador.setEditable(true);
+                    textoAlturaTreinador.setEditable(true);
+                    textoCategoria.setEditable(true);
+                    if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
+                        entidadeTreinadorDetalhes.show();
+                        Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
+                        textoNomeTreinador.setText(treinadorSelecionado.getNome());
+                        textoIdadeTreinador.setText(String.valueOf(treinadorSelecionado.getIdade()));
+                        textoAlturaTreinador.setText(String.valueOf(treinadorSelecionado.getAltura()));
+                        textoCategoria.setText(treinadorSelecionado.getCategoria());
+                        customTreinador.setText("Edit");
+                        customTreinador.setOnAction(CE -> {
+                            EditTreinadores();
+                        });
+                        cancelTreinador.setOnAction(CE -> {
+                            entidadeTreinadorDetalhes.close();
+                        });
+                    }
+                    else {
+                        AlertBox.Show("Erro","Selecione um Treinador antes de tentar editar");
+                    }
                 });
                 deleteTreinador.setOnAction(A -> {
-                    entidadeTreinadorDetalhes.show();
+                    if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
+                        entidadeTreinadorDetalhes.show();
+                        Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
+                        textoNomeTreinador.setText(treinadorSelecionado.getNome());
+                        textoNomeTreinador.setEditable(false);
+                        textoIdadeTreinador.setText(String.valueOf(treinadorSelecionado.getIdade()));
+                        textoIdadeTreinador.setEditable(false);
+                        textoAlturaTreinador.setText(String.valueOf(treinadorSelecionado.getAltura()));
+                        textoAlturaTreinador.setEditable(false);
+                        textoCategoria.setText(treinadorSelecionado.getCategoria());
+                        textoCategoria.setEditable(false);
+                        customTreinador.setText("Delete");
+                        customTreinador.setOnAction(CE -> {
+                            DeleteTreinadores();
+                        });
+                        cancelTreinador.setOnAction(CE -> {
+                            entidadeTreinadorDetalhes.close();
+                        });
+                    }
+                    else {
+                        AlertBox.Show("Erro", "Selecione um Treinador antes de tentar Eliminar");
+                    }
                 });
                 cemRegistosTreinador.setOnAction(CR -> {
                     for(int i = 0; i <= 99; i++)
@@ -304,7 +418,7 @@ public class Main extends Application {
                     tableTreinador.setItems(observableListTreinadores);    // Adição da ObservableList à tableView
                 });
                 closeTreinador.setOnAction(A -> {
-                    entidadeTreinadorDetalhes.close();
+                    entidadeTreinador.close();
                 });
                 //endregion
             });
@@ -411,7 +525,7 @@ public class Main extends Application {
 
         // Coluna Treinador
         TableColumn<Equipa, String> colunaNomeTreinadoresDetalhes = new TableColumn<>("Treinadores");
-        colunaNomeTreinadoresDetalhes.setMinWidth(20);
+        colunaNomeTreinadoresDetalhes.setMinWidth(40);
         colunaNomeTreinadoresDetalhes.setCellValueFactory(new PropertyValueFactory<>("treinadores"));
 
         // Associar as colunas à tabela
@@ -440,6 +554,31 @@ public class Main extends Application {
         entidadeEquipasDetalhes.initModality(Modality.APPLICATION_MODAL);
         entidadeEquipasDetalhes.setTitle("Equipas Detalhes");
         entidadeEquipasDetalhes.setResizable(false);
+    }
+
+    public void ParteGraficaAssociarEquipa(){
+        //region Preparação da janela
+        HBox butoesAssociarEquipa = new HBox(40);
+        HBox tabelasAssociarEquipa = new HBox(40);
+        BorderPane borderPaneAssociarEquipa = new BorderPane();
+        borderPaneAssociarEquipa.setCenter(tabelasAssociarEquipa);
+        borderPaneAssociarEquipa.setBottom(butoesAssociarEquipa);
+
+        tabelasAssociarEquipa.setPadding(new Insets(10, 20, 20, 20));
+        tabelasAssociarEquipa.getChildren().addAll(tableJogador, tableTreinador);
+        butoesAssociarEquipa.setPadding(new Insets(10, 20, 20, 20));
+        butoesAssociarEquipa.getChildren().addAll(associar, cancelAssociar);
+
+        StackPane stackPaneAssociarEquipa = new StackPane();
+        stackPaneAssociarEquipa.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
+        stackPaneAssociarEquipa.getChildren().add(borderPaneAssociarEquipa);
+
+        Scene formEntidadeAssociarEquipa = new Scene(stackPaneAssociarEquipa, 726, 561);            // Tratamento da janela
+        entidadeAssociarEquipa.setScene(formEntidadeAssociarEquipa);
+        entidadeAssociarEquipa.initModality(Modality.APPLICATION_MODAL);
+        entidadeAssociarEquipa.setTitle("Associar Equipa");
+        entidadeAssociarEquipa.setResizable(false);
+        //endregion
     }
 
     public void ParteGraficaJogador(){
@@ -524,23 +663,23 @@ public class Main extends Application {
         gridPaneJogadores.add(textoNomeJogador, 1, 0);       // célula: col 1, linha 0
 
         // Idade
-        Label labelIdade = new Label("Convocada:");				// Nova Label
+        Label labelIdade = new Label("Idade:");				// Nova Label
         gridPaneJogadores.add(labelIdade, 0, 1);		// célula col 0,linha 1
         gridPaneJogadores.add(textoIdadeJogador, 1, 1);		// célula: col 1, linha 1
 
         // Altura
-        Label labelAltura = new Label("Classificação:");			// Nova Label
+        Label labelAltura = new Label("Altura:");			// Nova Label
         gridPaneJogadores.add(labelAltura, 0, 2);		// célula col 0,linha 2
         gridPaneJogadores.add(textoAlturaJogador, 1, 2);		// célula: col 1, linha 2
 
         // Posição
-        Label labelPosicao = new Label("Posicao:");			// Nova Label
+        Label labelPosicao = new Label("Posição:");			// Nova Label
         gridPaneJogadores.add(labelPosicao, 0, 3);		// célula col 0,linha 2
         gridPaneJogadores.add(textoPosicao, 1, 3);		// célula: col 1, linha 2
 
-        // Jogador
-        Label labelJogador = new Label("Equipa:");				// Nova Label
-        gridPaneJogadores.add(labelJogador, 0, 4);		// célula col 0,linha 1
+        // Equipa
+        Label labelEquipaJogador = new Label("Equipa:");				// Nova Label
+        gridPaneJogadores.add(labelEquipaJogador, 0, 4);		// célula col 0,linha 1
         gridPaneJogadores.add(textoEquipaJogador, 1, 4);		// célula: col 1, linha 1
 
         HBox Butoes = new HBox(40);
@@ -641,12 +780,12 @@ public class Main extends Application {
         gridPaneTreinadores.add(textoNomeTreinador, 1, 0);       // célula: col 1, linha 0
 
         // Idade
-        Label labelIdade = new Label("Convocada:");				// Nova Label
+        Label labelIdade = new Label("Idade:");				// Nova Label
         gridPaneTreinadores.add(labelIdade, 0, 1);		// célula col 0,linha 1
         gridPaneTreinadores.add(textoIdadeTreinador, 1, 1);		// célula: col 1, linha 1
 
         // Altura
-        Label labelAltura = new Label("Classificação:");			// Nova Label
+        Label labelAltura = new Label("Altura:");			// Nova Label
         gridPaneTreinadores.add(labelAltura, 0, 2);		// célula col 0,linha 2
         gridPaneTreinadores.add(textoAlturaTreinador, 1, 2);		// célula: col 1, linha 2
 
@@ -655,8 +794,8 @@ public class Main extends Application {
         gridPaneTreinadores.add(labelCategoria, 0, 3);		// célula col 0,linha 2
         gridPaneTreinadores.add(textoCategoria, 1, 3);		// célula: col 1, linha 2
 
-        // Treinadores
-        Label labelEquipaTreinador = new Label("Treinador:");				// Nova Label
+        // Equipa
+        Label labelEquipaTreinador = new Label("Equipa:");				// Nova Label
         gridPaneTreinadores.add(labelEquipaTreinador, 0, 4);		// célula col 0,linha 1
         gridPaneTreinadores.add(textoEquipaTreinador, 1, 4);		// célula: col 1, linha 1
 
@@ -713,9 +852,7 @@ public class Main extends Application {
         stageAcercaDe.show();
     }
 
-    /**
-     * Esté é um método que está encarregado da adição das equipas na lista, este tem como parâmetros de entrada os jogadores e os treinadores, e tem como método de saída void.
-     */
+
     public void AddEquipas() {
 
         if (textoNomeEquipa.getText().isEmpty() || textoConvocada.getText().isEmpty()|| textoClassificacao.getText().isEmpty())
@@ -728,7 +865,7 @@ public class Main extends Application {
             {
                 if (Valida.number(textoClassificacao.getText()))
                 {
-                    AlertBox.Show("Erro","A classificação só pode ser demonstrada através de múmeros, porfavor introduza novos dados");
+                    AlertBox.Show("Erro","A classificação só pode ter números, porfavor introduza novamente os dados");
                 }
                 else
                 {
@@ -745,7 +882,7 @@ public class Main extends Application {
             {
                 if (Valida.number(textoClassificacao.getText()))
                 {
-                    AlertBox.Show("Erro","A classificação só pode ser demonstrada através de múmeros, porfavor introduza novos dados");
+                    AlertBox.Show("Erro","A classificação só pode ter números, porfavor introduza novamente os dados");
                 }
                 else
                 {
@@ -769,7 +906,7 @@ public class Main extends Application {
 
         if (textoNomeEquipa.getText().isEmpty() || textoConvocada.getText().isEmpty()|| textoClassificacao.getText().isEmpty())
         {
-            AlertBox.Show("Erro","A Equipa não pode ser criada, porfavor preencha todos os espaços.");
+            AlertBox.Show("Erro","A Equipa não pode ser editada, porfavor preencha todos os espaços.");
         }
         else
         {
@@ -777,7 +914,7 @@ public class Main extends Application {
             {
                 if (Valida.number(textoClassificacao.getText()))
                 {
-                    AlertBox.Show("Erro","A classificação só pode ser demonstrada através de múmeros, porfavor introduza novos dados");
+                    AlertBox.Show("Erro","A classificação só pode ter números, porfavor introduza novamente os dados");
                 }
                 else
                 {
@@ -796,7 +933,7 @@ public class Main extends Application {
             {
                 if (Valida.number(textoClassificacao.getText()))
                 {
-                    AlertBox.Show("Erro","A classificação só pode ser demonstrada através de múmeros, porfavor introduza novos dados");
+                    AlertBox.Show("Erro","A classificação só pode ter números, porfavor introduza novamente os dados");
                 }
                 else
                 {
@@ -823,5 +960,161 @@ public class Main extends Application {
         tableEquipa.getItems().remove(equipaSelecionada);
         tableEquipa.refresh();
         entidadeEquipasDetalhes.close();
+    }
+
+    public void AddJogadores() {
+
+        if (textoNomeJogador.getText().isEmpty() || textoIdadeJogador.getText().isEmpty() || textoAlturaJogador.getText().isEmpty() || textoPosicao.getText().isEmpty())
+        {
+            AlertBox.Show("Erro","O Jogador não pode ser criado, porfavor preencha todos os espaços.");
+        }
+        else
+        {
+            if (Valida.number(textoIdadeJogador.getText()))
+            {
+                AlertBox.Show("Erro","A Idade não pode ter letras, porfavor introduza novamente os dados");
+            }
+            else
+            {
+                if (Valida.number(textoAlturaJogador.getText()))
+                {
+                    AlertBox.Show("Erro","A altura só pode ter números, porfavor introduza novamente os dados");
+                }
+                else
+                {
+                    if (Valida.number(textoPosicao.getText()))
+                    {
+                        Jogador jogador = new Jogador(textoNomeJogador.getText(), Integer.parseInt(textoIdadeJogador.getText()),Double.parseDouble(textoAlturaJogador.getText()), textoPosicao.getText());
+                        listaJogadores.add(jogador);
+                        observableListJogadores = FXCollections.observableArrayList(listaJogadores);
+                        tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
+                        tableJogador.refresh();
+                        entidadeJogadorDetalhes.close();
+                    }
+                    else
+                    {
+                        AlertBox.Show("Erro","A posição não pode conter números, porfavor introduza novos dados");
+                    }
+                }
+            }
+        }
+    }
+
+    public void EditJogadores(){
+        if (textoNomeJogador.getText().isEmpty() || textoIdadeJogador.getText().isEmpty() || textoAlturaJogador.getText().isEmpty() || textoPosicao.getText().isEmpty())
+        {
+            AlertBox.Show("Erro","O Jogador não pode ser editado, porfavor preencha todos os espaços.");
+        }
+        else
+        {
+            if (Valida.number(textoIdadeJogador.getText()))
+            {
+                AlertBox.Show("Erro","A idade só pode ter números, porfavor introduza novamente os dados");
+            }
+            else
+            {
+                if (Valida.number(textoPosicao.getText()))
+                {
+                    Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem() ;
+                    jogadorSelecionado.setNome(textoNomeJogador.getText());
+                    jogadorSelecionado.setIdade(Integer.parseInt(textoIdadeJogador.getText()));
+                    jogadorSelecionado.setAltura(Double.parseDouble(textoAlturaJogador.getText()));
+                    jogadorSelecionado.setPosicao(textoPosicao.getText());
+                    observableListJogadores = FXCollections.observableArrayList(listaJogadores);
+                    tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
+                    tableJogador.refresh();
+                    entidadeJogadorDetalhes.close();
+                }
+                else
+                {
+                    AlertBox.Show("Erro","A posição não pode conter números, porfavor introduza novos dados");
+                }
+            }
+        }
+    }
+
+    public void DeleteJogadores(){
+        Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
+        tableJogador.getItems().remove(jogadorSelecionado);
+        tableJogador.refresh();
+        entidadeJogadorDetalhes.close();
+    }
+
+    public void AddTreinadores() {
+
+        if (textoNomeTreinador.getText().isEmpty() || textoIdadeTreinador.getText().isEmpty() || textoAlturaTreinador.getText().isEmpty() || textoCategoria.getText().isEmpty())
+        {
+            AlertBox.Show("Erro","O Treinador não pode ser criado, porfavor preencha todos os espaços.");
+        }
+        else
+        {
+            if (Valida.number(textoIdadeTreinador.getText()))
+            {
+                AlertBox.Show("Erro","A Idade não pode ter letras, porfavor introduza novamente os dados");
+            }
+            else
+            {
+                if (Valida.number(textoAlturaTreinador.getText()))
+                {
+                    AlertBox.Show("Erro","A altura só pode ter números, porfavor introduza novamente os dados");
+                }
+                else
+                {
+                    if (Valida.number(textoCategoria.getText()))
+                    {
+                        Treinador treinador = new Treinador(textoNomeTreinador.getText(), Integer.parseInt(textoIdadeTreinador.getText()),Double.parseDouble(textoAlturaTreinador.getText()), textoCategoria.getText());
+                        listaTreinadores.add(treinador);
+                        observableListTreinadores = FXCollections.observableArrayList(listaTreinadores);
+                        tableTreinador.setItems(observableListTreinadores);    // Adição da ObservableList à tableView
+                        tableTreinador.refresh();
+                        entidadeTreinadorDetalhes.close();
+                    }
+                    else
+                    {
+                        AlertBox.Show("Erro","A categoria não pode conter números, porfavor introduza novos dados");
+                    }
+                }
+            }
+        }
+    }
+
+    public void EditTreinadores(){
+        if (textoNomeTreinador.getText().isEmpty() || textoIdadeTreinador.getText().isEmpty() || textoAlturaTreinador.getText().isEmpty() || textoCategoria.getText().isEmpty())
+        {
+            AlertBox.Show("Erro","O Treinador não pode ser editado, porfavor preencha todos os espaços.");
+        }
+        else
+        {
+            if (Valida.number(textoIdadeTreinador.getText()))
+            {
+                AlertBox.Show("Erro","A idade só pode ter números, porfavor introduza novamente os dados");
+            }
+            else
+            {
+                if (Valida.number(textoCategoria.getText()))
+                {
+                    Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem() ;
+                    treinadorSelecionado.setNome(textoNomeTreinador.getText());
+                    treinadorSelecionado.setIdade(Integer.parseInt(textoIdadeTreinador.getText()));
+                    treinadorSelecionado.setAltura(Double.parseDouble(textoAlturaTreinador.getText()));
+                    treinadorSelecionado.setCategoria(textoCategoria.getText());
+                    observableListTreinadores = FXCollections.observableArrayList(listaTreinadores);
+                    tableTreinador.setItems(observableListTreinadores);    // Adição da ObservableList à tableView
+                    tableTreinador.refresh();
+                    entidadeTreinadorDetalhes.close();
+                }
+                else
+                {
+                    AlertBox.Show("Erro","A categoria não pode conter números, porfavor introduza novos dados");
+                }
+            }
+        }
+    }
+
+    public void DeleteTreinadores(){
+        Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
+        tableTreinador.getItems().remove(treinadorSelecionado);
+        tableTreinador.refresh();
+        entidadeTreinadorDetalhes.close();
     }
 }
