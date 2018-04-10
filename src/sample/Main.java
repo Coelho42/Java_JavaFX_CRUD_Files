@@ -146,11 +146,17 @@ public class Main extends Application {
             MenuItem menuItemFileOpcaoEquipa = new MenuItem("Equipas");
             MenuItem menuItemFileOpcaoJogador = new MenuItem("Jogadores");
             MenuItem menuItemFileOpcaoTreinador = new MenuItem("Treinadores");
+            MenuItem menuItemFileOpcaoSave = new MenuItem("Save");
+            MenuItem menuItemFileOpcaoLoad = new MenuItem("Load");
+            MenuItem menuItemFileOpcaoSair = new MenuItem("Sair");
             MenuItem menuItemFileAcercaDe = new MenuItem("Acerca De:");
             menuPrincipal.getItems().addAll(
                     menuItemFileOpcaoEquipa,
                     menuItemFileOpcaoJogador,
-                    menuItemFileOpcaoTreinador);
+                    menuItemFileOpcaoTreinador,
+                    menuItemFileOpcaoSave,
+                    menuItemFileOpcaoLoad,
+                    menuItemFileOpcaoSair);
 
             menuHelp.getItems().add(menuItemFileAcercaDe);
             //endregion
@@ -422,6 +428,9 @@ public class Main extends Application {
                 });
                 //endregion
             });
+            menuItemFileOpcaoSair.setOnAction(e -> {
+                primaryStage.close();
+                    });
             menuItemFileAcercaDe.setOnAction(e -> {
                 AcercaDe();
             });
@@ -563,11 +572,6 @@ public class Main extends Application {
         BorderPane borderPaneAssociarEquipa = new BorderPane();
         borderPaneAssociarEquipa.setCenter(tabelasAssociarEquipa);
         borderPaneAssociarEquipa.setBottom(butoesAssociarEquipa);
-
-        tabelasAssociarEquipa.setPadding(new Insets(10, 20, 20, 20));
-        tabelasAssociarEquipa.getChildren().addAll(tableJogador, tableTreinador);
-        butoesAssociarEquipa.setPadding(new Insets(10, 20, 20, 20));
-        butoesAssociarEquipa.getChildren().addAll(associar, cancelAssociar);
 
         StackPane stackPaneAssociarEquipa = new StackPane();
         stackPaneAssociarEquipa.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
@@ -832,7 +836,9 @@ public class Main extends Application {
         textoAcercaDe.setEditable(false);
         textoAcercaDe.setText("Escola Secundária Ferreira Dias \n" +
                 " TGPSI - Curso técnico de gestão e programação de sistemas informáticos \n" +
-                " Trabalho realizado no ambito da disciplina de PSI \n" +
+                "\n" +
+                " Trabalho realizado no ambito da disciplina de Programação de Sistemas Informáticos \n" +
+                " Projeto do Módulo 10\n" +
                 " 11º ano - 2ºGI\n" +
                 "\n" +
                 " Realizado por:\n" +
