@@ -40,8 +40,9 @@ public class Main extends Application {
     Button cemRegistosEquipa = new Button("100 Registos");
     Button customEquipa = new Button("'Custom'");
     Button cancelEquipa = new Button("Cancel");
-    Button associarEquipa = new Button("Associar");
-    Button desassociarEquipa = new Button("Desassociar");
+    Button associarJogador = new Button("Associar Jogador");
+    Button associarTreinador = new Button("Associar Treinador");
+    Button desassociar = new Button("Desassociar");
     Button associar = new Button("Associar");
     Button cancelAssociar = new Button ("Cancelar");
 
@@ -87,7 +88,6 @@ public class Main extends Application {
     Stage entidadeJogadorDetalhes = new Stage();
     Stage entidadeTreinador = new Stage();
     Stage entidadeTreinadorDetalhes = new Stage();
-    Stage entidadeAssociarEquipa = new Stage();
     //endregion
 
     //region TableView e respetivas Colunas
@@ -97,6 +97,8 @@ public class Main extends Application {
     ObservableList<Jogador> observableListJogadores;
     TableView<Treinador> tableTreinador = new TableView<>();
     ObservableList<Treinador> observableListTreinadores;
+    TableView<Jogador> tableEquipaJogadores = new TableView<>();
+    TableView<Treinador> tableEquipaTreinadores = new TableView<>();
     //endregion
 
     //region Outras Variáveis
@@ -137,7 +139,6 @@ public class Main extends Application {
             ParteGraficaJogadorDetalhes();
             ParteGraficaTreinador();
             ParteGraficaTreinadorDetalhes();
-            ParteGraficaAssociarEquipa();
             //endregion
 
             //region Adição dos MenuItems ao menuFile.
@@ -190,8 +191,13 @@ public class Main extends Application {
                     customEquipa.setOnAction(CE -> {
                         AddEquipas();
                     });
-                    associarEquipa.setOnAction(aE -> {
-                        entidadeAssociarEquipa.show();
+                    associarJogador.setOnAction(aE -> {
+
+
+                    });
+                    associarTreinador.setOnAction(aE -> {
+
+
                     });
                     cancelEquipa.setOnAction(Cancel -> {
                         entidadeEquipasDetalhes.close();
@@ -460,17 +466,20 @@ public class Main extends Application {
         //region Propriedades das Colunas da TableView Equipas
         // Coluna Nome
         TableColumn<Equipa, String> colunaNomeEquipa = new TableColumn<>("Nome");
-        colunaNomeEquipa.setMinWidth(20);
+        colunaNomeEquipa.setMinWidth(180);
+        colunaNomeEquipa.setResizable(false);
         colunaNomeEquipa.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         //Coluna Convocada
         TableColumn<Equipa, Boolean> colunaConvocada = new TableColumn<>("Convocada");
-        colunaConvocada.setMinWidth(20);
+        colunaConvocada.setMinWidth(150);
+        colunaConvocada.setResizable(false);
         colunaConvocada.setCellValueFactory(new PropertyValueFactory<>("convocada"));
 
         //Coluna Numero
         TableColumn<Equipa, Long> colunaClassificacao = new TableColumn<>("Classificação");
-        colunaClassificacao.setMinWidth(20);
+        colunaClassificacao.setMinWidth(150);
+        colunaClassificacao.setResizable(false);
         colunaClassificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
         //endregion
 
@@ -503,6 +512,7 @@ public class Main extends Application {
 
     public void ParteGraficaEquipaDetalhes() {
 
+        associarTreinador.setPrefWidth(180);
         GridPane gridPaneEquipas = new GridPane();					// layout para a região central
         gridPaneEquipas.setAlignment(Pos.CENTER);
         gridPaneEquipas.setPadding(new Insets(20,20,20,20));
@@ -524,65 +534,87 @@ public class Main extends Application {
         gridPaneEquipas.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
         gridPaneEquipas.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
 
-        // Criação da TableView
-        TableView<Equipa> tableJogadoresTreinadores = new TableView<>();
+        // Table Jogador
+        // Coluna Nome
+        TableColumn<Jogador, String> colunaNomeEquipaJogador = new TableColumn<>("Nome");
+        colunaNomeEquipaJogador.setMinWidth(120);
+        colunaNomeEquipaJogador.setResizable(false);
+        colunaNomeEquipaJogador.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
-        // Coluna Jogador
-        TableColumn<Equipa, String> colunaNomeJogadoresDetalhes = new TableColumn<>("Jogadores");
-        colunaNomeJogadoresDetalhes.setMinWidth(20);
-        colunaNomeJogadoresDetalhes.setCellValueFactory(new PropertyValueFactory<>("jogadores"));
+        //Coluna Idade
+        TableColumn<Jogador, Integer> colunaIdadeEquipaJogador = new TableColumn<>("Idade");
+        colunaIdadeEquipaJogador.setMinWidth(100);
+        colunaIdadeEquipaJogador.setResizable(false);
+        colunaIdadeEquipaJogador.setCellValueFactory(new PropertyValueFactory<>("idade"));
 
-        // Coluna Treinador
-        TableColumn<Equipa, String> colunaNomeTreinadoresDetalhes = new TableColumn<>("Treinadores");
-        colunaNomeTreinadoresDetalhes.setMinWidth(40);
-        colunaNomeTreinadoresDetalhes.setCellValueFactory(new PropertyValueFactory<>("treinadores"));
+        //Coluna Altura
+        TableColumn<Jogador, Double> colunaAlturaEquipaJogador = new TableColumn<>("Altura");
+        colunaAlturaEquipaJogador.setMinWidth(100);
+        colunaAlturaEquipaJogador.setResizable(false);
+        colunaAlturaEquipaJogador.setCellValueFactory(new PropertyValueFactory<>("altura"));
+
+        //Coluna Posição
+        TableColumn<Jogador, String> colunaPosicaoJogador = new TableColumn<>("Posição");
+        colunaPosicaoJogador.setMinWidth(100);
+        colunaPosicaoJogador.setResizable(false);
+        colunaPosicaoJogador.setCellValueFactory(new PropertyValueFactory<>("posicao"));
+
+        // Table Treinador
+        // Coluna Nome
+        TableColumn<Treinador, String> colunaNomeEquipaTreinador = new TableColumn<>("Nome");
+        colunaNomeEquipaTreinador.setMinWidth(120);
+        colunaNomeEquipaTreinador.setResizable(false);
+        colunaNomeEquipaTreinador.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+        //Coluna Idade
+        TableColumn<Treinador, Integer> colunaIdadeEquipaTreinador = new TableColumn<>("Idade");
+        colunaIdadeEquipaTreinador.setMinWidth(100);
+        colunaIdadeEquipaTreinador.setResizable(false);
+        colunaIdadeEquipaTreinador.setCellValueFactory(new PropertyValueFactory<>("idade"));
+
+        //Coluna Altura
+        TableColumn<Treinador, Double> colunaAlturaEquipaTreinador = new TableColumn<>("Altura");
+        colunaAlturaEquipaTreinador.setMinWidth(100);
+        colunaAlturaEquipaTreinador.setResizable(false);
+        colunaAlturaEquipaTreinador.setCellValueFactory(new PropertyValueFactory<>("altura"));
+
+        //Coluna Posição
+        TableColumn<Treinador, String> colunaCategoriaTreinador = new TableColumn<>("Categoria");
+        colunaCategoriaTreinador.setMinWidth(100);
+        colunaCategoriaTreinador.setResizable(false);
+        colunaCategoriaTreinador.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
         // Associar as colunas à tabela
-        tableJogadoresTreinadores.getColumns().addAll(colunaNomeJogadoresDetalhes, colunaNomeTreinadoresDetalhes);
+        tableEquipaJogadores.getColumns().addAll(colunaNomeEquipaJogador, colunaIdadeEquipaJogador, colunaAlturaEquipaJogador, colunaPosicaoJogador);
+        tableEquipaTreinadores.getColumns().addAll(colunaNomeEquipaTreinador, colunaIdadeEquipaTreinador, colunaAlturaEquipaTreinador, colunaCategoriaTreinador);
 
         BorderPane borderPaneEquipas = new BorderPane();
+        HBox tabelaButoes = new HBox (40);
         HBox butoesBaixo = new HBox(40);
-        HBox butoesDireita = new HBox(40);
+        VBox butoesDireita = new VBox(40);
         butoesBaixo.setAlignment(Pos.CENTER);
         butoesBaixo.setPadding(new Insets(10,20,20,20));
         butoesBaixo.getChildren().addAll(customEquipa, cancelEquipa);
         butoesDireita.setAlignment(Pos.CENTER);
         butoesDireita.setPadding(new Insets(10,20,20,20));
-        butoesDireita.getChildren().addAll(tableJogadoresTreinadores, associarEquipa, desassociarEquipa);
+        butoesDireita.getChildren().addAll(associarJogador, associarTreinador, desassociar);
+        tabelaButoes.setAlignment(Pos.CENTER);
+        tabelaButoes.setPadding(new Insets(10,20,20,20));
+        tabelaButoes.getChildren().addAll(tableEquipaJogadores, tableEquipaTreinadores, butoesDireita);
 
         StackPane stackPaneEquipas = new StackPane();					// Layout para organizar verticalmente os objetos
         stackPaneEquipas.setPadding(new Insets(20,20,20,20));			// espessura interna de cada bordo interno
         stackPaneEquipas.getChildren().add(borderPaneEquipas);
 
         borderPaneEquipas.setTop(gridPaneEquipas);
-        borderPaneEquipas.setCenter(butoesDireita);
+        borderPaneEquipas.setCenter(tabelaButoes);
         borderPaneEquipas.setBottom(butoesBaixo);
 
-        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,650, 489);
+        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,1100, 700);
         entidadeEquipasDetalhes.setScene(formEntidadeEquipasDetalhes);
         entidadeEquipasDetalhes.initModality(Modality.APPLICATION_MODAL);
         entidadeEquipasDetalhes.setTitle("Equipas Detalhes");
         entidadeEquipasDetalhes.setResizable(false);
-    }
-
-    public void ParteGraficaAssociarEquipa(){
-        //region Preparação da janela
-        HBox butoesAssociarEquipa = new HBox(40);
-        HBox tabelasAssociarEquipa = new HBox(40);
-        BorderPane borderPaneAssociarEquipa = new BorderPane();
-        borderPaneAssociarEquipa.setCenter(tabelasAssociarEquipa);
-        borderPaneAssociarEquipa.setBottom(butoesAssociarEquipa);
-
-        StackPane stackPaneAssociarEquipa = new StackPane();
-        stackPaneAssociarEquipa.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
-        stackPaneAssociarEquipa.getChildren().add(borderPaneAssociarEquipa);
-
-        Scene formEntidadeAssociarEquipa = new Scene(stackPaneAssociarEquipa, 726, 561);            // Tratamento da janela
-        entidadeAssociarEquipa.setScene(formEntidadeAssociarEquipa);
-        entidadeAssociarEquipa.initModality(Modality.APPLICATION_MODAL);
-        entidadeAssociarEquipa.setTitle("Associar Equipa");
-        entidadeAssociarEquipa.setResizable(false);
-        //endregion
     }
 
     public void ParteGraficaJogador(){
@@ -604,32 +636,37 @@ public class Main extends Application {
         //region Propriedades das Colunas da TableView Jogadores
         // Coluna Nome
         TableColumn<Jogador, String> colunaNomeJogador = new TableColumn<>("Nome");
-        colunaNomeJogador.setMinWidth(20);
+        colunaNomeJogador.setMinWidth(180);
+        colunaNomeJogador.setResizable(false);
         colunaNomeJogador.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         //Coluna Idade
         TableColumn<Jogador, Integer> colunaIdadeJogador = new TableColumn<>("Idade");
-        colunaIdadeJogador.setMinWidth(20);
+        colunaIdadeJogador.setMinWidth(120);
+        colunaIdadeJogador.setResizable(false);
         colunaIdadeJogador.setCellValueFactory(new PropertyValueFactory<>("idade"));
 
         //Coluna Altura
         TableColumn<Jogador, Double> colunaAlturaJogador = new TableColumn<>("Altura");
-        colunaAlturaJogador.setMinWidth(20);
+        colunaAlturaJogador.setMinWidth(120);
+        colunaAlturaJogador.setResizable(false);
         colunaAlturaJogador.setCellValueFactory(new PropertyValueFactory<>("altura"));
 
         //Coluna Posição
         TableColumn<Jogador, String> colunaPosicao = new TableColumn<>("Posição");
-        colunaPosicao.setMinWidth(20);
+        colunaPosicao.setMinWidth(120);
+        colunaPosicao.setResizable(false);
         colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posicao"));
 
         //Coluna Equipa
         TableColumn<Jogador, String> colunaEquipa = new TableColumn<>("Equipa");
-        colunaEquipa.setMinWidth(20);
+        colunaEquipa.setMinWidth(120);
+        colunaEquipa.setResizable(false);
         colunaEquipa.setCellValueFactory(new PropertyValueFactory<>("equipa"));
         //endregion
 
         // Associar as colunas à tabela
-        tableJogador.getColumns().addAll(colunaNomeJogador, colunaIdadeJogador, colunaAlturaJogador, colunaPosicao);
+        tableJogador.getColumns().addAll(colunaNomeJogador, colunaIdadeJogador, colunaAlturaJogador, colunaPosicao, colunaEquipa);
 
         //region Preparação da janela
         HBox butoesJogador = new HBox(40);
@@ -657,7 +694,7 @@ public class Main extends Application {
 
         GridPane gridPaneJogadores = new GridPane();					// layout para a região central
         gridPaneJogadores.setAlignment(Pos.CENTER);
-        gridPaneJogadores.setPadding(new Insets(20,20,20,20));
+        gridPaneJogadores.setPadding(new Insets(20,20,0,20));
         gridPaneJogadores.setVgap(12);								// espaço entre colunas (pixeis)
         gridPaneJogadores.setHgap(10);								// espaço entre linhas
 
@@ -688,12 +725,14 @@ public class Main extends Application {
 
         HBox Butoes = new HBox(40);
         Butoes.getChildren().addAll(customJogador, cancelJogador);
-        gridPaneJogadores.add(Butoes,1,5);
+        Butoes.setAlignment(Pos.CENTER);
+        Butoes.setPadding(new Insets(10,20,20,20));
 
         BorderPane borderPaneJogadores = new BorderPane();
         borderPaneJogadores.setCenter(gridPaneJogadores);
+        borderPaneJogadores.setBottom(Butoes);
 
-        Scene formEntidadeJogadoresDetalhes = new Scene(borderPaneJogadores,481, 489);
+        Scene formEntidadeJogadoresDetalhes = new Scene(borderPaneJogadores,320, 320);
         entidadeJogadorDetalhes.setScene(formEntidadeJogadoresDetalhes);
         entidadeJogadorDetalhes.initModality(Modality.APPLICATION_MODAL);
         entidadeJogadorDetalhes.setTitle("Jogadores Detalhes");
@@ -719,33 +758,38 @@ public class Main extends Application {
         //region Propriedades das Colunas da TableView Treinadores
         // Coluna Nome
         TableColumn<Treinador, String> colunaNomeTreinador = new TableColumn<>("Nome");
-        colunaNomeTreinador.setMinWidth(20);
+        colunaNomeTreinador.setMinWidth(120);
+        colunaNomeTreinador.setResizable(false);
         colunaNomeTreinador.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         //Coluna Idade
         TableColumn<Treinador, Integer> colunaIdadeTreinador = new TableColumn<>("Idade");
-        colunaIdadeTreinador.setMinWidth(20);
+        colunaIdadeTreinador.setMinWidth(120);
+        colunaIdadeTreinador.setResizable(false);
         colunaIdadeTreinador.setCellValueFactory(new PropertyValueFactory<>("idade"));
 
         //Coluna Altura
         TableColumn<Treinador, Double> colunaAlturaTreinador = new TableColumn<>("Altura");
-        colunaAlturaTreinador.setMinWidth(20);
+        colunaAlturaTreinador.setMinWidth(120);
+        colunaAlturaTreinador.setResizable(false);
         colunaAlturaTreinador.setCellValueFactory(new PropertyValueFactory<>("altura"));
 
         //Coluna Posição
         TableColumn<Treinador, String> colunaCategoria = new TableColumn<>("Categoria");
-        colunaCategoria.setMinWidth(20);
+        colunaCategoria.setMinWidth(120);
+        colunaCategoria.setResizable(false);
         colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
         //Coluna Equipa
         TableColumn<Treinador, String> colunaEquipa = new TableColumn<>("Equipa");
-        colunaEquipa.setMinWidth(20);
+        colunaEquipa.setMinWidth(120);
+        colunaEquipa.setResizable(false);
         colunaEquipa.setCellValueFactory(new PropertyValueFactory<>("equipa"));
         //endregion
 
         //region TableView e ObservableList Stuff
         // Associar as colunas à tabela
-        tableTreinador.getColumns().addAll(colunaNomeTreinador, colunaIdadeTreinador, colunaAlturaTreinador, colunaCategoria);
+        tableTreinador.getColumns().addAll(colunaNomeTreinador, colunaIdadeTreinador, colunaAlturaTreinador, colunaCategoria, colunaEquipa);
         //endregion
 
         //region Preparação da janela
@@ -774,7 +818,7 @@ public class Main extends Application {
 
         GridPane gridPaneTreinadores = new GridPane();					// layout para a região central
         gridPaneTreinadores.setAlignment(Pos.CENTER);
-        gridPaneTreinadores.setPadding(new Insets(20,20,20,20));
+        gridPaneTreinadores.setPadding(new Insets(20,20,0,20));
         gridPaneTreinadores.setVgap(12);								// espaço entre colunas (pixeis)
         gridPaneTreinadores.setHgap(10);								// espaço entre linhas
 
@@ -805,12 +849,14 @@ public class Main extends Application {
 
         HBox Butoes = new HBox(40);
         Butoes.getChildren().addAll(customTreinador, cancelTreinador);
-        gridPaneTreinadores.add(Butoes,1,5);
+        Butoes.setAlignment(Pos.CENTER);
+        Butoes.setPadding(new Insets(10,20,20,20));
 
         BorderPane borderPaneTreinadores = new BorderPane();
         borderPaneTreinadores.setCenter(gridPaneTreinadores);
+        borderPaneTreinadores.setBottom(Butoes);
 
-        Scene formEntidadeTreinadoresDetalhes = new Scene(borderPaneTreinadores,481, 489);
+        Scene formEntidadeTreinadoresDetalhes = new Scene(borderPaneTreinadores,320, 320);
         entidadeTreinadorDetalhes.setScene(formEntidadeTreinadoresDetalhes);
         entidadeTreinadorDetalhes.initModality(Modality.APPLICATION_MODAL);
         entidadeTreinadorDetalhes.setTitle("Treinadores Detalhes");
