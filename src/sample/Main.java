@@ -82,11 +82,11 @@ public class Main extends Application {
     //endregion
 
     //region Scenes & Stages
-    Stage entidadeEquipa = new Stage();
-    Stage entidadeEquipasDetalhes = new Stage();
-    Stage entidadeJogador = new Stage();
+    Stage entidadeEquipaLista = new Stage();
+    Stage entidadeEquipaDetalhes = new Stage();
+    Stage entidadeJogadorLista = new Stage();
     Stage entidadeJogadorDetalhes = new Stage();
-    Stage entidadeTreinador = new Stage();
+    Stage entidadeTreinadorLista = new Stage();
     Stage entidadeTreinadorDetalhes = new Stage();
     //endregion
 
@@ -177,7 +177,7 @@ public class Main extends Application {
             primaryStage.show();
 
             menuItemFileOpcaoEquipa.setOnAction(e -> {
-                entidadeEquipa.show();
+                entidadeEquipaLista.show();
                 //region Botões Add, Edit e Delete
                 addEquipa.setOnAction(AE -> {
                     textoNomeEquipa.setEditable(true);
@@ -186,12 +186,31 @@ public class Main extends Application {
                     textoNomeEquipa.clear();
                     textoConvocada.clear();
                     textoClassificacao.clear();
-                    entidadeEquipasDetalhes.show();
+                    entidadeEquipaDetalhes.show();
                     customEquipa.setText("Adicionar");
                     customEquipa.setOnAction(CE -> {
                         AddEquipas();
                     });
                     associarJogador.setOnAction(aE -> {
+                        addJogador.setVisible(false);
+                        editJogador.setVisible(false);
+                        deleteJogador.setVisible(false);
+                        cemRegistosJogador.setVisible(false);
+                        closeJogador.setVisible(false);
+                        associar.setVisible(false);
+                        cancelAssociar.setVisible(false);
+                        entidadeJogadorLista.show();
+
+                        editJogador.setOnAction(aJ -> {
+                            if (tableJogador.getSelectionModel().getSelectedItem() != null) {
+                                Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
+
+
+                            }
+                            else {
+                                AlertBox.Show("Erro", "Não selecionou nenhum jogador para associar à equipa, porfavor selecione um Jogador.");
+                            }
+                        });
 
 
                     });
@@ -200,7 +219,7 @@ public class Main extends Application {
 
                     });
                     cancelEquipa.setOnAction(Cancel -> {
-                        entidadeEquipasDetalhes.close();
+                        entidadeEquipaDetalhes.close();
                     });
                 });
                 editEquipa.setOnAction(EE -> {
@@ -208,7 +227,7 @@ public class Main extends Application {
                     textoConvocada.setEditable(true);
                     textoClassificacao.setEditable(true);
                     if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
-                        entidadeEquipasDetalhes.show();
+                        entidadeEquipaDetalhes.show();
                         Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
                         textoNomeEquipa.setText(equipaSelecionada.getNome());
                         if (equipaSelecionada.getConvocada() == true) {
@@ -223,7 +242,7 @@ public class Main extends Application {
                             EditEquipas();
                         });
                         cancelEquipa.setOnAction(Cancel -> {
-                            entidadeEquipasDetalhes.close();
+                            entidadeEquipaDetalhes.close();
                         });
                     }
                     else {
@@ -232,7 +251,7 @@ public class Main extends Application {
                 });
                 deleteEquipa.setOnAction(DE -> {
                     if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
-                        entidadeEquipasDetalhes.show();
+                        entidadeEquipaDetalhes.show();
                         Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
                         textoNomeEquipa.setText(equipaSelecionada.getNome());
                         textoNomeEquipa.setEditable(false);
@@ -250,7 +269,7 @@ public class Main extends Application {
                             DeleteEquipas();
                         });
                         cancelEquipa.setOnAction(Cancel -> {
-                            entidadeEquipasDetalhes.close();
+                            entidadeEquipaDetalhes.close();
                         });
                     }
                     else {
@@ -266,12 +285,12 @@ public class Main extends Application {
                     tableEquipa.refresh();
                 });
                 closeEquipa.setOnAction(CE -> {
-                    entidadeEquipa.close();
+                    entidadeEquipaLista.close();
                 });
                 //endregion
             });
             menuItemFileOpcaoJogador.setOnAction(e -> {
-                entidadeJogador.show();
+                entidadeJogadorLista.show();
                 //region Botões Add, Edit e Delete
                 addJogador.setOnAction(AJ -> {
                     textoNomeJogador.setEditable(true);
@@ -348,12 +367,12 @@ public class Main extends Application {
                     tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
                 });
                 closeJogador.setOnAction(CJ -> {
-                    entidadeJogador.close();
+                    entidadeJogadorLista.close();
                 });
                 //endregion
             });
             menuItemFileOpcaoTreinador.setOnAction(e -> {
-                entidadeTreinador.show();
+                entidadeTreinadorLista.show();
                 //region Botões Add, Edit e Delete
                 addTreinador.setOnAction(A -> {
                     textoNomeTreinador.setEditable(true);
@@ -430,7 +449,7 @@ public class Main extends Application {
                     tableTreinador.setItems(observableListTreinadores);    // Adição da ObservableList à tableView
                 });
                 closeTreinador.setOnAction(A -> {
-                    entidadeTreinador.close();
+                    entidadeTreinadorLista.close();
                 });
                 //endregion
             });
@@ -502,17 +521,16 @@ public class Main extends Application {
         stackPaneEquipa.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
         stackPaneEquipa.getChildren().add(borderPaneEquipa);
 
-        Scene formEntidadeEquipa = new Scene(stackPaneEquipa, 726, 561);            // Tratamento da janela
-        entidadeEquipa.setScene(formEntidadeEquipa);
-        entidadeEquipa.initModality(Modality.APPLICATION_MODAL);
-        entidadeEquipa.setTitle("Equipas");
-        entidadeEquipa.setResizable(false);
+        Scene formentidadeEquipaLista = new Scene(stackPaneEquipa, 726, 561);            // Tratamento da janela
+        entidadeEquipaLista.setScene(formentidadeEquipaLista);
+        entidadeEquipaLista.initModality(Modality.APPLICATION_MODAL);
+        entidadeEquipaLista.setTitle("Equipas");
+        entidadeEquipaLista.setResizable(false);
         //endregion
     }
 
     public void ParteGraficaEquipaDetalhes() {
 
-        associarTreinador.setPrefWidth(180);
         GridPane gridPaneEquipas = new GridPane();					// layout para a região central
         gridPaneEquipas.setAlignment(Pos.CENTER);
         gridPaneEquipas.setPadding(new Insets(20,20,20,20));
@@ -537,50 +555,50 @@ public class Main extends Application {
         // Table Jogador
         // Coluna Nome
         TableColumn<Jogador, String> colunaNomeEquipaJogador = new TableColumn<>("Nome");
-        colunaNomeEquipaJogador.setMinWidth(120);
+        colunaNomeEquipaJogador.setMinWidth(100);
         colunaNomeEquipaJogador.setResizable(false);
         colunaNomeEquipaJogador.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         //Coluna Idade
         TableColumn<Jogador, Integer> colunaIdadeEquipaJogador = new TableColumn<>("Idade");
-        colunaIdadeEquipaJogador.setMinWidth(100);
+        colunaIdadeEquipaJogador.setMinWidth(90);
         colunaIdadeEquipaJogador.setResizable(false);
         colunaIdadeEquipaJogador.setCellValueFactory(new PropertyValueFactory<>("idade"));
 
         //Coluna Altura
         TableColumn<Jogador, Double> colunaAlturaEquipaJogador = new TableColumn<>("Altura");
-        colunaAlturaEquipaJogador.setMinWidth(100);
+        colunaAlturaEquipaJogador.setMinWidth(90);
         colunaAlturaEquipaJogador.setResizable(false);
         colunaAlturaEquipaJogador.setCellValueFactory(new PropertyValueFactory<>("altura"));
 
         //Coluna Posição
         TableColumn<Jogador, String> colunaPosicaoJogador = new TableColumn<>("Posição");
-        colunaPosicaoJogador.setMinWidth(100);
+        colunaPosicaoJogador.setMinWidth(90);
         colunaPosicaoJogador.setResizable(false);
         colunaPosicaoJogador.setCellValueFactory(new PropertyValueFactory<>("posicao"));
 
         // Table Treinador
         // Coluna Nome
         TableColumn<Treinador, String> colunaNomeEquipaTreinador = new TableColumn<>("Nome");
-        colunaNomeEquipaTreinador.setMinWidth(120);
+        colunaNomeEquipaTreinador.setMinWidth(100);
         colunaNomeEquipaTreinador.setResizable(false);
         colunaNomeEquipaTreinador.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         //Coluna Idade
         TableColumn<Treinador, Integer> colunaIdadeEquipaTreinador = new TableColumn<>("Idade");
-        colunaIdadeEquipaTreinador.setMinWidth(100);
+        colunaIdadeEquipaTreinador.setMinWidth(90);
         colunaIdadeEquipaTreinador.setResizable(false);
         colunaIdadeEquipaTreinador.setCellValueFactory(new PropertyValueFactory<>("idade"));
 
         //Coluna Altura
         TableColumn<Treinador, Double> colunaAlturaEquipaTreinador = new TableColumn<>("Altura");
-        colunaAlturaEquipaTreinador.setMinWidth(100);
+        colunaAlturaEquipaTreinador.setMinWidth(90);
         colunaAlturaEquipaTreinador.setResizable(false);
         colunaAlturaEquipaTreinador.setCellValueFactory(new PropertyValueFactory<>("altura"));
 
         //Coluna Posição
         TableColumn<Treinador, String> colunaCategoriaTreinador = new TableColumn<>("Categoria");
-        colunaCategoriaTreinador.setMinWidth(100);
+        colunaCategoriaTreinador.setMinWidth(90);
         colunaCategoriaTreinador.setResizable(false);
         colunaCategoriaTreinador.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
@@ -610,11 +628,11 @@ public class Main extends Application {
         borderPaneEquipas.setCenter(tabelaButoes);
         borderPaneEquipas.setBottom(butoesBaixo);
 
-        Scene formEntidadeEquipasDetalhes = new Scene(stackPaneEquipas,1100, 700);
-        entidadeEquipasDetalhes.setScene(formEntidadeEquipasDetalhes);
-        entidadeEquipasDetalhes.initModality(Modality.APPLICATION_MODAL);
-        entidadeEquipasDetalhes.setTitle("Equipas Detalhes");
-        entidadeEquipasDetalhes.setResizable(false);
+        Scene formentidadeEquipaDetalhes = new Scene(stackPaneEquipas,1100, 700);
+        entidadeEquipaDetalhes.setScene(formentidadeEquipaDetalhes);
+        entidadeEquipaDetalhes.initModality(Modality.APPLICATION_MODAL);
+        entidadeEquipaDetalhes.setTitle("Equipas Detalhes");
+        entidadeEquipaDetalhes.setResizable(false);
     }
 
     public void ParteGraficaJogador(){
@@ -625,6 +643,8 @@ public class Main extends Application {
         deleteJogador.setPrefSize(130, 60);
         cemRegistosJogador.setPrefSize(130,60);
         closeJogador.setPrefSize(130, 60);
+        associar.setPrefSize(130, 60);
+        cancelAssociar.setPrefSize(130, 60);
         //endregion
 
         //region Estilo e fonte das Labels
@@ -670,23 +690,28 @@ public class Main extends Application {
 
         //region Preparação da janela
         HBox butoesJogador = new HBox(40);
+        HBox butoesAssociacao = new HBox(40);
+        VBox todosButoes = new VBox(40);
         BorderPane borderPaneJogador = new BorderPane();
+        butoesAssociacao.getChildren().addAll(associar, cancelAssociar);
+        todosButoes.getChildren().addAll(butoesJogador, butoesAssociacao);
         borderPaneJogador.setTop(labelJogador);
         borderPaneJogador.setCenter(tableJogador);
-        borderPaneJogador.setBottom(butoesJogador);
+        borderPaneJogador.setBottom(todosButoes);
 
         butoesJogador.setPadding(new Insets(10, 20, 20, 20));
         butoesJogador.getChildren().addAll(addJogador, editJogador, deleteJogador, cemRegistosJogador, closeJogador);
+        butoesAssociacao.setPadding(new Insets(0, 20, 20, 20));
 
         StackPane stackPaneJogador = new StackPane();
         stackPaneJogador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
         stackPaneJogador.getChildren().add(borderPaneJogador);
 
-        Scene formEntidadeJogador = new Scene(stackPaneJogador, 726, 561);            // Tratamento da janela
-        entidadeJogador.setScene(formEntidadeJogador);
-        entidadeJogador.initModality(Modality.APPLICATION_MODAL);
-        entidadeJogador.setTitle("Jogadores");
-        entidadeJogador.setResizable(false);
+        Scene formentidadeJogadorLista = new Scene(stackPaneJogador, 726, 561);            // Tratamento da janela
+        entidadeJogadorLista.setScene(formentidadeJogadorLista);
+        entidadeJogadorLista.initModality(Modality.APPLICATION_MODAL);
+        entidadeJogadorLista.setTitle("Jogadores");
+        entidadeJogadorLista.setResizable(false);
         //endregion
     }
 
@@ -732,8 +757,8 @@ public class Main extends Application {
         borderPaneJogadores.setCenter(gridPaneJogadores);
         borderPaneJogadores.setBottom(Butoes);
 
-        Scene formEntidadeJogadoresDetalhes = new Scene(borderPaneJogadores,320, 320);
-        entidadeJogadorDetalhes.setScene(formEntidadeJogadoresDetalhes);
+        Scene formentidadeJogadorListaesDetalhes = new Scene(borderPaneJogadores,320, 320);
+        entidadeJogadorDetalhes.setScene(formentidadeJogadorListaesDetalhes);
         entidadeJogadorDetalhes.initModality(Modality.APPLICATION_MODAL);
         entidadeJogadorDetalhes.setTitle("Jogadores Detalhes");
         entidadeJogadorDetalhes.setResizable(false);
@@ -758,7 +783,7 @@ public class Main extends Application {
         //region Propriedades das Colunas da TableView Treinadores
         // Coluna Nome
         TableColumn<Treinador, String> colunaNomeTreinador = new TableColumn<>("Nome");
-        colunaNomeTreinador.setMinWidth(120);
+        colunaNomeTreinador.setMinWidth(180);
         colunaNomeTreinador.setResizable(false);
         colunaNomeTreinador.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
@@ -806,11 +831,11 @@ public class Main extends Application {
         stackPaneTreinador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
         stackPaneTreinador.getChildren().add(borderPaneTreinador);
 
-        Scene formEntidadeTreinador = new Scene(stackPaneTreinador, 726, 561);            // Tratamento da janela
-        entidadeTreinador.setScene(formEntidadeTreinador);
-        entidadeTreinador.initModality(Modality.APPLICATION_MODAL);
-        entidadeTreinador.setTitle("Treinadores");
-        entidadeTreinador.setResizable(false);
+        Scene formentidadeTreinadorLista = new Scene(stackPaneTreinador, 726, 561);            // Tratamento da janela
+        entidadeTreinadorLista.setScene(formentidadeTreinadorLista);
+        entidadeTreinadorLista.initModality(Modality.APPLICATION_MODAL);
+        entidadeTreinadorLista.setTitle("Treinadores");
+        entidadeTreinadorLista.setResizable(false);
         //endregion
     }
 
@@ -856,8 +881,8 @@ public class Main extends Application {
         borderPaneTreinadores.setCenter(gridPaneTreinadores);
         borderPaneTreinadores.setBottom(Butoes);
 
-        Scene formEntidadeTreinadoresDetalhes = new Scene(borderPaneTreinadores,320, 320);
-        entidadeTreinadorDetalhes.setScene(formEntidadeTreinadoresDetalhes);
+        Scene formentidadeTreinadorListaesDetalhes = new Scene(borderPaneTreinadores,320, 320);
+        entidadeTreinadorDetalhes.setScene(formentidadeTreinadorListaesDetalhes);
         entidadeTreinadorDetalhes.initModality(Modality.APPLICATION_MODAL);
         entidadeTreinadorDetalhes.setTitle("Treinadores Detalhes");
         entidadeTreinadorDetalhes.setResizable(false);
@@ -927,7 +952,7 @@ public class Main extends Application {
                     observableListEquipas = FXCollections.observableArrayList(listaEquipas);
                     tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
                     tableEquipa.refresh();
-                    entidadeEquipasDetalhes.close();
+                    entidadeEquipaDetalhes.close();
                 }
             }
             else if (textoConvocada.getText().equals("Não") || textoConvocada.getText().equals("não"))
@@ -944,7 +969,7 @@ public class Main extends Application {
                     observableListEquipas = FXCollections.observableArrayList(listaEquipas);
                     tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
                     tableEquipa.refresh();
-                    entidadeEquipasDetalhes.close();
+                    entidadeEquipaDetalhes.close();
                 }
             }
             else
@@ -978,7 +1003,7 @@ public class Main extends Application {
                     observableListEquipas = FXCollections.observableArrayList(listaEquipas);
                     tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
                     tableEquipa.refresh();
-                    entidadeEquipasDetalhes.close();
+                    entidadeEquipaDetalhes.close();
                 }
             }
             else if (textoConvocada.getText().equals("Não") || textoConvocada.getText().equals("não"))
@@ -997,7 +1022,7 @@ public class Main extends Application {
                     observableListEquipas = FXCollections.observableArrayList(listaEquipas);
                     tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
                     tableEquipa.refresh();
-                    entidadeEquipasDetalhes.close();
+                    entidadeEquipaDetalhes.close();
                 }
             }
             else
@@ -1011,7 +1036,7 @@ public class Main extends Application {
         Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
         tableEquipa.getItems().remove(equipaSelecionada);
         tableEquipa.refresh();
-        entidadeEquipasDetalhes.close();
+        entidadeEquipaDetalhes.close();
     }
 
     public void AddJogadores() {
