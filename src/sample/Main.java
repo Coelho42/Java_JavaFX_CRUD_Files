@@ -689,7 +689,7 @@ public class Main extends Application {
         tableJogador.getColumns().addAll(colunaNomeJogador, colunaIdadeJogador, colunaAlturaJogador, colunaPosicao, colunaEquipa);
 
         //region Preparação da janela
-        HBox butoesJogador = new HBox(40);
+        HBox butoesJogador = new HBox(30);
         HBox butoesAssociacao = new HBox(40);
         VBox todosButoes = new VBox(40);
         BorderPane borderPaneJogador = new BorderPane();
