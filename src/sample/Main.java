@@ -179,6 +179,11 @@ public class Main extends Application {
             primaryStage.show();
 
             menuItemFileOpcaoEquipa.setOnAction(e -> {
+                associarJogador.setDisable(true);
+                associarTreinador.setDisable(true);
+                desassociar.setDisable(true);
+                tableEquipaTreinadores.setDisable(true);
+                tableEquipaJogadores.setDisable(true);
                 entidadeEquipaLista.show();
                 //region Botões Add, Edit e Delete
                 addEquipa.setOnAction(AE -> {
@@ -193,46 +198,16 @@ public class Main extends Application {
                     customEquipa.setOnAction(CE -> {
                         AddEquipas();
                     });
-                    associarJogador.setOnAction(aE -> {
-                        addJogador.setVisible(false);
-                        editJogador.setVisible(false);
-                        deleteJogador.setVisible(false);
-                        cemRegistosJogador.setVisible(false);
-                        closeJogador.setVisible(false);
-                        associar.setVisible(true);
-                        cancelAssociar.setVisible(true);
-                        entidadeJogadorLista.show();
-
-                        associar.setOnAction(aJ -> {
-                            if (tableJogador.getSelectionModel().getSelectedItem() != null) {
-                                Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
-                                AlertBox.Show("1","1");
-                                for (Equipa equipa : listaEquipas){
-                                    AlertBox.Show("2","2");
-                                    equipa.getJogadorList().add(jogadorSelecionado);
-                                    observableListEquipaJogadores = FXCollections.observableArrayList(equipa.getJogadorList());
-                                    tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
-                                    tableEquipaJogadores.refresh();
-                                    entidadeJogadorLista.close();
-                                    AlertBox.Show("sim","yes");
-                                }
-                            }
-                            else {
-                                AlertBox.Show("Erro", "Não selecionou nenhum jogador para associar à equipa, porfavor selecione um Jogador.");
-                            }
-                        });
-
-
-                    });
-                    associarTreinador.setOnAction(aE -> {
-
-
-                    });
                     cancelEquipa.setOnAction(Cancel -> {
                         entidadeEquipaDetalhes.close();
                     });
                 });
                 editEquipa.setOnAction(EE -> {
+                    associarJogador.setDisable(false);
+                    associarTreinador.setDisable(false);
+                    desassociar.setDisable(false);
+                    tableEquipaTreinadores.setDisable(false);
+                    tableEquipaJogadores.setDisable(false);
                     textoNomeEquipa.setEditable(true);
                     textoConvocada.setEditable(true);
                     textoClassificacao.setEditable(true);
@@ -251,6 +226,37 @@ public class Main extends Application {
                         customEquipa.setOnAction(CE -> {
                             EditEquipas();
                         });
+
+                        associarJogador.setOnAction(aE -> {
+                            addJogador.setVisible(false);
+                            editJogador.setVisible(false);
+                            deleteJogador.setVisible(false);
+                            cemRegistosJogador.setVisible(false);
+                            closeJogador.setVisible(false);
+                            associar.setVisible(true);
+                            cancelAssociar.setVisible(true);
+                            entidadeJogadorLista.show();
+
+                            associar.setOnAction(aJ -> {
+                                if (tableJogador.getSelectionModel().getSelectedItem() != null) {
+                                    Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
+                                    equipaSelecionada.getJogadorList().add(jogadorSelecionado);
+                                    observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
+                                    tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
+                                    tableEquipaJogadores.refresh();
+                                    entidadeJogadorLista.close();
+                                }
+                                else {
+                                    AlertBox.Show("Erro", "Não selecionou nenhum jogador para associar à equipa, porfavor selecione um Jogador.");
+                                }
+                            });
+
+
+                        });
+                        associarTreinador.setOnAction(aE -> {
+
+
+                        });
                         cancelEquipa.setOnAction(Cancel -> {
                             entidadeEquipaDetalhes.close();
                         });
@@ -260,6 +266,11 @@ public class Main extends Application {
                     }
                 });
                 deleteEquipa.setOnAction(DE -> {
+                    associarJogador.setDisable(true);
+                    associarTreinador.setDisable(true);
+                    desassociar.setDisable(true);
+                    tableEquipaTreinadores.setDisable(true);
+                    tableEquipaJogadores.setDisable(true);
                     if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
                         entidadeEquipaDetalhes.show();
                         Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
