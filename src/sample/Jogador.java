@@ -64,27 +64,6 @@ public class Jogador extends Pessoa {
     }
     //endregion
 
-    //region Métodos
-    /**
-     * Esté é um método que está encarregado da criação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Add(List<Jogador> listaJogador) {
-
-    }
-
-    /**
-     * Esté é um método que está encarregado da edição dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Edit(List<Jogador> listaJogador) {
-    }
-
-    /**
-     * Esté é um método que está encarregado da eliminação dos jogadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Delete(List<Jogador> listaJogador) {
-    }
-    //endregion
-
     //region Getters & Setters
     public String getPosicao() {
         return posicao;

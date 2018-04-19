@@ -47,7 +47,6 @@ public class Equipa {
     // Atributos de Relação
     private List<Jogador> jogadorList;
     private List<Treinador> treinadorList;
-
     //endregion
 
     //region Construtores
@@ -104,5 +103,14 @@ public class Equipa {
     public void setClassificacao(long classificacao) {
         this.classificacao = classificacao;
     }
+
+    public List<Jogador> getJogadorList() { return jogadorList; }
+
+    public void setJogadorList(List<Jogador> jogadorList) { this.jogadorList = jogadorList; }
+
+    public List<Treinador> getTreinadorList() { return treinadorList; }
+
+    public void setTreinadorList(List<Treinador> treinadorList) { this.treinadorList = treinadorList; }
+
     //endregion
 }

@@ -98,7 +98,9 @@ public class Main extends Application {
     TableView<Treinador> tableTreinador = new TableView<>();
     ObservableList<Treinador> observableListTreinadores;
     TableView<Jogador> tableEquipaJogadores = new TableView<>();
+    ObservableList<Jogador> observableListEquipaJogadores;
     TableView<Treinador> tableEquipaTreinadores = new TableView<>();
+    ObservableList<Treinador> observableListEquipaTreinadores;
     //endregion
 
     //region Outras Variáveis
@@ -197,15 +199,23 @@ public class Main extends Application {
                         deleteJogador.setVisible(false);
                         cemRegistosJogador.setVisible(false);
                         closeJogador.setVisible(false);
-                        associar.setVisible(false);
-                        cancelAssociar.setVisible(false);
+                        associar.setVisible(true);
+                        cancelAssociar.setVisible(true);
                         entidadeJogadorLista.show();
 
-                        editJogador.setOnAction(aJ -> {
+                        associar.setOnAction(aJ -> {
                             if (tableJogador.getSelectionModel().getSelectedItem() != null) {
                                 Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
-
-
+                                AlertBox.Show("1","1");
+                                for (Equipa equipa : listaEquipas){
+                                    AlertBox.Show("2","2");
+                                    equipa.getJogadorList().add(jogadorSelecionado);
+                                    observableListEquipaJogadores = FXCollections.observableArrayList(equipa.getJogadorList());
+                                    tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
+                                    tableEquipaJogadores.refresh();
+                                    entidadeJogadorLista.close();
+                                    AlertBox.Show("sim","yes");
+                                }
                             }
                             else {
                                 AlertBox.Show("Erro", "Não selecionou nenhum jogador para associar à equipa, porfavor selecione um Jogador.");
@@ -290,6 +300,13 @@ public class Main extends Application {
                 //endregion
             });
             menuItemFileOpcaoJogador.setOnAction(e -> {
+                addJogador.setVisible(true);
+                editJogador.setVisible(true);
+                deleteJogador.setVisible(true);
+                cemRegistosJogador.setVisible(true);
+                closeJogador.setVisible(true);
+                associar.setVisible(false);
+                cancelAssociar.setVisible(false);
                 entidadeJogadorLista.show();
                 //region Botões Add, Edit e Delete
                 addJogador.setOnAction(AJ -> {
@@ -690,18 +707,17 @@ public class Main extends Application {
 
         //region Preparação da janela
         HBox butoesJogador = new HBox(30);
-        HBox butoesAssociacao = new HBox(40);
-        VBox todosButoes = new VBox(40);
+        HBox butoesAssociacao = new HBox(30);
+        VBox tablebutoesAssociacao = new VBox (10);
         BorderPane borderPaneJogador = new BorderPane();
         butoesAssociacao.getChildren().addAll(associar, cancelAssociar);
-        todosButoes.getChildren().addAll(butoesJogador, butoesAssociacao);
-        borderPaneJogador.setTop(labelJogador);
-        borderPaneJogador.setCenter(tableJogador);
-        borderPaneJogador.setBottom(todosButoes);
-
-        butoesJogador.setPadding(new Insets(10, 20, 20, 20));
+        butoesAssociacao.setPadding(new Insets(10, 0, 0, 205));
         butoesJogador.getChildren().addAll(addJogador, editJogador, deleteJogador, cemRegistosJogador, closeJogador);
-        butoesAssociacao.setPadding(new Insets(0, 20, 20, 20));
+        butoesJogador.setPadding(new Insets(0, 20, 20, 20));
+        tablebutoesAssociacao.getChildren().addAll(tableJogador, butoesAssociacao);
+        borderPaneJogador.setTop(labelJogador);
+        borderPaneJogador.setCenter(tablebutoesAssociacao);
+        borderPaneJogador.setBottom(butoesJogador);
 
         StackPane stackPaneJogador = new StackPane();
         stackPaneJogador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno
