@@ -22,6 +22,9 @@ public class Jogador extends Pessoa {
 
     //region Atributos
 
+    // Id do Jogador
+    private int id;
+
     /**
      * É uma variável do tipo string que indica a posição do jogador no campo
      * (base, extremo, poste etc... ) em cada equipa.
@@ -41,6 +44,7 @@ public class Jogador extends Pessoa {
      * @param posicao Posição no campo do Jogador
      */
     public Jogador(String nome, int idade, double altura, String posicao) {
+        id = id + 1;
         this.setNome(nome);
         this.setIdade(idade);
         this.setAltura(altura);
@@ -65,6 +69,11 @@ public class Jogador extends Pessoa {
     //endregion
 
     //region Getters & Setters
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
     public String getPosicao() {
         return posicao;
     }
@@ -72,5 +81,10 @@ public class Jogador extends Pessoa {
     public void setPosicao(String posicao) {
         this.posicao = posicao;
     }
+
+    public Equipa getEquipa() { return equipa; }
+
+    public void setEquipa(Equipa equipa) { this.equipa = equipa; }
+
     //endregion
 }

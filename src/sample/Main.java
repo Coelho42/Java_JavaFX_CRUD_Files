@@ -15,7 +15,11 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,9 +46,10 @@ public class Main extends Application {
     Button cancelEquipa = new Button("Cancel");
     Button associarJogador = new Button("Associar Jogador");
     Button associarTreinador = new Button("Associar Treinador");
-    Button desassociar = new Button("Desassociar");
-    Button associar = new Button("Associar");
-    Button cancelAssociar = new Button ("Cancelar");
+    Button desassociarJogador = new Button("Desassociar Jogador");
+    Button desassociarTreinador = new Button ("Desassociar Treinador");
+
+
 
     Button addJogador = new Button("Adicionar");
     Button editJogador = new Button("Editar");
@@ -53,6 +58,8 @@ public class Main extends Application {
     Button cemRegistosJogador = new Button("100 Registos");
     Button customJogador = new Button("'Custom'");
     Button cancelJogador= new Button("Cancel");
+    Button associarJogadorGraf = new Button("Associar");
+    Button cancelAssociarJogadorGraf = new Button ("Cancelar");
 
     Button addTreinador = new Button("Adicionar");
     Button editTreinador = new Button("Editar");
@@ -61,6 +68,8 @@ public class Main extends Application {
     Button cemRegistosTreinador = new Button("100 Registos");
     Button customTreinador = new Button("'Custom'");
     Button cancelTreinador = new Button("Cancel");
+    Button associarTreinadorGraf = new Button("Associar");
+    Button cancelAssociarTreinadorGraf = new Button ("Cancelar");
     //endregion
 
     //region TextFields
@@ -105,6 +114,10 @@ public class Main extends Application {
 
     //region Outras Variáveis
     boolean convocada;
+    Equipa equipaSelecionada;
+    //String fileAndLocation = "C:\\Users\\a50445\\Desktop\\Valores.bin\\";
+    String fileAndLocation = "C:\\Users\\MSI\\Desktop\\Valores.bin\\";
+    SerializarDesserializar listas = new SerializarDesserializar(listaEquipas, listaJogadores, listaTreinadores);
     //endregion
 
     /**
@@ -181,7 +194,8 @@ public class Main extends Application {
             menuItemFileOpcaoEquipa.setOnAction(e -> {
                 associarJogador.setDisable(true);
                 associarTreinador.setDisable(true);
-                desassociar.setDisable(true);
+                desassociarTreinador.setDisable(true);
+                desassociarJogador.setDisable(true);
                 tableEquipaTreinadores.setDisable(true);
                 tableEquipaJogadores.setDisable(true);
                 entidadeEquipaLista.show();
@@ -205,7 +219,8 @@ public class Main extends Application {
                 editEquipa.setOnAction(EE -> {
                     associarJogador.setDisable(false);
                     associarTreinador.setDisable(false);
-                    desassociar.setDisable(false);
+                    desassociarJogador.setDisable(false);
+                    desassociarTreinador.setDisable(false);
                     tableEquipaTreinadores.setDisable(false);
                     tableEquipaJogadores.setDisable(false);
                     textoNomeEquipa.setEditable(true);
@@ -213,7 +228,7 @@ public class Main extends Application {
                     textoClassificacao.setEditable(true);
                     if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
                         entidadeEquipaDetalhes.show();
-                        Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
+                        equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
                         textoNomeEquipa.setText(equipaSelecionada.getNome());
                         if (equipaSelecionada.getConvocada() == true) {
                             textoConvocada.setText("Sim");
@@ -222,6 +237,12 @@ public class Main extends Application {
                             textoConvocada.setText("Não");
                         }
                         textoClassificacao.setText(String.valueOf(equipaSelecionada.getClassificacao()));
+                        observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
+                        tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
+                        tableEquipaJogadores.refresh();
+                        observableListEquipaTreinadores = FXCollections.observableArrayList(equipaSelecionada.getTreinadorList());
+                        tableEquipaTreinadores.setItems(observableListEquipaTreinadores);    // Adição da ObservableList à tableView
+                        tableEquipaTreinadores.refresh();
                         customEquipa.setText("Edit");
                         customEquipa.setOnAction(CE -> {
                             EditEquipas();
@@ -233,29 +254,78 @@ public class Main extends Application {
                             deleteJogador.setVisible(false);
                             cemRegistosJogador.setVisible(false);
                             closeJogador.setVisible(false);
-                            associar.setVisible(true);
-                            cancelAssociar.setVisible(true);
+                            associarJogadorGraf.setVisible(true);
+                            cancelAssociarJogadorGraf.setVisible(true);
                             entidadeJogadorLista.show();
 
-                            associar.setOnAction(aJ -> {
+                            associarJogadorGraf.setOnAction(aJ -> {
                                 if (tableJogador.getSelectionModel().getSelectedItem() != null) {
                                     Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
                                     equipaSelecionada.getJogadorList().add(jogadorSelecionado);
+                                    entidadeJogadorLista.close();
+                                    jogadorSelecionado.setEquipa(equipaSelecionada);
+
                                     observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
                                     tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
                                     tableEquipaJogadores.refresh();
-                                    entidadeJogadorLista.close();
                                 }
                                 else {
                                     AlertBox.Show("Erro", "Não selecionou nenhum jogador para associar à equipa, porfavor selecione um Jogador.");
                                 }
                             });
-
-
+                            cancelAssociarJogadorGraf.setOnAction(cA -> {
+                                entidadeJogadorLista.close();
+                            });
                         });
                         associarTreinador.setOnAction(aE -> {
+                            addTreinador.setVisible(false);
+                            editTreinador.setVisible(false);
+                            deleteTreinador.setVisible(false);
+                            cemRegistosTreinador.setVisible(false);
+                            closeTreinador.setVisible(false);
+                            associarTreinadorGraf.setVisible(true);
+                            cancelAssociarTreinadorGraf.setVisible(true);
+                            entidadeTreinadorLista.show();
 
+                            associarTreinadorGraf.setOnAction(aT -> {
+                                if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
+                                    Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
+                                    equipaSelecionada.getTreinadorList().add(treinadorSelecionado);
+                                    entidadeTreinadorLista.close();
+                                    observableListEquipaTreinadores = FXCollections.observableArrayList(equipaSelecionada.getTreinadorList());
+                                    tableEquipaTreinadores.setItems(observableListEquipaTreinadores);    // Adição da ObservableList à tableView
+                                    tableEquipaTreinadores.refresh();
+                                }
+                                else {
+                                    AlertBox.Show("Erro", "Não selecionou nenhum jogador para associar à equipa, porfavor selecione um Jogador.");
+                                }
+                            });
+                            cancelAssociarTreinadorGraf.setOnAction(cA -> {
+                                entidadeTreinadorLista.close();
+                            });
+                        });
 
+                        desassociarJogador.setOnAction(dJ -> {
+                            if (tableJogador.getSelectionModel().getSelectedItem() != null) {
+                                equipaSelecionada.getJogadorList().remove(tableJogador.getSelectionModel().getSelectedItem());
+                                observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
+                                tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
+                                tableEquipaJogadores.refresh();
+                            }
+                            else {
+                                AlertBox.Show("Erro", "Não selecionou nenhum jogador para desassociar à equipa.");
+                            }
+                        });
+                        desassociarTreinador.setOnAction(dJ -> {
+                            if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
+                                equipaSelecionada.getTreinadorList().remove(tableTreinador.getSelectionModel().getSelectedItem());
+                                observableListEquipaTreinadores = FXCollections.observableArrayList(equipaSelecionada.getTreinadorList());
+                                tableEquipaTreinadores.setItems(observableListEquipaTreinadores);    // Adição da ObservableList à tableView
+                                tableEquipaTreinadores.refresh();
+                            }
+                            else {
+                                AlertBox.Show("Erro", "Não selecionou nenhum treinador para desassociar à equipa.");
+                            }
                         });
                         cancelEquipa.setOnAction(Cancel -> {
                             entidadeEquipaDetalhes.close();
@@ -265,10 +335,12 @@ public class Main extends Application {
                         AlertBox.Show("Erro","Selecione uma Equipa antes de tentar editar");
                     }
                 });
+
                 deleteEquipa.setOnAction(DE -> {
                     associarJogador.setDisable(true);
                     associarTreinador.setDisable(true);
-                    desassociar.setDisable(true);
+                    desassociarJogador.setDisable(true);
+                    desassociarTreinador.setDisable(true);
                     tableEquipaTreinadores.setDisable(true);
                     tableEquipaJogadores.setDisable(true);
                     if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
@@ -316,8 +388,8 @@ public class Main extends Application {
                 deleteJogador.setVisible(true);
                 cemRegistosJogador.setVisible(true);
                 closeJogador.setVisible(true);
-                associar.setVisible(false);
-                cancelAssociar.setVisible(false);
+                associarJogadorGraf.setVisible(false);
+                cancelAssociarJogadorGraf.setVisible(false);
                 entidadeJogadorLista.show();
                 //region Botões Add, Edit e Delete
                 addJogador.setOnAction(AJ -> {
@@ -400,6 +472,13 @@ public class Main extends Application {
                 //endregion
             });
             menuItemFileOpcaoTreinador.setOnAction(e -> {
+                addTreinador.setVisible(true);
+                editTreinador.setVisible(true);
+                deleteTreinador.setVisible(true);
+                cemRegistosTreinador.setVisible(true);
+                closeTreinador.setVisible(true);
+                associarTreinadorGraf.setVisible(false);
+                cancelAssociarTreinadorGraf.setVisible(false);
                 entidadeTreinadorLista.show();
                 //region Botões Add, Edit e Delete
                 addTreinador.setOnAction(A -> {
@@ -480,6 +559,26 @@ public class Main extends Application {
                     entidadeTreinadorLista.close();
                 });
                 //endregion
+            });
+            //region Btn Gravar e Ler Ciêntifica
+
+            //String fileAndLocation = "C:\\Users\\newma\\Desktop\\Valores.bin\\";
+            menuItemFileOpcaoSave.setOnAction(SA -> {
+                Serialization.Serializar(fileAndLocation, listas);
+                AlertBox.Show("Resultado:", "Serializado com sucesso");
+            });
+
+            menuItemFileOpcaoLoad.setOnAction(LO ->{
+                File fileAndLocationFile = new File(fileAndLocation);
+                if(fileAndLocationFile.exists()) {
+                    listas = (SerializarDesserializar) Serialization.Desserializar(fileAndLocation);
+                    listaEquipas = listas.getListaEquipas();
+                    listaJogadores = listas.getListaJogadores();
+                    listaTreinadores = listas.getListaTreinadores();
+                    AlertBox.Show("Aviso", "Não existe nada para ser lido!");
+                } else{
+                    AlertBox.Show("Aviso", "Não existe nada para ser lido!");
+                }
             });
             menuItemFileOpcaoSair.setOnAction(e -> {
                 primaryStage.close();
@@ -643,7 +742,7 @@ public class Main extends Application {
         butoesBaixo.getChildren().addAll(customEquipa, cancelEquipa);
         butoesDireita.setAlignment(Pos.CENTER);
         butoesDireita.setPadding(new Insets(10,20,20,20));
-        butoesDireita.getChildren().addAll(associarJogador, associarTreinador, desassociar);
+        butoesDireita.getChildren().addAll(associarJogador, associarTreinador, desassociarJogador, desassociarTreinador);
         tabelaButoes.setAlignment(Pos.CENTER);
         tabelaButoes.setPadding(new Insets(10,20,20,20));
         tabelaButoes.getChildren().addAll(tableEquipaJogadores, tableEquipaTreinadores, butoesDireita);
@@ -671,8 +770,8 @@ public class Main extends Application {
         deleteJogador.setPrefSize(130, 60);
         cemRegistosJogador.setPrefSize(130,60);
         closeJogador.setPrefSize(130, 60);
-        associar.setPrefSize(130, 60);
-        cancelAssociar.setPrefSize(130, 60);
+        associarJogadorGraf.setPrefSize(130, 60);
+        cancelAssociarJogadorGraf.setPrefSize(130, 60);
         //endregion
 
         //region Estilo e fonte das Labels
@@ -718,16 +817,16 @@ public class Main extends Application {
 
         //region Preparação da janela
         HBox butoesJogador = new HBox(30);
-        HBox butoesAssociacao = new HBox(30);
-        VBox tablebutoesAssociacao = new VBox (10);
+        HBox butoesAssociacaoJogador = new HBox(30);
+        VBox tablebutoesAssociacaoJogador = new VBox (10);
         BorderPane borderPaneJogador = new BorderPane();
-        butoesAssociacao.getChildren().addAll(associar, cancelAssociar);
-        butoesAssociacao.setPadding(new Insets(10, 0, 0, 205));
+        butoesAssociacaoJogador.getChildren().addAll(associarJogadorGraf, cancelAssociarJogadorGraf);
+        butoesAssociacaoJogador.setPadding(new Insets(0, 0, 0, 205));
         butoesJogador.getChildren().addAll(addJogador, editJogador, deleteJogador, cemRegistosJogador, closeJogador);
         butoesJogador.setPadding(new Insets(0, 20, 20, 20));
-        tablebutoesAssociacao.getChildren().addAll(tableJogador, butoesAssociacao);
+        tablebutoesAssociacaoJogador.getChildren().addAll(tableJogador, butoesAssociacaoJogador);
         borderPaneJogador.setTop(labelJogador);
-        borderPaneJogador.setCenter(tablebutoesAssociacao);
+        borderPaneJogador.setCenter(tablebutoesAssociacaoJogador);
         borderPaneJogador.setBottom(butoesJogador);
 
         StackPane stackPaneJogador = new StackPane();
@@ -799,6 +898,8 @@ public class Main extends Application {
         deleteTreinador.setPrefSize(130, 60);
         cemRegistosTreinador.setPrefSize(130,60);
         closeTreinador.setPrefSize(130, 60);
+        associarTreinadorGraf.setPrefSize(130, 60);
+        cancelAssociarTreinadorGraf.setPrefSize(130, 60);
         //endregion
 
         //region Estilo e fonte das Labels
@@ -846,13 +947,17 @@ public class Main extends Application {
 
         //region Preparação da janela
         HBox butoesTreinador = new HBox(40);
+        HBox butoesAssociacaoTreinador = new HBox(30);
+        VBox tablebutoesAssociacaoTreinador = new VBox (10);
         BorderPane borderPaneTreinador = new BorderPane();
-        borderPaneTreinador.setTop(labelTreinador);
-        borderPaneTreinador.setCenter(tableTreinador);
-        borderPaneTreinador.setBottom(butoesTreinador);
-
-        butoesTreinador.setPadding(new Insets(10, 20, 20, 20));
+        butoesAssociacaoTreinador.getChildren().addAll(associarTreinadorGraf, cancelAssociarTreinadorGraf);
+        butoesAssociacaoTreinador.setPadding(new Insets(0, 0, 0, 205));
+        butoesTreinador.setPadding(new Insets(0, 20, 20, 20));
         butoesTreinador.getChildren().addAll(addTreinador, editTreinador, deleteTreinador, cemRegistosTreinador, closeTreinador);
+        tablebutoesAssociacaoTreinador.getChildren().addAll(tableTreinador, butoesAssociacaoTreinador);
+        borderPaneTreinador.setTop(labelTreinador);
+        borderPaneTreinador.setCenter(tablebutoesAssociacaoTreinador);
+        borderPaneTreinador.setBottom(butoesTreinador);
 
         StackPane stackPaneTreinador = new StackPane();
         stackPaneTreinador.setPadding(new Insets(20, 20, 20, 20));            // espessura interna de cada bordo interno

@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -45,8 +46,8 @@ public class Equipa {
     private long classificacao;
 
     // Atributos de Relação
-    private List<Jogador> jogadorList;
-    private List<Treinador> treinadorList;
+    private List<Jogador> jogadorList = new ArrayList<>();
+    private List<Treinador> treinadorList = new ArrayList<>();
     //endregion
 
     //region Construtores
@@ -57,6 +58,7 @@ public class Equipa {
      * @param classificacao Classificação da equipa
      */
     public Equipa(String nome, boolean convocada, long classificacao) {
+        id = id + 1;
         this.setNome(nome);
         this.setConvocada(convocada);
         this.setClassificacao(classificacao);

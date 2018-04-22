@@ -5,10 +5,6 @@ package sample;
  */
 public class Pessoa {
     /**
-     * É uma variável do tipo long que recebe o id dos jogadores, pois os jogadores que podem ser criados são infinitos ou seja o id pode chegar a ter vários digitos, logo tem de ser um long
-     */
-    private long id;
-    /**
      * É uma varíavel do tipo String que atribui um nome de cada jogador.
      */
     private String nome;
@@ -20,15 +16,6 @@ public class Pessoa {
      * É uma variável do tipo double que recebe a altura dos jogadores, pois as alturas têm no máximo 3 digitos mas tem números décimais, logo tem de ser um double.
      */
     private double altura;
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;

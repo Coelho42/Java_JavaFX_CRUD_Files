@@ -22,6 +22,9 @@ import java.util.Vector;
 public class Treinador extends Pessoa {
 
     //region Atributos
+
+    // Id do treinador
+    private int id;
     /**
      * É uma variável do tipo stirng que recebe uma string que indica a categoria do treinador na equipa.
      */
@@ -40,6 +43,7 @@ public class Treinador extends Pessoa {
      * @param categoria A categoria do Treinador
      */
     public Treinador(String nome, int idade, double altura, String categoria) {
+        id = id + 1;
         this.setNome(nome);
         this.setIdade(idade);
         this.setAltura(altura);
@@ -84,6 +88,14 @@ public class Treinador extends Pessoa {
     //endregion
 
     //region Getters & Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getCategoria() {
         return categoria;
     }
