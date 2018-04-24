@@ -115,9 +115,9 @@ public class Main extends Application {
     //region Outras Variáveis
     boolean convocada;
     Equipa equipaSelecionada;
-    //String fileAndLocation = "C:\\Users\\a50445\\Desktop\\Valores.bin\\";
-    String fileAndLocation = "C:\\Users\\MSI\\Desktop\\Valores.bin\\";
-    SerializarDesserializar listas = new SerializarDesserializar(listaEquipas, listaJogadores, listaTreinadores);
+    String fileAndLocation = "D:\\Users\\a50445\\Desktop\\Valores.bin\\";
+    //String fileAndLocation = "C:\\Users\\MSI\\Desktop\\Valores.bin\\";
+    SerializarDesserializar listas;
     //endregion
 
     /**
@@ -198,6 +198,9 @@ public class Main extends Application {
                 desassociarJogador.setDisable(true);
                 tableEquipaTreinadores.setDisable(true);
                 tableEquipaJogadores.setDisable(true);
+                observableListEquipas = FXCollections.observableArrayList(listaEquipas);
+                tableEquipa.setItems(observableListEquipas);    // Adição da ObservableList à tableView
+                tableEquipa.refresh();
                 entidadeEquipaLista.show();
                 //region Botões Add, Edit e Delete
                 addEquipa.setOnAction(AE -> {
@@ -264,7 +267,6 @@ public class Main extends Application {
                                     equipaSelecionada.getJogadorList().add(jogadorSelecionado);
                                     entidadeJogadorLista.close();
                                     jogadorSelecionado.setEquipa(equipaSelecionada);
-
                                     observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
                                     tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
                                     tableEquipaJogadores.refresh();
@@ -307,7 +309,7 @@ public class Main extends Application {
 
                         desassociarJogador.setOnAction(dJ -> {
                             if (tableJogador.getSelectionModel().getSelectedItem() != null) {
-                                equipaSelecionada.getJogadorList().remove(tableJogador.getSelectionModel().getSelectedItem());
+                                equipaSelecionada.getJogadorList().remove(tableEquipaJogadores.getSelectionModel().getSelectedItem());
                                 observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
                                 tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
                                 tableEquipaJogadores.refresh();
@@ -318,7 +320,7 @@ public class Main extends Application {
                         });
                         desassociarTreinador.setOnAction(dJ -> {
                             if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
-                                equipaSelecionada.getTreinadorList().remove(tableTreinador.getSelectionModel().getSelectedItem());
+                                equipaSelecionada.getTreinadorList().remove(tableEquipaTreinadores.getSelectionModel().getSelectedItem());
                                 observableListEquipaTreinadores = FXCollections.observableArrayList(equipaSelecionada.getTreinadorList());
                                 tableEquipaTreinadores.setItems(observableListEquipaTreinadores);    // Adição da ObservableList à tableView
                                 tableEquipaTreinadores.refresh();
@@ -390,6 +392,9 @@ public class Main extends Application {
                 closeJogador.setVisible(true);
                 associarJogadorGraf.setVisible(false);
                 cancelAssociarJogadorGraf.setVisible(false);
+                observableListJogadores = FXCollections.observableArrayList(listaJogadores);
+                tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
+                tableJogador.refresh();
                 entidadeJogadorLista.show();
                 //region Botões Add, Edit e Delete
                 addJogador.setOnAction(AJ -> {
@@ -465,6 +470,7 @@ public class Main extends Application {
                     }
                     observableListJogadores = FXCollections.observableArrayList(listaJogadores);
                     tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
+                    tableJogador.refresh();
                 });
                 closeJogador.setOnAction(CJ -> {
                     entidadeJogadorLista.close();
@@ -479,6 +485,9 @@ public class Main extends Application {
                 closeTreinador.setVisible(true);
                 associarTreinadorGraf.setVisible(false);
                 cancelAssociarTreinadorGraf.setVisible(false);
+                observableListTreinadores = FXCollections.observableArrayList(listaTreinadores);
+                tableTreinador.setItems(observableListTreinadores);    // Adição da ObservableList à tableView
+                tableTreinador.refresh();
                 entidadeTreinadorLista.show();
                 //region Botões Add, Edit e Delete
                 addTreinador.setOnAction(A -> {
@@ -554,6 +563,7 @@ public class Main extends Application {
                     }
                     observableListTreinadores = FXCollections.observableArrayList(listaTreinadores);
                     tableTreinador.setItems(observableListTreinadores);    // Adição da ObservableList à tableView
+                    tableTreinador.refresh();
                 });
                 closeTreinador.setOnAction(A -> {
                     entidadeTreinadorLista.close();
@@ -564,6 +574,7 @@ public class Main extends Application {
 
             //String fileAndLocation = "C:\\Users\\newma\\Desktop\\Valores.bin\\";
             menuItemFileOpcaoSave.setOnAction(SA -> {
+                listas = new SerializarDesserializar(listaEquipas, listaJogadores, listaTreinadores);
                 Serialization.Serializar(fileAndLocation, listas);
                 AlertBox.Show("Resultado:", "Serializado com sucesso");
             });
@@ -575,7 +586,6 @@ public class Main extends Application {
                     listaEquipas = listas.getListaEquipas();
                     listaJogadores = listas.getListaJogadores();
                     listaTreinadores = listas.getListaTreinadores();
-                    AlertBox.Show("Aviso", "Não existe nada para ser lido!");
                 } else{
                     AlertBox.Show("Aviso", "Não existe nada para ser lido!");
                 }
@@ -666,16 +676,19 @@ public class Main extends Application {
 
         // Nome
         Label labelNome = new Label("Nome:");			        // Nova Label
+        textoNomeEquipa.setMinWidth(220);
         gridPaneEquipas.add(labelNome, 0, 0);		// célula col 0,linha 0
         gridPaneEquipas.add(textoNomeEquipa, 1, 0);       // célula: col 1, linha 0
 
         // Convocada
         Label labelConvocada = new Label("Convocada:");				// Nova Label
+        textoConvocada.setMaxWidth(60);
         gridPaneEquipas.add(labelConvocada, 0, 1);		// célula col 0,linha 1
         gridPaneEquipas.add(textoConvocada, 1, 1);		// célula: col 1, linha 1
 
         // Classificação
         Label labelClassificacao = new Label("Classificação:");			// Nova Label
+        textoClassificacao.setMaxWidth(60);
         gridPaneEquipas.add(labelClassificacao, 0, 2);		// célula col 0,linha 2
         gridPaneEquipas.add(textoClassificacao, 1, 2);		// célula: col 1, linha 2
 
@@ -805,15 +818,8 @@ public class Main extends Application {
         colunaPosicao.setResizable(false);
         colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posicao"));
 
-        //Coluna Equipa
-        TableColumn<Jogador, String> colunaEquipa = new TableColumn<>("Equipa");
-        colunaEquipa.setMinWidth(120);
-        colunaEquipa.setResizable(false);
-        colunaEquipa.setCellValueFactory(new PropertyValueFactory<>("equipa"));
-        //endregion
-
         // Associar as colunas à tabela
-        tableJogador.getColumns().addAll(colunaNomeJogador, colunaIdadeJogador, colunaAlturaJogador, colunaPosicao, colunaEquipa);
+        tableJogador.getColumns().addAll(colunaNomeJogador, colunaIdadeJogador, colunaAlturaJogador, colunaPosicao);
 
         //region Preparação da janela
         HBox butoesJogador = new HBox(30);
@@ -851,26 +857,31 @@ public class Main extends Application {
 
         // Nome
         Label labelNome = new Label("Nome:");			        // Nova Label
+        textoNomeJogador.setMinWidth(220);
         gridPaneJogadores.add(labelNome, 0, 0);		// célula col 0,linha 0
         gridPaneJogadores.add(textoNomeJogador, 1, 0);       // célula: col 1, linha 0
 
         // Idade
         Label labelIdade = new Label("Idade:");				// Nova Label
+        textoIdadeJogador.setMaxWidth(60);
         gridPaneJogadores.add(labelIdade, 0, 1);		// célula col 0,linha 1
         gridPaneJogadores.add(textoIdadeJogador, 1, 1);		// célula: col 1, linha 1
 
         // Altura
         Label labelAltura = new Label("Altura:");			// Nova Label
+        textoAlturaJogador.setMaxWidth(60);
         gridPaneJogadores.add(labelAltura, 0, 2);		// célula col 0,linha 2
         gridPaneJogadores.add(textoAlturaJogador, 1, 2);		// célula: col 1, linha 2
 
         // Posição
         Label labelPosicao = new Label("Posição:");			// Nova Label
+        textoPosicao.setMaxWidth(190);
         gridPaneJogadores.add(labelPosicao, 0, 3);		// célula col 0,linha 2
         gridPaneJogadores.add(textoPosicao, 1, 3);		// célula: col 1, linha 2
 
         // Equipa
         Label labelEquipaJogador = new Label("Equipa:");				// Nova Label
+        textoEquipaJogador.setMinWidth(220);
         gridPaneJogadores.add(labelEquipaJogador, 0, 4);		// célula col 0,linha 1
         gridPaneJogadores.add(textoEquipaJogador, 1, 4);		// célula: col 1, linha 1
 
@@ -933,16 +944,9 @@ public class Main extends Application {
         colunaCategoria.setResizable(false);
         colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
-        //Coluna Equipa
-        TableColumn<Treinador, String> colunaEquipa = new TableColumn<>("Equipa");
-        colunaEquipa.setMinWidth(120);
-        colunaEquipa.setResizable(false);
-        colunaEquipa.setCellValueFactory(new PropertyValueFactory<>("equipa"));
-        //endregion
-
         //region TableView e ObservableList Stuff
         // Associar as colunas à tabela
-        tableTreinador.getColumns().addAll(colunaNomeTreinador, colunaIdadeTreinador, colunaAlturaTreinador, colunaCategoria, colunaEquipa);
+        tableTreinador.getColumns().addAll(colunaNomeTreinador, colunaIdadeTreinador, colunaAlturaTreinador, colunaCategoria);
         //endregion
 
         //region Preparação da janela
@@ -1193,7 +1197,7 @@ public class Main extends Application {
                 {
                     if (Valida.number(textoPosicao.getText()))
                     {
-                        Jogador jogador = new Jogador(textoNomeJogador.getText(), Integer.parseInt(textoIdadeJogador.getText()),Double.parseDouble(textoAlturaJogador.getText()), textoPosicao.getText());
+                        Jogador jogador = new Jogador(textoNomeJogador.getText(), Integer.parseInt(textoIdadeJogador.getText()),Double.parseDouble(textoAlturaJogador.getText()), textoPosicao.getText(), equipaSelecionada);
                         listaJogadores.add(jogador);
                         observableListJogadores = FXCollections.observableArrayList(listaJogadores);
                         tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
@@ -1271,7 +1275,7 @@ public class Main extends Application {
                 {
                     if (Valida.number(textoCategoria.getText()))
                     {
-                        Treinador treinador = new Treinador(textoNomeTreinador.getText(), Integer.parseInt(textoIdadeTreinador.getText()),Double.parseDouble(textoAlturaTreinador.getText()), textoCategoria.getText());
+                        Treinador treinador = new Treinador(textoNomeTreinador.getText(), Integer.parseInt(textoIdadeTreinador.getText()),Double.parseDouble(textoAlturaTreinador.getText()), textoCategoria.getText(), equipaSelecionada);
                         listaTreinadores.add(treinador);
                         observableListTreinadores = FXCollections.observableArrayList(listaTreinadores);
                         tableTreinador.setItems(observableListTreinadores);    // Adição da ObservableList à tableView

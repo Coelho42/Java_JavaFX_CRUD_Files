@@ -1,9 +1,11 @@
 package sample;
 
+import java.io.Serializable;
+
 /**
  * Classe pessoa que contêm as informações básicas referentes a uma Pessoa, esta é uma super classe e partilha os seus atributos com as classes Jogador e Treinador.
  */
-public class Pessoa {
+public class Pessoa implements Serializable {
     /**
      * É uma varíavel do tipo String que atribui um nome de cada jogador.
      */

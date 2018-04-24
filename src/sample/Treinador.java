@@ -13,13 +13,14 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
 /**
  * Esta classe é utilizada na criação dos Jogadores, esta contem 1 atributo que destiguemos trienadores uns dos outros e contem 3 métodos para a criação , edição e eliminação de um ou mais treinadores para que estes participem no calendário de jogos do torneio tartaruga.
  */
-public class Treinador extends Pessoa {
+public class Treinador extends Pessoa implements Serializable {
 
     //region Atributos
 
