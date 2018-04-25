@@ -68,26 +68,6 @@ public class Treinador extends Pessoa implements Serializable {
     }
     //endregion
 
-    //region Métodos
-    /**
-     * Esté é um método que está encarregado da criação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Add(List<Treinador> listaTreinador) {
-    }
-
-    /**
-     * Esté é um método que está encarregado da edição dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Edit(List<Treinador> listaTreinador) {
-    }
-
-    /**
-     * Esté é um método que está encarregado da eliminação dos treinadores na lista, este não tem parâmetros de entrada, e tem como método de saída void.
-     */
-    public void Delete(List<Treinador> listaTreinador) {
-    }
-    //endregion
-
     //region Getters & Setters
     public int getId() {
         return id;
@@ -104,5 +84,9 @@ public class Treinador extends Pessoa implements Serializable {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+
+    public Equipa getEquipa() { return equipa; }
+
+    public void setEquipa(Equipa equipa) { this.equipa = equipa; }
     //endregion
 }

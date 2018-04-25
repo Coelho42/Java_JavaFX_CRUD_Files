@@ -115,6 +115,8 @@ public class Main extends Application {
     //region Outras Variáveis
     boolean convocada;
     Equipa equipaSelecionada;
+    Jogador jogadorSelecionado;
+    Treinador treinadorSelecionado;
     String fileAndLocation = "D:\\Users\\a50445\\Desktop\\Valores.bin\\";
     //String fileAndLocation = "C:\\Users\\MSI\\Desktop\\Valores.bin\\";
     SerializarDesserializar listas;
@@ -210,6 +212,8 @@ public class Main extends Application {
                     textoNomeEquipa.clear();
                     textoConvocada.clear();
                     textoClassificacao.clear();
+                    tableEquipaTreinadores.setDisable(true);
+                    tableEquipaJogadores.setDisable(true);
                     entidadeEquipaDetalhes.show();
                     customEquipa.setText("Adicionar");
                     customEquipa.setOnAction(CE -> {
@@ -229,6 +233,7 @@ public class Main extends Application {
                     textoNomeEquipa.setEditable(true);
                     textoConvocada.setEditable(true);
                     textoClassificacao.setEditable(true);
+
                     if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
                         entidadeEquipaDetalhes.show();
                         equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
@@ -259,17 +264,22 @@ public class Main extends Application {
                             closeJogador.setVisible(false);
                             associarJogadorGraf.setVisible(true);
                             cancelAssociarJogadorGraf.setVisible(true);
+                            for (Jogador jogador : equipaSelecionada.getJogadorList()) {
+                                observableListJogadores.remove(jogador);
+                                tableJogador.setItems(observableListJogadores);
+                                tableJogador.refresh();
+                            }
                             entidadeJogadorLista.show();
 
                             associarJogadorGraf.setOnAction(aJ -> {
                                 if (tableJogador.getSelectionModel().getSelectedItem() != null) {
-                                    Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
+                                    jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
                                     equipaSelecionada.getJogadorList().add(jogadorSelecionado);
-                                    entidadeJogadorLista.close();
-                                    jogadorSelecionado.setEquipa(equipaSelecionada);
+                                    tableJogador.getSelectionModel().getSelectedItem().setEquipa(equipaSelecionada);
                                     observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
                                     tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
                                     tableEquipaJogadores.refresh();
+                                    entidadeJogadorLista.close();
                                 }
                                 else {
                                     AlertBox.Show("Erro", "Não selecionou nenhum jogador para associar à equipa, porfavor selecione um Jogador.");
@@ -287,16 +297,22 @@ public class Main extends Application {
                             closeTreinador.setVisible(false);
                             associarTreinadorGraf.setVisible(true);
                             cancelAssociarTreinadorGraf.setVisible(true);
+                            for (Treinador treinador : equipaSelecionada.getTreinadorList()) {
+                                observableListTreinadores.remove(treinador);
+                                tableTreinador.setItems(observableListTreinadores);
+                                tableTreinador.refresh();
+                            }
                             entidadeTreinadorLista.show();
 
                             associarTreinadorGraf.setOnAction(aT -> {
                                 if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
-                                    Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
+                                    treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
                                     equipaSelecionada.getTreinadorList().add(treinadorSelecionado);
-                                    entidadeTreinadorLista.close();
+                                    tableTreinador.getSelectionModel().getSelectedItem().setEquipa(equipaSelecionada);
                                     observableListEquipaTreinadores = FXCollections.observableArrayList(equipaSelecionada.getTreinadorList());
                                     tableEquipaTreinadores.setItems(observableListEquipaTreinadores);    // Adição da ObservableList à tableView
                                     tableEquipaTreinadores.refresh();
+                                    entidadeTreinadorLista.close();
                                 }
                                 else {
                                     AlertBox.Show("Erro", "Não selecionou nenhum jogador para associar à equipa, porfavor selecione um Jogador.");
@@ -310,6 +326,9 @@ public class Main extends Application {
                         desassociarJogador.setOnAction(dJ -> {
                             if (tableJogador.getSelectionModel().getSelectedItem() != null) {
                                 equipaSelecionada.getJogadorList().remove(tableEquipaJogadores.getSelectionModel().getSelectedItem());
+                                observableListJogadores.add(tableEquipaJogadores.getSelectionModel().getSelectedItem());
+                                tableJogador.setItems(observableListJogadores);
+                                tableJogador.refresh();
                                 observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
                                 tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
                                 tableEquipaJogadores.refresh();
@@ -321,6 +340,9 @@ public class Main extends Application {
                         desassociarTreinador.setOnAction(dJ -> {
                             if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
                                 equipaSelecionada.getTreinadorList().remove(tableEquipaTreinadores.getSelectionModel().getSelectedItem());
+                                observableListTreinadores.add(tableEquipaTreinadores.getSelectionModel().getSelectedItem());
+                                tableTreinador.setItems(observableListTreinadores);
+                                tableTreinador.refresh();
                                 observableListEquipaTreinadores = FXCollections.observableArrayList(equipaSelecionada.getTreinadorList());
                                 tableEquipaTreinadores.setItems(observableListEquipaTreinadores);    // Adição da ObservableList à tableView
                                 tableEquipaTreinadores.refresh();
@@ -345,9 +367,10 @@ public class Main extends Application {
                     desassociarTreinador.setDisable(true);
                     tableEquipaTreinadores.setDisable(true);
                     tableEquipaJogadores.setDisable(true);
+                    entidadeJogadorLista.close();
                     if (tableEquipa.getSelectionModel().getSelectedItem() != null) {
                         entidadeEquipaDetalhes.show();
-                        Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
+                        equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
                         textoNomeEquipa.setText(equipaSelecionada.getNome());
                         textoNomeEquipa.setEditable(false);
                         if (equipaSelecionada.getConvocada() == true) {
@@ -359,6 +382,12 @@ public class Main extends Application {
                         textoConvocada.setEditable(false);
                         textoClassificacao.setText(String.valueOf(equipaSelecionada.getClassificacao()));
                         textoClassificacao.setEditable(false);
+                        observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
+                        tableEquipaJogadores.setItems(observableListEquipaJogadores);    // Adição da ObservableList à tableView
+                        tableEquipaJogadores.refresh();
+                        observableListEquipaTreinadores = FXCollections.observableArrayList(equipaSelecionada.getTreinadorList());
+                        tableEquipaTreinadores.setItems(observableListEquipaTreinadores);    // Adição da ObservableList à tableView
+                        tableEquipaTreinadores.refresh();
                         customEquipa.setText("Delete");
                         customEquipa.setOnAction(CE -> {
                             DeleteEquipas();
@@ -396,12 +425,14 @@ public class Main extends Application {
                 tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
                 tableJogador.refresh();
                 entidadeJogadorLista.show();
+
                 //region Botões Add, Edit e Delete
                 addJogador.setOnAction(AJ -> {
                     textoNomeJogador.setEditable(true);
                     textoIdadeJogador.setEditable(true);
                     textoAlturaJogador.setEditable(true);
                     textoPosicao.setEditable(true);
+                    textoEquipaJogador.setEditable(false);
                     textoNomeJogador.clear();
                     textoIdadeJogador.clear();
                     textoAlturaJogador.clear();
@@ -415,21 +446,30 @@ public class Main extends Application {
                         entidadeJogadorDetalhes.close();
                     });
                 });
+
                 editJogador.setOnAction(EJ -> {
                     textoNomeJogador.setEditable(true);
                     textoIdadeJogador.setEditable(true);
                     textoAlturaJogador.setEditable(true);
                     textoPosicao.setEditable(true);
+                    textoEquipaJogador.setEditable(false);
                     if (tableJogador.getSelectionModel().getSelectedItem() != null) {
                         entidadeJogadorDetalhes.show();
-                        Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
+                        jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
                         textoNomeJogador.setText(jogadorSelecionado.getNome());
                         textoIdadeJogador.setText(String.valueOf(jogadorSelecionado.getIdade()));
                         textoAlturaJogador.setText(String.valueOf(jogadorSelecionado.getAltura()));
                         textoPosicao.setText(jogadorSelecionado.getPosicao());
+                        if (jogadorSelecionado.getEquipa() == null){
+                            textoEquipaJogador.setText(null);
+                        }
+                        else {
+                            textoEquipaJogador.setText(jogadorSelecionado.getEquipa().getNome());
+                        }
                         customJogador.setText("Edit");
                         customJogador.setOnAction(CE -> {
                             EditJogadores();
+                            System.out.println(jogadorSelecionado.getEquipa());
                         });
                         cancelJogador.setOnAction(CE -> {
                             entidadeJogadorDetalhes.close();
@@ -442,7 +482,7 @@ public class Main extends Application {
                 deleteJogador.setOnAction(DJ -> {
                     if (tableJogador.getSelectionModel().getSelectedItem() != null) {
                         entidadeJogadorDetalhes.show();
-                        Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
+                        jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
                         textoNomeJogador.setText(jogadorSelecionado.getNome());
                         textoNomeJogador.setEditable(false);
                         textoIdadeJogador.setText(String.valueOf(jogadorSelecionado.getIdade()));
@@ -451,6 +491,13 @@ public class Main extends Application {
                         textoAlturaJogador.setEditable(false);
                         textoPosicao.setText(jogadorSelecionado.getPosicao());
                         textoPosicao.setEditable(false);
+                        if (jogadorSelecionado.getEquipa() == null){
+                            textoEquipaJogador.setText(null);
+                        }
+                        else {
+                            textoEquipaJogador.setText(jogadorSelecionado.getEquipa().getNome());
+                        }
+                        textoEquipaJogador.setEditable(false);
                         customJogador.setText("Delete");
                         customJogador.setOnAction(CE -> {
                             DeleteJogadores();
@@ -495,6 +542,7 @@ public class Main extends Application {
                     textoIdadeTreinador.setEditable(true);
                     textoAlturaTreinador.setEditable(true);
                     textoCategoria.setEditable(true);
+                    textoEquipaTreinador.setEditable(false);
                     textoNomeTreinador.clear();
                     textoIdadeTreinador.clear();
                     textoAlturaTreinador.clear();
@@ -513,16 +561,24 @@ public class Main extends Application {
                     textoIdadeTreinador.setEditable(true);
                     textoAlturaTreinador.setEditable(true);
                     textoCategoria.setEditable(true);
+                    textoEquipaTreinador.setEditable(false);
                     if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
                         entidadeTreinadorDetalhes.show();
-                        Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
+                        treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
                         textoNomeTreinador.setText(treinadorSelecionado.getNome());
                         textoIdadeTreinador.setText(String.valueOf(treinadorSelecionado.getIdade()));
                         textoAlturaTreinador.setText(String.valueOf(treinadorSelecionado.getAltura()));
                         textoCategoria.setText(treinadorSelecionado.getCategoria());
+                        if (treinadorSelecionado.getEquipa() == null){
+                            textoEquipaTreinador.setText(null);
+                        }
+                        else {
+                            textoEquipaTreinador.setText(treinadorSelecionado.getEquipa().getNome());
+                        }
                         customTreinador.setText("Edit");
                         customTreinador.setOnAction(CE -> {
                             EditTreinadores();
+                            System.out.println(treinadorSelecionado.getEquipa());
                         });
                         cancelTreinador.setOnAction(CE -> {
                             entidadeTreinadorDetalhes.close();
@@ -535,7 +591,7 @@ public class Main extends Application {
                 deleteTreinador.setOnAction(A -> {
                     if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
                         entidadeTreinadorDetalhes.show();
-                        Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
+                        treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
                         textoNomeTreinador.setText(treinadorSelecionado.getNome());
                         textoNomeTreinador.setEditable(false);
                         textoIdadeTreinador.setText(String.valueOf(treinadorSelecionado.getIdade()));
@@ -544,6 +600,14 @@ public class Main extends Application {
                         textoAlturaTreinador.setEditable(false);
                         textoCategoria.setText(treinadorSelecionado.getCategoria());
                         textoCategoria.setEditable(false);
+                        if (treinadorSelecionado.getEquipa() == null){
+                            textoEquipaTreinador.setText(null);
+                        }
+                        else {
+                            textoEquipaTreinador.setText(treinadorSelecionado.getEquipa().getNome());
+                        }
+                        textoEquipaTreinador.setEditable(false);
+                        //textoEquipaTreinador.setText();
                         customTreinador.setText("Delete");
                         customTreinador.setOnAction(CE -> {
                             DeleteTreinadores();
@@ -875,7 +939,7 @@ public class Main extends Application {
 
         // Posição
         Label labelPosicao = new Label("Posição:");			// Nova Label
-        textoPosicao.setMaxWidth(190);
+        textoPosicao.setMaxWidth(160);
         gridPaneJogadores.add(labelPosicao, 0, 3);		// célula col 0,linha 2
         gridPaneJogadores.add(textoPosicao, 1, 3);		// célula: col 1, linha 2
 
@@ -985,26 +1049,31 @@ public class Main extends Application {
 
         // Nome
         Label labelNome = new Label("Nome:");			        // Nova Label
+        textoNomeTreinador.setMinWidth(220);
         gridPaneTreinadores.add(labelNome, 0, 0);		// célula col 0,linha 0
         gridPaneTreinadores.add(textoNomeTreinador, 1, 0);       // célula: col 1, linha 0
 
         // Idade
         Label labelIdade = new Label("Idade:");				// Nova Label
+        textoIdadeTreinador.setMaxWidth(60);
         gridPaneTreinadores.add(labelIdade, 0, 1);		// célula col 0,linha 1
         gridPaneTreinadores.add(textoIdadeTreinador, 1, 1);		// célula: col 1, linha 1
 
         // Altura
         Label labelAltura = new Label("Altura:");			// Nova Label
+        textoAlturaTreinador.setMaxWidth(60);
         gridPaneTreinadores.add(labelAltura, 0, 2);		// célula col 0,linha 2
         gridPaneTreinadores.add(textoAlturaTreinador, 1, 2);		// célula: col 1, linha 2
 
         // Categoria
         Label labelCategoria = new Label("Categoria:");			// Nova Label
+        textoCategoria.setMinWidth(160);
         gridPaneTreinadores.add(labelCategoria, 0, 3);		// célula col 0,linha 2
         gridPaneTreinadores.add(textoCategoria, 1, 3);		// célula: col 1, linha 2
 
         // Equipa
         Label labelEquipaTreinador = new Label("Equipa:");				// Nova Label
+        textoEquipaTreinador.setMaxWidth(220);
         gridPaneTreinadores.add(labelEquipaTreinador, 0, 4);		// célula col 0,linha 1
         gridPaneTreinadores.add(textoEquipaTreinador, 1, 4);		// célula: col 1, linha 1
 
@@ -1169,11 +1238,30 @@ public class Main extends Application {
     }
 
     public void DeleteEquipas() {
-        Equipa equipaSelecionada = tableEquipa.getSelectionModel().getSelectedItem();
-        tableEquipa.getItems().remove(equipaSelecionada);
-        tableEquipa.refresh();
-        entidadeEquipaDetalhes.close();
+        if (observableListEquipaJogadores.isEmpty() && observableListEquipaTreinadores.isEmpty()) {
+            listaEquipas.remove(equipaSelecionada);
+            tableEquipa.getItems().remove(equipaSelecionada);
+            tableEquipa.refresh();
+            entidadeEquipaDetalhes.close();
+        } else {
+            DialogBox.Show("VIR Alert", "A equipa que pretende eliminar contem relações, pretende eliminar esta equipa?");
+            if (DialogBox.resposta == true) {
+                for (Jogador jogador : equipaSelecionada.getJogadorList()){
+                    jogador.setEquipa(null);
+                }
+                for (Treinador treinador : equipaSelecionada.getTreinadorList()){
+                    treinador.setEquipa(null);
+                }
+                equipaSelecionada.getJogadorList().clear();
+                equipaSelecionada.getTreinadorList().clear();
+                listaEquipas.remove(equipaSelecionada);
+                tableEquipa.getItems().remove(equipaSelecionada);
+                tableEquipa.refresh();
+                entidadeEquipaDetalhes.close();
+            }
+        }
     }
+
 
     public void AddJogadores() {
 
@@ -1197,7 +1285,7 @@ public class Main extends Application {
                 {
                     if (Valida.number(textoPosicao.getText()))
                     {
-                        Jogador jogador = new Jogador(textoNomeJogador.getText(), Integer.parseInt(textoIdadeJogador.getText()),Double.parseDouble(textoAlturaJogador.getText()), textoPosicao.getText(), equipaSelecionada);
+                        Jogador jogador = new Jogador(textoNomeJogador.getText(), Integer.parseInt(textoIdadeJogador.getText()),Double.parseDouble(textoAlturaJogador.getText()), textoPosicao.getText());
                         listaJogadores.add(jogador);
                         observableListJogadores = FXCollections.observableArrayList(listaJogadores);
                         tableJogador.setItems(observableListJogadores);    // Adição da ObservableList à tableView
@@ -1246,12 +1334,22 @@ public class Main extends Application {
         }
     }
 
-    public void DeleteJogadores(){
-        Jogador jogadorSelecionado = tableJogador.getSelectionModel().getSelectedItem();
-        tableJogador.getItems().remove(jogadorSelecionado);
-        tableJogador.refresh();
-        entidadeJogadorDetalhes.close();
+    public void DeleteJogadores() {
+        if (jogadorSelecionado.getEquipa() == null) {
+            tableJogador.getItems().remove(jogadorSelecionado);
+            listaJogadores.remove(jogadorSelecionado);
+            tableJogador.refresh();
+            entidadeJogadorDetalhes.close();
+        } else {
+            DialogBox.Show("VIR Alert", "O Jogador que pretende eliminar contem relações, pretende eliminar este Jogador?");
+            jogadorSelecionado.getEquipa().getJogadorList().remove(jogadorSelecionado);
+            tableJogador.getItems().remove(jogadorSelecionado);
+            listaJogadores.remove(jogadorSelecionado);
+            tableJogador.refresh();
+            entidadeJogadorDetalhes.close();
+        }
     }
+
 
     public void AddTreinadores() {
 
@@ -1325,9 +1423,19 @@ public class Main extends Application {
     }
 
     public void DeleteTreinadores(){
-        Treinador treinadorSelecionado = tableTreinador.getSelectionModel().getSelectedItem();
-        tableTreinador.getItems().remove(treinadorSelecionado);
-        tableTreinador.refresh();
-        entidadeTreinadorDetalhes.close();
+
+        if (treinadorSelecionado.getEquipa() == null) {
+            tableTreinador.getItems().remove(treinadorSelecionado);
+            listaTreinadores.remove(treinadorSelecionado);
+            tableTreinador.refresh();
+            entidadeTreinadorDetalhes.close();
+        } else {
+            DialogBox.Show("VIR Alert", "O Jogador que pretende eliminar contem relações, pretende eliminar este Jogador?");
+            treinadorSelecionado.getEquipa().getTreinadorList().remove(treinadorSelecionado);
+            tableTreinador.getItems().remove(treinadorSelecionado);
+            listaTreinadores.remove(treinadorSelecionado);
+            tableTreinador.refresh();
+            entidadeTreinadorDetalhes.close();
+        }
     }
 }
