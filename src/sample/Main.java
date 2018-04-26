@@ -327,6 +327,7 @@ public class Main extends Application {
                             if (tableJogador.getSelectionModel().getSelectedItem() != null) {
                                 equipaSelecionada.getJogadorList().remove(tableEquipaJogadores.getSelectionModel().getSelectedItem());
                                 observableListJogadores.add(tableEquipaJogadores.getSelectionModel().getSelectedItem());
+                                tableJogador.getSelectionModel().getSelectedItem().setEquipa(null);
                                 tableJogador.setItems(observableListJogadores);
                                 tableJogador.refresh();
                                 observableListEquipaJogadores = FXCollections.observableArrayList(equipaSelecionada.getJogadorList());
@@ -341,6 +342,8 @@ public class Main extends Application {
                             if (tableTreinador.getSelectionModel().getSelectedItem() != null) {
                                 equipaSelecionada.getTreinadorList().remove(tableEquipaTreinadores.getSelectionModel().getSelectedItem());
                                 observableListTreinadores.add(tableEquipaTreinadores.getSelectionModel().getSelectedItem());
+                                tableTreinador.getSelectionModel().getSelectedItem().setEquipa(null);
+                                equipaSelecionada.getTreinadorList().remove(treinadorSelecionado);
                                 tableTreinador.setItems(observableListTreinadores);
                                 tableTreinador.refresh();
                                 observableListEquipaTreinadores = FXCollections.observableArrayList(equipaSelecionada.getTreinadorList());
